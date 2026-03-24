@@ -1,0 +1,50 @@
+import type { MetadataRoute } from "next";
+import {
+  getAllOccupations,
+  getAllMetroAreas,
+  getWagePagesChunk,
+  countAllWagePages,
+} from "@/lib/db";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://salarybycity.com";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const occupations = getAllOccupations();
+  const areas = getAllMetroAreas();
+
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: SITE_URL, changeFrequency: "monthly", priority: 1.0 },
+    { url: `${SITE_URL}/jobs`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/locations`, changeFrequency: "monthly", priority: 0.9 },
+  ];
+
+  const jobPages: MetadataRoute.Sitemap = occupations.map((occ) => ({
+    url: `${SITE_URL}/jobs/${occ.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  const locationPages: MetadataRoute.Sitemap = areas.map((area) => ({
+    url: `${SITE_URL}/locations/${area.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  // Job x Location pages (the bulk — up to 300K)
+  const total = countAllWagePages();
+  const CHUNK_SIZE = 50000;
+  const jobLocationPages: MetadataRoute.Sitemap = [];
+
+  // For sitemap, limit to first 50K to keep sitemap reasonable
+  // Next.js will auto-split if needed
+  const chunk = getWagePagesChunk(0, Math.min(total, CHUNK_SIZE));
+  for (const page of chunk) {
+    jobLocationPages.push({
+      url: `${SITE_URL}/jobs/${page.occ_slug}/${page.area_slug}`,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    });
+  }
+
+  return [...staticPages, ...jobPages, ...locationPages, ...jobLocationPages];
+}

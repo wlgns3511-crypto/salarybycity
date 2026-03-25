@@ -157,6 +157,45 @@ export function getWagePagesChunk(offset: number, limit: number): { occ_slug: st
   `).all(limit, offset) as { occ_slug: string; area_slug: string }[];
 }
 
+// --- State queries ---
+
+export function getAllStateCodes(): string[] {
+  return (getDb().prepare("SELECT DISTINCT state FROM areas WHERE area_type = 'M' AND state != '' ORDER BY state").all() as { state: string }[]).map(r => r.state);
+}
+
+export function getAreasByState(state: string): Area[] {
+  return getDb().prepare("SELECT * FROM areas WHERE state = ? AND area_type = 'M' ORDER BY area_title").all(state) as Area[];
+}
+
+export function getHighestPayingJobsNational(limit = 20): WageWithOccupation[] {
+  return getDb().prepare(`
+    SELECT w.*, o.title as occ_title, o.slug as occ_slug
+    FROM wages w
+    JOIN occupations o ON w.soc_code = o.soc_code
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE a.area_type = 'N' AND w.annual_median IS NOT NULL
+    ORDER BY w.annual_median DESC LIMIT ?
+  `).all(limit) as WageWithOccupation[];
+}
+
+export function getJobsByMajorGroup(majorGroup: string): WageWithOccupation[] {
+  return getDb().prepare(`
+    SELECT w.*, o.title as occ_title, o.slug as occ_slug
+    FROM wages w
+    JOIN occupations o ON w.soc_code = o.soc_code
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE a.area_type = 'N' AND o.major_group = ? AND w.annual_median IS NOT NULL
+    ORDER BY w.annual_median DESC
+  `).all(majorGroup) as WageWithOccupation[];
+}
+
+export function getMajorGroups(): { major_group: string; major_group_title: string; count: number }[] {
+  return getDb().prepare(`
+    SELECT major_group, major_group_title, COUNT(*) as count
+    FROM occupations GROUP BY major_group ORDER BY major_group_title
+  `).all() as { major_group: string; major_group_title: string; count: number }[];
+}
+
 // --- Related data for pages ---
 
 export function getRelatedOccupations(majorGroup: string, excludeSoc: string, limit = 5): Occupation[] {

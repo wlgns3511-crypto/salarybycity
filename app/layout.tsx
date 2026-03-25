@@ -56,6 +56,13 @@ export default function RootLayout({
               Data from the U.S. Bureau of Labor Statistics, Occupational
               Employment and Wage Statistics (OEWS) program.
             </p>
+            <p className="mt-2">
+              <a href="/about" className="hover:text-blue-600">About</a>
+              {" | "}
+              <a href="/privacy" className="hover:text-blue-600">Privacy</a>
+              {" | "}
+              <a href="/contact" className="hover:text-blue-600">Contact</a>
+            </p>
             <p className="mt-1">
               &copy; {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
             </p>

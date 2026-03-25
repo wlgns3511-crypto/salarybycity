@@ -160,6 +160,14 @@ export default async function JobLocationPage({ params }: Props) {
 
       <AdSlot id="job-location-bottom" />
 
+      <section className="mt-8 p-4 bg-slate-50 rounded-lg">
+        <h2 className="text-lg font-bold mb-2">Explore More About This Area</h2>
+        <div className="flex flex-wrap gap-3 text-sm">
+          <a href={`https://costbycity.com/cities/${location}/`} className="text-emerald-600 hover:underline" target="_blank" rel="noopener">Cost of Living in {cityName}</a>
+          <a href={`https://guidebycity.com/city/${location}/`} className="text-teal-600 hover:underline" target="_blank" rel="noopener">City Guide: {cityName}</a>
+        </div>
+      </section>
+
       <FAQ items={faqs} />
 
       {/* JSON-LD */}

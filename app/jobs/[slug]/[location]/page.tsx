@@ -21,6 +21,7 @@ import {
   breadcrumbSchema,
   generateFAQs,
 } from "@/lib/schema";
+import { analyzeSalary } from "@/lib/salary-analysis";
 
 interface Props {
   params: Promise<{ slug: string; location: string }>;
@@ -66,7 +67,14 @@ export default async function JobLocationPage({ params }: Props) {
   const cityName = shortAreaName(area.area_title);
   const year = getDataYear();
 
-  const faqs = generateFAQs(occ.title, cityName, wage);
+  const analysis = analyzeSalary(occ.title, cityName, wage, nationalWage ?? null);
+  const baseFaqs = generateFAQs(occ.title, cityName, wage);
+  const faqs = [
+    ...baseFaqs,
+    { question: `Is ${occ.title} a good career in ${cityName}?`, answer: analysis.summary },
+    ...(analysis.growthPotential ? [{ question: `What is the earning potential for ${occ.title}s?`, answer: analysis.growthPotential }] : []),
+    { question: `Is the ${occ.title} salary enough to live in ${cityName}?`, answer: analysis.costOfLivingNote },
+  ];
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
@@ -133,6 +141,32 @@ export default async function JobLocationPage({ params }: Props) {
           </div>
         </div>
       </div>
+
+      {/* Salary Analysis */}
+      <section className="mb-6">
+        <h2 className="text-xl font-bold mb-3">Salary Overview</h2>
+        <div className="bg-emerald-50 border-l-4 border-emerald-400 p-4 rounded-r-lg mb-4">
+          <p className="text-slate-700 text-sm">{analysis.summary}</p>
+        </div>
+
+        {analysis.insights.length > 0 && (
+          <div className="space-y-2 mb-4">
+            {analysis.insights.map((insight, i) => (
+              <div key={i} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
+                <span className="text-blue-500 text-sm mt-0.5">💡</span>
+                <p className="text-slate-700 text-sm">{insight}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {analysis.costOfLivingNote && (
+          <div className="bg-amber-50 border-l-4 border-amber-300 p-3 rounded-r-lg">
+            <p className="font-medium text-amber-800 text-xs mb-1">Cost of Living Consideration</p>
+            <p className="text-slate-700 text-sm">{analysis.costOfLivingNote}</p>
+          </div>
+        )}
+      </section>
 
       <h2 className="text-xl font-bold mb-3">Salary Distribution</h2>
       <SalaryBar wage={wage} />

@@ -44,7 +44,7 @@ export default async function JobDetailPage({ params }: Props) {
 
   const nationalWage = getNationalWage(occ.soc_code);
   const topCities = getTopPayingCities(occ.soc_code, 20);
-  const allCityWages = getWagesByOccupation(occ.soc_code, 400);
+  const allCityWages = getWagesByOccupation(occ.soc_code, 50);
   const related = getRelatedOccupations(occ.major_group, occ.soc_code, 8);
   const year = getDataYear();
 
@@ -117,7 +117,7 @@ export default async function JobDetailPage({ params }: Props) {
       {allCityWages.length > 20 && (
         <section className="mt-8">
           <h2 className="text-xl font-bold mb-3">
-            All Metro Areas ({allCityWages.length})
+            Top {allCityWages.length} Metro Areas by Salary
           </h2>
           <CityComparisonTable rows={allCityWages} jobSlug={slug} />
         </section>

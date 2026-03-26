@@ -41,7 +41,7 @@ export default async function LocationDetailPage({ params }: Props) {
   if (!area) notFound();
 
   const topJobs = getTopPayingJobs(area.area_code, 20);
-  const allJobs = getWagesByArea(area.area_code, 500);
+  const allJobs = getWagesByArea(area.area_code, 50);
   const cityName = shortAreaName(area.area_title);
   const year = getDataYear();
 
@@ -77,7 +77,7 @@ export default async function LocationDetailPage({ params }: Props) {
       {allJobs.length > 20 && (
         <section>
           <h2 className="text-xl font-bold mb-3">
-            All Occupations ({allJobs.length})
+            Top 50 Occupations by Salary
           </h2>
           <JobComparisonTable rows={allJobs} areaSlug={slug} />
         </section>

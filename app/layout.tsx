@@ -61,6 +61,8 @@ export default function RootLayout({
               {" | "}
               <a href="/privacy" className="hover:text-blue-600">Privacy</a>
               {" | "}
+              <a href="/terms" className="hover:text-blue-600">Terms</a>
+              {" | "}
               <a href="/contact" className="hover:text-blue-600">Contact</a>
             </p>
             <p className="mt-1">

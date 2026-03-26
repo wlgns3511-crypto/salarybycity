@@ -22,6 +22,7 @@ import {
   generateFAQs,
 } from "@/lib/schema";
 import { analyzeSalary } from "@/lib/salary-analysis";
+import { getCrossRefInsights } from '@/lib/crossref';
 
 interface Props {
   params: Promise<{ slug: string; location: string }>;
@@ -67,6 +68,7 @@ export default async function JobLocationPage({ params }: Props) {
   const cityName = shortAreaName(area.area_title);
   const year = getDataYear();
 
+  const crossInsights = getCrossRefInsights(location, 'salary');
   const analysis = analyzeSalary(occ.title, cityName, wage, nationalWage ?? null);
   const baseFaqs = generateFAQs(occ.title, cityName, wage);
   const faqs = [
@@ -193,6 +195,19 @@ export default async function JobLocationPage({ params }: Props) {
       )}
 
       <AdSlot id="job-location-bottom" />
+
+      {crossInsights.length > 0 && (
+        <section className="mt-8 mb-6">
+          <h2 className="text-xl font-bold mb-3">Related Data Insights</h2>
+          <div className="space-y-2">
+            {crossInsights.map((insight, i) => (
+              <div key={i} className="p-3 bg-slate-50 border-l-4 border-slate-300 rounded-r-lg">
+                <p className="text-sm text-slate-700" dangerouslySetInnerHTML={{ __html: insight }} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="mt-8 p-4 bg-slate-50 rounded-lg">
         <h2 className="text-lg font-bold mb-2">Explore More About This Area</h2>

@@ -1,0 +1,3857 @@
+{
+"metros": {
+"abilene-tx": {
+"name": "Abilene, TX",
+"state": "TX",
+"cost_index": 90.364,
+"median_income": 61924,
+"median_rent": 1050,
+"median_home_value": 158300
+},
+"akron-oh": {
+"name": "Akron, OH",
+"state": "OH",
+"cost_index": 93.37,
+"median_income": 68647,
+"median_rent": 962,
+"median_home_value": 185800
+},
+"albany-ga": {
+"name": "Albany, GA",
+"state": "GA",
+"cost_index": 87.669,
+"median_income": 53173,
+"median_rent": 912,
+"median_home_value": 139900
+},
+"albany-or": {
+"name": "Albany, OR",
+"state": "OR",
+"cost_index": 102.1,
+"median_income": 69523,
+"median_rent": 1160,
+"median_home_value": 319800
+},
+"albany-schenectady-troy-ny": {
+"name": "Albany, NY",
+"state": "NY",
+"cost_index": 99.566,
+"median_income": 83360,
+"median_rent": 1181,
+"median_home_value": 254100
+},
+"albuquerque-nm": {
+"name": "Albuquerque, NM",
+"state": "NM",
+"cost_index": 95.546,
+"median_income": 63971,
+"median_rent": 1035,
+"median_home_value": 242600
+},
+"alexandria-la": {
+"name": "Alexandria, LA",
+"state": "LA",
+"cost_index": 85.686,
+"median_income": 55650,
+"median_rent": 922,
+"median_home_value": 166300
+},
+"allentown-bethlehem-easton-pa-nj": {
+"name": "Allentown, PA",
+"state": "PA",
+"cost_index": 99.968,
+"median_income": 78597,
+"median_rent": 1246,
+"median_home_value": 258000
+},
+"altoona-pa": {
+"name": "Altoona, PA",
+"state": "PA",
+"cost_index": 89.507,
+"median_income": 59386,
+"median_rent": 838,
+"median_home_value": 149300
+},
+"amarillo-tx": {
+"name": "Amarillo, TX",
+"state": "TX",
+"cost_index": 91.82,
+"median_income": 64147,
+"median_rent": 997,
+"median_home_value": 180600
+},
+"ames-ia": {
+"name": "Ames, IA",
+"state": "IA",
+"cost_index": 88.83,
+"median_income": 68107,
+"median_rent": 981,
+"median_home_value": 216000
+},
+"amherst-town-northampton-ma": {
+"name": "Amherst Town, MA",
+"state": "MA",
+"cost_index": 100.243,
+"median_income": null,
+"median_rent": null,
+"median_home_value": null
+},
+"anchorage-ak": {
+"name": "Anchorage, AK",
+"state": "AK",
+"cost_index": 105.42,
+"median_income": 93016,
+"median_rent": 1375,
+"median_home_value": 344500
+},
+"ann-arbor-mi": {
+"name": "Ann Arbor, MI",
+"state": "MI",
+"cost_index": 100.88,
+"median_income": 84245,
+"median_rent": 1335,
+"median_home_value": 336300
+},
+"anniston-oxford-al": {
+"name": "Anniston, AL",
+"state": "AL",
+"cost_index": 85.949,
+"median_income": 54339,
+"median_rent": 806,
+"median_home_value": 140500
+},
+"appleton-wi": {
+"name": "Appleton, WI",
+"state": "WI",
+"cost_index": 92.419,
+"median_income": 79958,
+"median_rent": 942,
+"median_home_value": 226600
+},
+"asheville-nc": {
+"name": "Asheville, NC",
+"state": "NC",
+"cost_index": 96.506,
+"median_income": 64538,
+"median_rent": 1121,
+"median_home_value": 295000
+},
+"athens-clarke-county-ga": {
+"name": "Athens, GA",
+"state": "GA",
+"cost_index": 93.343,
+"median_income": 59130,
+"median_rent": 1028,
+"median_home_value": 252300
+},
+"atlanta-sandy-springs-roswell-ga": {
+"name": "Atlanta, GA",
+"state": "GA",
+"cost_index": 100.058,
+"median_income": 82625,
+"median_rent": 1446,
+"median_home_value": 299800
+},
+"atlantic-city-hammonton-nj": {
+"name": "Atlantic City, NJ",
+"state": "NJ",
+"cost_index": 98.857,
+"median_income": 73113,
+"median_rent": 1268,
+"median_home_value": 254100
+},
+"auburn-opelika-al": {
+"name": "Auburn, AL",
+"state": "AL",
+"cost_index": 87.933,
+"median_income": 59288,
+"median_rent": 953,
+"median_home_value": 224400
+},
+"augusta-richmond-county-ga-sc": {
+"name": "Augusta, GA",
+"state": "GA",
+"cost_index": 91.903,
+"median_income": 62941,
+"median_rent": 1016,
+"median_home_value": 186700
+},
+"austin-round-rock-san-marcos-tx": {
+"name": "Austin, TX",
+"state": "TX",
+"cost_index": 98.066,
+"median_income": 92939,
+"median_rent": 1529,
+"median_home_value": 390500
+},
+"bakersfield-delano-ca": {
+"name": "Bakersfield, CA",
+"state": "CA",
+"cost_index": 100.886,
+"median_income": 63883,
+"median_rent": 1161,
+"median_home_value": 282800
+},
+"baltimore-columbia-towson-md": {
+"name": "Baltimore, MD",
+"state": "MD",
+"cost_index": 104.487,
+"median_income": 94167,
+"median_rent": 1489,
+"median_home_value": 357800,
+"avg_salary": 86808,
+"top_salary": 163970,
+"total_employment": 590670
+},
+"bangor-me": {
+"name": "Bangor, ME",
+"state": "ME",
+"cost_index": 96.508,
+"median_income": 59438,
+"median_rent": 932,
+"median_home_value": 176700
+},
+"barnstable-town-ma": {
+"name": "Barnstable Town, MA",
+"state": "MA",
+"cost_index": 98.351,
+"median_income": 90447,
+"median_rent": 1536,
+"median_home_value": 519100
+},
+"baton-rouge-la": {
+"name": "Baton Rouge, LA",
+"state": "LA",
+"cost_index": 90.78,
+"median_income": 67979,
+"median_rent": 1072,
+"median_home_value": 223600
+},
+"battle-creek-mi": {
+"name": "Battle Creek, MI",
+"state": "MI",
+"cost_index": 90.541,
+"median_income": 58191,
+"median_rent": 897,
+"median_home_value": 138700
+},
+"bay-city-mi": {
+"name": "Bay City, MI",
+"state": "MI",
+"cost_index": 91.921,
+"median_income": 57887,
+"median_rent": 786,
+"median_home_value": 125000
+},
+"beaumont-port-arthur-tx": {
+"name": "Beaumont, TX",
+"state": "TX",
+"cost_index": 90.046,
+"median_income": 62427,
+"median_rent": 992,
+"median_home_value": 154700
+},
+"beckley-wv": {
+"name": "Beckley, WV",
+"state": "WV",
+"cost_index": 88.369,
+"median_income": 48859,
+"median_rent": 796,
+"median_home_value": 118700
+},
+"bellingham-wa": {
+"name": "Bellingham, WA",
+"state": "WA",
+"cost_index": 103.334,
+"median_income": 77581,
+"median_rent": 1370,
+"median_home_value": 475000
+},
+"bend-or": {
+"name": "Bend, OR",
+"state": "OR",
+"cost_index": 103.607,
+"median_income": 82042,
+"median_rent": 1550,
+"median_home_value": 526200
+},
+"billings-mt": {
+"name": "Billings, MT",
+"state": "MT",
+"cost_index": 93.526,
+"median_income": 72377,
+"median_rent": 1045,
+"median_home_value": 292300
+},
+"binghamton-ny": {
+"name": "Binghamton, NY",
+"state": "NY",
+"cost_index": 92.863,
+"median_income": 61271,
+"median_rent": 884,
+"median_home_value": 140300
+},
+"birmingham-al": {
+"name": "Birmingham, AL",
+"state": "AL",
+"cost_index": 91.644,
+"median_income": 68329,
+"median_rent": 1081,
+"median_home_value": 216200
+},
+"bismarck-nd": {
+"name": "Bismarck, ND",
+"state": "ND",
+"cost_index": 91.024,
+"median_income": 81846,
+"median_rent": 973,
+"median_home_value": 288600
+},
+"blacksburg-christiansburg-radford-va": {
+"name": "Blacksburg, VA",
+"state": "VA",
+"cost_index": 92.71,
+"median_income": 62017,
+"median_rent": 1040,
+"median_home_value": 221400
+},
+"bloomington-il": {
+"name": "Bloomington, IL",
+"state": "IL",
+"cost_index": 93.537,
+"median_income": 75356,
+"median_rent": 941,
+"median_home_value": 191300
+},
+"bloomington-in": {
+"name": "Bloomington, IN",
+"state": "IN",
+"cost_index": 95.084,
+"median_income": 59998,
+"median_rent": 1089,
+"median_home_value": 224300
+},
+"boise-city-id": {
+"name": "Boise City, ID",
+"state": "ID",
+"cost_index": 98.391,
+"median_income": 78138,
+"median_rent": 1245,
+"median_home_value": 383200
+},
+"boston-cambridge-newton-ma-nh": {
+"name": "Boston, MA",
+"state": "MA",
+"cost_index": 108.266,
+"median_income": 107117,
+"median_rent": 1827,
+"median_home_value": 570000
+},
+"boulder-co": {
+"name": "Boulder, CO",
+"state": "CO",
+"cost_index": 105.202,
+"median_income": 99770,
+"median_rent": 1828,
+"median_home_value": 671100
+},
+"bowling-green-ky": {
+"name": "Bowling Green, KY",
+"state": "KY",
+"cost_index": 90.179,
+"median_income": 60914,
+"median_rent": 918,
+"median_home_value": 204400
+},
+"bozeman-mt": {
+"name": "Bozeman, MT",
+"state": "MT",
+"cost_index": 102.51,
+"median_income": 83434,
+"median_rent": 1405,
+"median_home_value": 526700
+},
+"bremerton-silverdale-port-orchard-wa": {
+"name": "Bremerton, WA",
+"state": "WA",
+"cost_index": 105.607,
+"median_income": 93675,
+"median_rent": 1635,
+"median_home_value": 463000
+},
+"bridgeport-stamford-danbury-ct-metropolitan-statistical-area": {
+"name": "Bridgeport, CT Metropolitan Statistical Area",
+"state": "CT",
+"cost_index": 106.864,
+"median_income": 107351,
+"median_rent": 1751,
+"median_home_value": 490800
+},
+"brownsville-harlingen-tx": {
+"name": "Brownsville, TX",
+"state": "TX",
+"cost_index": 85.975,
+"median_income": 47435,
+"median_rent": 855,
+"median_home_value": 109600
+},
+"brunswick-st-simons-ga": {
+"name": "Brunswick, GA",
+"state": "GA",
+"cost_index": 87.708,
+"median_income": 60777,
+"median_rent": 972,
+"median_home_value": 202400
+},
+"buffalo-cheektowaga-ny": {
+"name": "Buffalo, NY",
+"state": "NY",
+"cost_index": 95.844,
+"median_income": 67638,
+"median_rent": 956,
+"median_home_value": 190900,
+"avg_salary": 82769,
+"top_salary": 208420,
+"total_employment": 233000
+},
+"burlington-nc": {
+"name": "Burlington, NC",
+"state": "NC",
+"cost_index": 93.196,
+"median_income": 60866,
+"median_rent": 959,
+"median_home_value": 197700
+},
+"burlington-south-burlington-vt": {
+"name": "Burlington, VT",
+"state": "VT",
+"cost_index": 100.949,
+"median_income": 86183,
+"median_rent": 1447,
+"median_home_value": 348000
+},
+"canton-massillon-oh": {
+"name": "Canton, OH",
+"state": "OH",
+"cost_index": 89.406,
+"median_income": 62859,
+"median_rent": 835,
+"median_home_value": 164300
+},
+"cape-coral-fort-myers-fl": {
+"name": "Cape Coral, FL",
+"state": "FL",
+"cost_index": 102.349,
+"median_income": 69368,
+"median_rent": 1466,
+"median_home_value": 290900
+},
+"cape-girardeau-mo-il": {
+"name": "Cape Girardeau, MO",
+"state": "MO",
+"cost_index": 86.078,
+"median_income": 62671,
+"median_rent": 842,
+"median_home_value": 182400
+},
+"carson-city-nv": {
+"name": "Carson City, NV",
+"state": "NV",
+"cost_index": 98.13,
+"median_income": 67465,
+"median_rent": 1127,
+"median_home_value": 390800
+},
+"casper-wy": {
+"name": "Casper, WY",
+"state": "WY",
+"cost_index": 93.829,
+"median_income": 69104,
+"median_rent": 945,
+"median_home_value": 247600
+},
+"cedar-rapids-ia": {
+"name": "Cedar Rapids, IA",
+"state": "IA",
+"cost_index": 88.963,
+"median_income": 75477,
+"median_rent": 863,
+"median_home_value": 186900
+},
+"chambersburg-pa": {
+"name": "Chambersburg, PA",
+"state": "PA",
+"cost_index": 94.642,
+"median_income": 71808,
+"median_rent": 1019,
+"median_home_value": 222000
+},
+"champaign-urbana-il": {
+"name": "Champaign, IL",
+"state": "IL",
+"cost_index": 92.704,
+"median_income": 62281,
+"median_rent": 975,
+"median_home_value": 189700
+},
+"charleston-wv": {
+"name": "Charleston, WV",
+"state": "WV",
+"cost_index": 88.717,
+"median_income": 54473,
+"median_rent": 841,
+"median_home_value": 125800
+},
+"charleston-north-charleston-sc": {
+"name": "Charleston, SC",
+"state": "SC",
+"cost_index": 100.962,
+"median_income": 77460,
+"median_rent": 1402,
+"median_home_value": 317300
+},
+"charlotte-concord-gastonia-nc-sc": {
+"name": "Charlotte, NC",
+"state": "NC",
+"cost_index": 97.348,
+"median_income": 76177,
+"median_rent": 1279,
+"median_home_value": 283000,
+"avg_salary": 81840,
+"top_salary": 167590,
+"total_employment": 570930
+},
+"charlottesville-va": {
+"name": "Charlottesville, VA",
+"state": "VA",
+"cost_index": 99.146,
+"median_income": 86188,
+"median_rent": 1445,
+"median_home_value": 375800
+},
+"chattanooga-tn-ga": {
+"name": "Chattanooga, TN",
+"state": "TN",
+"cost_index": 91.464,
+"median_income": 65387,
+"median_rent": 1000,
+"median_home_value": 220000
+},
+"cheyenne-wy": {
+"name": "Cheyenne, WY",
+"state": "WY",
+"cost_index": 96.491,
+"median_income": 76282,
+"median_rent": 1043,
+"median_home_value": 295800
+},
+"chicago-naperville-elgin-il-in": {
+"name": "Chicago, IL",
+"state": "IL",
+"cost_index": 103.595,
+"median_income": 85087,
+"median_rent": 1310,
+"median_home_value": 288400
+},
+"chico-ca": {
+"name": "Chico, CA",
+"state": "CA",
+"cost_index": 101.197,
+"median_income": 66085,
+"median_rent": 1280,
+"median_home_value": 371600
+},
+"cincinnati-oh-ky-in": {
+"name": "Cincinnati, OH",
+"state": "OH",
+"cost_index": 95.37,
+"median_income": 76247,
+"median_rent": 990,
+"median_home_value": 220900
+},
+"clarksville-tn-ky": {
+"name": "Clarksville, TN",
+"state": "TN",
+"cost_index": 90.947,
+"median_income": 62188,
+"median_rent": 1064,
+"median_home_value": 208200
+},
+"cleveland-oh": {
+"name": "Cleveland, OH",
+"state": "OH",
+"cost_index": 93.923,
+"median_income": null,
+"median_rent": null,
+"median_home_value": null
+},
+"cleveland-tn": {
+"name": "Cleveland, TN",
+"state": "TN",
+"cost_index": 88.08,
+"median_income": 60001,
+"median_rent": 894,
+"median_home_value": 197400
+},
+"coeur-dalene-id": {
+"name": "Coeur d'Alene, ID",
+"state": "ID",
+"cost_index": 98.293,
+"median_income": 71949,
+"median_rent": 1216,
+"median_home_value": 407000
+},
+"college-station-bryan-tx": {
+"name": "College Station, TX",
+"state": "TX",
+"cost_index": 90.951,
+"median_income": 58659,
+"median_rent": 1107,
+"median_home_value": 244100
+},
+"colorado-springs-co": {
+"name": "Colorado Springs, CO",
+"state": "CO",
+"cost_index": 100.707,
+"median_income": 82334,
+"median_rent": 1508,
+"median_home_value": 391000
+},
+"columbia-mo": {
+"name": "Columbia, MO",
+"state": "MO",
+"cost_index": 89.438,
+"median_income": 65863,
+"median_rent": 981,
+"median_home_value": 225300
+},
+"columbia-sc": {
+"name": "Columbia, SC",
+"state": "SC",
+"cost_index": 93.662,
+"median_income": 63471,
+"median_rent": 1096,
+"median_home_value": 192600
+},
+"columbus-ga-al": {
+"name": "Columbus, GA",
+"state": "GA",
+"cost_index": 89.296,
+"median_income": 55720,
+"median_rent": 999,
+"median_home_value": 172200
+},
+"columbus-in": {
+"name": "Columbus, IN",
+"state": "IN",
+"cost_index": 93.003,
+"median_income": 76912,
+"median_rent": 1063,
+"median_home_value": 197500
+},
+"columbus-oh": {
+"name": "Columbus, OH",
+"state": "OH",
+"cost_index": 95.469,
+"median_income": 76541,
+"median_rent": 1146,
+"median_home_value": 251600,
+"avg_salary": 81183,
+"top_salary": 162410,
+"total_employment": 483410
+},
+"corpus-christi-tx": {
+"name": "Corpus Christi, TX",
+"state": "TX",
+"cost_index": 92.671,
+"median_income": 64005,
+"median_rent": 1183,
+"median_home_value": 175100
+},
+"corvallis-or": {
+"name": "Corvallis, OR",
+"state": "OR",
+"cost_index": 104.017,
+"median_income": 72882,
+"median_rent": 1315,
+"median_home_value": 442300
+},
+"crestview-fort-walton-beach-destin-fl": {
+"name": "Crestview, FL",
+"state": "FL",
+"cost_index": 97.031,
+"median_income": 74279,
+"median_rent": 1391,
+"median_home_value": 301500
+},
+"dallas-fort-worth-arlington-tx": {
+"name": "Dallas, TX",
+"state": "TX",
+"cost_index": 103.09,
+"median_income": 83398,
+"median_rent": 1409,
+"median_home_value": 299000,
+"avg_salary": 81843,
+"top_salary": 170840,
+"total_employment": 1800380
+},
+"dalton-ga": {
+"name": "Dalton, GA",
+"state": "GA",
+"cost_index": 89.844,
+"median_income": 60017,
+"median_rent": 833,
+"median_home_value": 168500
+},
+"daphne-fairhope-foley-al": {
+"name": "Daphne, AL",
+"state": "AL",
+"cost_index": 94.69,
+"median_income": 71039,
+"median_rent": 1160,
+"median_home_value": 266000
+},
+"davenport-moline-rock-island-ia-il": {
+"name": "Davenport, IA",
+"state": "IA",
+"cost_index": 89.079,
+"median_income": 68395,
+"median_rent": 875,
+"median_home_value": 161800
+},
+"dayton-kettering-beavercreek-oh": {
+"name": "Dayton, OH",
+"state": "OH",
+"cost_index": 92.694,
+"median_income": 67088,
+"median_rent": 941,
+"median_home_value": 171200
+},
+"decatur-al": {
+"name": "Decatur, AL",
+"state": "AL",
+"cost_index": 87.212,
+"median_income": 60036,
+"median_rent": 772,
+"median_home_value": 166400
+},
+"decatur-il": {
+"name": "Decatur, IL",
+"state": "IL",
+"cost_index": 88.422,
+"median_income": 59622,
+"median_rent": 774,
+"median_home_value": 119800
+},
+"deltona-daytona-beach-ormond-beach-fl": {
+"name": "Deltona, FL",
+"state": "FL",
+"cost_index": 99.367,
+"median_income": 64197,
+"median_rent": 1311,
+"median_home_value": 259700
+},
+"denver-aurora-centennial-co": {
+"name": "Denver, CO",
+"state": "CO",
+"cost_index": 105.782,
+"median_income": 96920,
+"median_rent": 1706,
+"median_home_value": 518900
+},
+"des-moines-west-des-moines-ia": {
+"name": "Des Moines, IA",
+"state": "IA",
+"cost_index": 91.701,
+"median_income": 81103,
+"median_rent": 1063,
+"median_home_value": 235800
+},
+"detroit-warren-dearborn-mi": {
+"name": "Detroit, MI",
+"state": "MI",
+"cost_index": 100.298,
+"median_income": 72456,
+"median_rent": 1112,
+"median_home_value": 223800,
+"avg_salary": 82592,
+"top_salary": 218340,
+"total_employment": 846600
+},
+"dothan-al": {
+"name": "Dothan, AL",
+"state": "AL",
+"cost_index": 83.833,
+"median_income": 54171,
+"median_rent": 822,
+"median_home_value": 154200
+},
+"dover-de": {
+"name": "Dover, DE",
+"state": "DE",
+"cost_index": 97.507,
+"median_income": 69278,
+"median_rent": 1224,
+"median_home_value": 272300
+},
+"dubuque-ia": {
+"name": "Dubuque, IA",
+"state": "IA",
+"cost_index": 87.328,
+"median_income": 73495,
+"median_rent": 912,
+"median_home_value": 210300
+},
+"duluth-mn-wi": {
+"name": "Duluth, MN",
+"state": "MN",
+"cost_index": 88.768,
+"median_income": 67612,
+"median_rent": 909,
+"median_home_value": 193600
+},
+"durham-chapel-hill-nc": {
+"name": "Durham, NC",
+"state": "NC",
+"cost_index": 97.572,
+"median_income": 76040,
+"median_rent": 1249,
+"median_home_value": 310600
+},
+"eagle-pass-tx": {
+"name": "Eagle Pass, TX",
+"state": "TX",
+"cost_index": 83.805,
+"median_income": 48497,
+"median_rent": 757,
+"median_home_value": 125000
+},
+"eau-claire-wi": {
+"name": "Eau Claire, WI",
+"state": "WI",
+"cost_index": 92.796,
+"median_income": 70009,
+"median_rent": 925,
+"median_home_value": 222600
+},
+"el-centro-ca": {
+"name": "El Centro, CA",
+"state": "CA",
+"cost_index": 95.174,
+"median_income": 53847,
+"median_rent": 961,
+"median_home_value": 256000
+},
+"elizabethtown-ky": {
+"name": "Elizabethtown, KY",
+"state": "KY",
+"cost_index": 90.572,
+"median_income": 64111,
+"median_rent": 902,
+"median_home_value": 184100
+},
+"elkhart-goshen-in": {
+"name": "Elkhart, IN",
+"state": "IN",
+"cost_index": 90.325,
+"median_income": 63978,
+"median_rent": 945,
+"median_home_value": 181800
+},
+"elmira-ny": {
+"name": "Elmira, NY",
+"state": "NY",
+"cost_index": 94.398,
+"median_income": 61358,
+"median_rent": 991,
+"median_home_value": 128200
+},
+"el-paso-tx": {
+"name": "El Paso, TX",
+"state": "TX",
+"cost_index": 89.912,
+"median_income": 55344,
+"median_rent": 977,
+"median_home_value": 153400
+},
+"enid-ok": {
+"name": "Enid, OK *",
+"state": "OK",
+"cost_index": 84.269,
+"median_income": 64165,
+"median_rent": 868,
+"median_home_value": 142000
+},
+"erie-pa": {
+"name": "Erie, PA",
+"state": "PA",
+"cost_index": 90.95,
+"median_income": 59396,
+"median_rent": 851,
+"median_home_value": 160200
+},
+"eugene-springfield-or": {
+"name": "Eugene, OR",
+"state": "OR",
+"cost_index": 101.568,
+"median_income": 65157,
+"median_rent": 1210,
+"median_home_value": 363800
+},
+"evansville-in": {
+"name": "Evansville, IN",
+"state": "IN",
+"cost_index": 91.528,
+"median_income": 64084,
+"median_rent": 908,
+"median_home_value": 173500
+},
+"fairbanks-college-ak": {
+"name": "Fairbanks, AK",
+"state": "AK",
+"cost_index": 103.208,
+"median_income": 81655,
+"median_rent": 1360,
+"median_home_value": 276800
+},
+"fargo-nd-mn": {
+"name": "Fargo, ND",
+"state": "ND",
+"cost_index": 90.871,
+"median_income": 73641,
+"median_rent": 919,
+"median_home_value": 261000
+},
+"farmington-nm": {
+"name": "Farmington, NM",
+"state": "NM",
+"cost_index": 87.707,
+"median_income": 50734,
+"median_rent": 894,
+"median_home_value": 170700
+},
+"fayetteville-nc": {
+"name": "Fayetteville, NC",
+"state": "NC",
+"cost_index": 91.978,
+"median_income": 57488,
+"median_rent": 1085,
+"median_home_value": 175600
+},
+"fayetteville-springdale-rogers-ar": {
+"name": "Fayetteville, AR",
+"state": "AR",
+"cost_index": 91.353,
+"median_income": 73316,
+"median_rent": 1010,
+"median_home_value": 242800
+},
+"flagstaff-az": {
+"name": "Flagstaff, AZ",
+"state": "AZ",
+"cost_index": 100.325,
+"median_income": 67266,
+"median_rent": 1353,
+"median_home_value": 379400
+},
+"flint-mi": {
+"name": "Flint, MI",
+"state": "MI",
+"cost_index": 93.034,
+"median_income": 58594,
+"median_rent": 893,
+"median_home_value": 158400
+},
+"florence-sc": {
+"name": "Florence, SC",
+"state": "SC",
+"cost_index": 86.774,
+"median_income": 52401,
+"median_rent": 848,
+"median_home_value": 150300
+},
+"florence-muscle-shoals-al": {
+"name": "Florence, AL",
+"state": "AL",
+"cost_index": 84.817,
+"median_income": 56113,
+"median_rent": 787,
+"median_home_value": 164400
+},
+"fond-du-lac-wi": {
+"name": "Fond du Lac, WI",
+"state": "WI",
+"cost_index": 91.643,
+"median_income": 70368,
+"median_rent": 892,
+"median_home_value": 195800
+},
+"fort-collins-loveland-co": {
+"name": "Fort Collins, CO",
+"state": "CO",
+"cost_index": 101.128,
+"median_income": 87199,
+"median_rent": 1584,
+"median_home_value": 488300
+},
+"fort-smith-ar-ok": {
+"name": "Fort Smith, AR",
+"state": "AR",
+"cost_index": 85.888,
+"median_income": 53224,
+"median_rent": 791,
+"median_home_value": 146600
+},
+"fort-wayne-in": {
+"name": "Fort Wayne, IN",
+"state": "IN",
+"cost_index": 92.572,
+"median_income": 66758,
+"median_rent": 922,
+"median_home_value": 175100
+},
+"fresno-ca": {
+"name": "Fresno, CA",
+"state": "CA",
+"cost_index": 102.158,
+"median_income": 67756,
+"median_rent": 1207,
+"median_home_value": 338200
+},
+"gadsden-al": {
+"name": "Gadsden, AL",
+"state": "AL",
+"cost_index": 85.653,
+"median_income": 52177,
+"median_rent": 779,
+"median_home_value": 148400
+},
+"gainesville-fl": {
+"name": "Gainesville, FL",
+"state": "FL",
+"cost_index": 96.733,
+"median_income": 56638,
+"median_rent": 1157,
+"median_home_value": 226100
+},
+"gainesville-ga": {
+"name": "Gainesville, GA",
+"state": "GA",
+"cost_index": 96.766,
+"median_income": 74153,
+"median_rent": 1179,
+"median_home_value": 277900
+},
+"gettysburg-pa": {
+"name": "Gettysburg, PA",
+"state": "PA",
+"cost_index": 95.379,
+"median_income": 78975,
+"median_rent": 1060,
+"median_home_value": 242800
+},
+"glens-falls-ny": {
+"name": "Glens Falls, NY",
+"state": "NY",
+"cost_index": 94.866,
+"median_income": 71380,
+"median_rent": 1015,
+"median_home_value": 208800
+},
+"goldsboro-nc": {
+"name": "Goldsboro, NC",
+"state": "NC",
+"cost_index": 88.462,
+"median_income": 54323,
+"median_rent": 899,
+"median_home_value": 152300
+},
+"grand-forks-nd-mn": {
+"name": "Grand Forks, ND",
+"state": "ND",
+"cost_index": 86.663,
+"median_income": 65971,
+"median_rent": 918,
+"median_home_value": 225400
+},
+"grand-island-ne": {
+"name": "Grand Island, NE",
+"state": "NE",
+"cost_index": 86.657,
+"median_income": 63314,
+"median_rent": 870,
+"median_home_value": 186200
+},
+"grand-junction-co": {
+"name": "Grand Junction, CO",
+"state": "CO",
+"cost_index": 95.476,
+"median_income": 68077,
+"median_rent": 1089,
+"median_home_value": 312600
+},
+"grand-rapids-wyoming-kentwood-mi": {
+"name": "Grand Rapids, MI",
+"state": "MI",
+"cost_index": 95.546,
+"median_income": 76898,
+"median_rent": 1078,
+"median_home_value": 239900
+},
+"grants-pass-or": {
+"name": "Grants Pass, OR",
+"state": "OR",
+"cost_index": 97.76,
+"median_income": 56068,
+"median_rent": 1093,
+"median_home_value": 353800
+},
+"great-falls-mt": {
+"name": "Great Falls, MT",
+"state": "MT",
+"cost_index": 96.845,
+"median_income": 61351,
+"median_rent": 866,
+"median_home_value": 227600
+},
+"greeley-co": {
+"name": "Greeley, CO",
+"state": "CO",
+"cost_index": 100.176,
+"median_income": 89182,
+"median_rent": 1351,
+"median_home_value": 412200
+},
+"green-bay-wi": {
+"name": "Green Bay, WI",
+"state": "WI",
+"cost_index": 93.086,
+"median_income": 74208,
+"median_rent": 924,
+"median_home_value": 220000
+},
+"greensboro-high-point-nc": {
+"name": "Greensboro, NC",
+"state": "NC",
+"cost_index": 92.865,
+"median_income": 59567,
+"median_rent": 985,
+"median_home_value": 188800
+},
+"greenville-nc": {
+"name": "Greenville, NC",
+"state": "NC",
+"cost_index": 88.402,
+"median_income": 54915,
+"median_rent": 911,
+"median_home_value": 178700
+},
+"greenville-anderson-greer-sc": {
+"name": "Greenville, SC",
+"state": "SC",
+"cost_index": 93.26,
+"median_income": 66226,
+"median_rent": 1026,
+"median_home_value": 221100
+},
+"gulfport-biloxi-ms": {
+"name": "Gulfport, MS",
+"state": "MS",
+"cost_index": 90.006,
+"median_income": 58287,
+"median_rent": 1010,
+"median_home_value": 175800
+},
+"hagerstown-martinsburg-md-wv": {
+"name": "Hagerstown, MD",
+"state": "MD",
+"cost_index": 94.171,
+"median_income": 72751,
+"median_rent": 1076,
+"median_home_value": 242400
+},
+"hammond-la": {
+"name": "Hammond, LA",
+"state": "LA",
+"cost_index": 84.46,
+"median_income": 55274,
+"median_rent": 930,
+"median_home_value": 193300
+},
+"hanford-corcoran-ca": {
+"name": "Hanford, CA",
+"state": "CA",
+"cost_index": 101.612,
+"median_income": 68540,
+"median_rent": 1201,
+"median_home_value": 281400
+},
+"harrisburg-carlisle-pa": {
+"name": "Harrisburg, PA",
+"state": "PA",
+"cost_index": 98.65,
+"median_income": 76189,
+"median_rent": 1098,
+"median_home_value": 226100
+},
+"harrisonburg-va": {
+"name": "Harrisonburg, VA",
+"state": "VA",
+"cost_index": 94.892,
+"median_income": 66823,
+"median_rent": 1068,
+"median_home_value": 265900
+},
+"hartford-west-hartford-east-hartford-ct": {
+"name": "Hartford, CT",
+"state": "CT",
+"cost_index": 102.746,
+"median_income": 89371,
+"median_rent": 1297,
+"median_home_value": 288800
+},
+"hattiesburg-ms": {
+"name": "Hattiesburg, MS",
+"state": "MS",
+"cost_index": 87.633,
+"median_income": 55078,
+"median_rent": 939,
+"median_home_value": 160200
+},
+"helena-mt": {
+"name": "Helena, MT",
+"state": "MT",
+"cost_index": 95.675,
+"median_income": 72168,
+"median_rent": 1000,
+"median_home_value": 334300
+},
+"hickory-lenoir-morganton-nc": {
+"name": "Hickory, NC",
+"state": "NC",
+"cost_index": 88.486,
+"median_income": 57943,
+"median_rent": 797,
+"median_home_value": 172700
+},
+"hilton-head-island-bluffton-port-royal-sc": {
+"name": "Hilton Head Island, SC",
+"state": "SC",
+"cost_index": 98.017,
+"median_income": 77536,
+"median_rent": 1400,
+"median_home_value": 364800
+},
+"hinesville-ga": {
+"name": "Hinesville, GA",
+"state": "GA",
+"cost_index": 93.933,
+"median_income": 55427,
+"median_rent": 1146,
+"median_home_value": 158800
+},
+"homosassa-springs-fl": {
+"name": "Homosassa Springs, FL",
+"state": "FL",
+"cost_index": 93.467,
+"median_income": 52569,
+"median_rent": 1000,
+"median_home_value": 190800
+},
+"hot-springs-ar": {
+"name": "Hot Springs, AR",
+"state": "AR",
+"cost_index": 85.73,
+"median_income": 54229,
+"median_rent": 913,
+"median_home_value": 166600
+},
+"houma-bayou-cane-thibodaux-la": {
+"name": "Houma, LA",
+"state": "LA",
+"cost_index": 85.103,
+"median_income": 62443,
+"median_rent": 927,
+"median_home_value": 175600
+},
+"houston-pasadena-the-woodlands-tx": {
+"name": "Houston, TX",
+"state": "TX",
+"cost_index": 98.629,
+"median_income": 78061,
+"median_rent": 1301,
+"median_home_value": 253600
+},
+"huntington-ashland-wv-ky-oh": {
+"name": "Huntington, WV",
+"state": "WV",
+"cost_index": 88.422,
+"median_income": 55964,
+"median_rent": 840,
+"median_home_value": 142800
+},
+"huntsville-al": {
+"name": "Huntsville, AL",
+"state": "AL",
+"cost_index": 93.072,
+"median_income": 78521,
+"median_rent": 1016,
+"median_home_value": 240400
+},
+"idaho-falls-id": {
+"name": "Idaho Falls, ID",
+"state": "ID",
+"cost_index": 94.412,
+"median_income": 73337,
+"median_rent": 968,
+"median_home_value": 285000
+},
+"indianapolis-carmel-greenwood-in": {
+"name": "Indianapolis, IN",
+"state": "IN",
+"cost_index": 95.696,
+"median_income": 73571,
+"median_rent": 1081,
+"median_home_value": 223300
+},
+"iowa-city-ia": {
+"name": "Iowa City, IA",
+"state": "IA",
+"cost_index": 91.509,
+"median_income": 72680,
+"median_rent": 1057,
+"median_home_value": 265500
+},
+"ithaca-ny": {
+"name": "Ithaca, NY",
+"state": "NY",
+"cost_index": 103.317,
+"median_income": 69995,
+"median_rent": 1320,
+"median_home_value": 264300
+},
+"jackson-mi": {
+"name": "Jackson, MI",
+"state": "MI",
+"cost_index": 91.779,
+"median_income": 62581,
+"median_rent": 920,
+"median_home_value": 166700
+},
+"jackson-ms": {
+"name": "Jackson, MS",
+"state": "MS",
+"cost_index": 89.048,
+"median_income": 60085,
+"median_rent": 1012,
+"median_home_value": 176500
+},
+"jackson-tn": {
+"name": "Jackson, TN",
+"state": "TN",
+"cost_index": 85.522,
+"median_income": 55807,
+"median_rent": 903,
+"median_home_value": 152200
+},
+"jacksonville-fl": {
+"name": "Jacksonville, FL",
+"state": "FL",
+"cost_index": 99.484,
+"median_income": 73194,
+"median_rent": 1315,
+"median_home_value": 281000,
+"avg_salary": 75598,
+"top_salary": 234060,
+"total_employment": 334880
+},
+"jacksonville-nc": {
+"name": "Jacksonville, NC",
+"state": "NC",
+"cost_index": 92.085,
+"median_income": 59976,
+"median_rent": 1132,
+"median_home_value": 196800
+},
+"janesville-beloit-wi": {
+"name": "Janesville, WI",
+"state": "WI",
+"cost_index": 93.703,
+"median_income": 70630,
+"median_rent": 981,
+"median_home_value": 193000
+},
+"jefferson-city-mo": {
+"name": "Jefferson City, MO",
+"state": "MO",
+"cost_index": 87.975,
+"median_income": 70195,
+"median_rent": 776,
+"median_home_value": 189800
+},
+"johnson-city-tn": {
+"name": "Johnson City, TN",
+"state": "TN",
+"cost_index": 87.928,
+"median_income": 54217,
+"median_rent": 845,
+"median_home_value": 183600
+},
+"johnstown-pa": {
+"name": "Johnstown, PA",
+"state": "PA",
+"cost_index": 85.929,
+"median_income": 54221,
+"median_rent": 700,
+"median_home_value": 110900
+},
+"jonesboro-ar": {
+"name": "Jonesboro, AR",
+"state": "AR",
+"cost_index": 85.876,
+"median_income": 52709,
+"median_rent": 852,
+"median_home_value": 166600
+},
+"joplin-mo-ks": {
+"name": "Joplin, MO",
+"state": "MO",
+"cost_index": 85.718,
+"median_income": 56930,
+"median_rent": 853,
+"median_home_value": 151800
+},
+"kahului-wailuku-hi": {
+"name": "Kahului, HI",
+"state": "HI",
+"cost_index": 109.393,
+"median_income": 95379,
+"median_rent": 1805,
+"median_home_value": 800100
+},
+"kalamazoo-portage-mi": {
+"name": "Kalamazoo, MI",
+"state": "MI",
+"cost_index": 94.84,
+"median_income": 67905,
+"median_rent": 994,
+"median_home_value": 209700
+},
+"kankakee-il": {
+"name": "Kankakee, IL",
+"state": "IL",
+"cost_index": 96.394,
+"median_income": 65489,
+"median_rent": 1025,
+"median_home_value": 176800
+},
+"kansas-city-mo-ks": {
+"name": "Kansas City, MO",
+"state": "MO",
+"cost_index": 92.543,
+"median_income": 78827,
+"median_rent": 1148,
+"median_home_value": 246000,
+"avg_salary": 78460,
+"top_salary": 158050,
+"total_employment": 490450
+},
+"kennewick-richland-wa": {
+"name": "Kennewick, WA",
+"state": "WA",
+"cost_index": 100.079,
+"median_income": 82146,
+"median_rent": 1157,
+"median_home_value": 330200
+},
+"kenosha-wi": {
+"name": "Kenosha, WI",
+"state": "WI",
+"cost_index": 101.118,
+"median_income": null,
+"median_rent": null,
+"median_home_value": null
+},
+"killeen-temple-tx": {
+"name": "Killeen, TX",
+"state": "TX",
+"cost_index": 91.132,
+"median_income": 63394,
+"median_rent": 1084,
+"median_home_value": 190900
+},
+"kingsport-bristol-tn-va": {
+"name": "Kingsport, TN",
+"state": "TN",
+"cost_index": 86.447,
+"median_income": 53644,
+"median_rent": 778,
+"median_home_value": 166500
+},
+"kingston-ny": {
+"name": "Kingston, NY",
+"state": "NY",
+"cost_index": 100.709,
+"median_income": 77197,
+"median_rent": 1269,
+"median_home_value": 288400
+},
+"kiryas-joel-poughkeepsie-newburgh-ny": {
+"name": "Kiryas Joel, NY",
+"state": "NY",
+"cost_index": 109.422,
+"median_income": null,
+"median_rent": null,
+"median_home_value": null
+},
+"knoxville-tn": {
+"name": "Knoxville, TN",
+"state": "TN",
+"cost_index": 92.569,
+"median_income": 66715,
+"median_rent": 1012,
+"median_home_value": 230700
+},
+"kokomo-in": {
+"name": "Kokomo, IN",
+"state": "IN",
+"cost_index": 89.648,
+"median_income": 62014,
+"median_rent": 855,
+"median_home_value": 143100
+},
+"la-crosse-onalaska-wi-mn": {
+"name": "La Crosse, WI",
+"state": "WI",
+"cost_index": 91.769,
+"median_income": 69043,
+"median_rent": 977,
+"median_home_value": 224700
+},
+"lafayette-la": {
+"name": "Lafayette, LA",
+"state": "LA",
+"cost_index": 87.209,
+"median_income": 58150,
+"median_rent": 918,
+"median_home_value": 187800
+},
+"lafayette-west-lafayette-in": {
+"name": "Lafayette, IN",
+"state": "IN",
+"cost_index": 93.43,
+"median_income": 57188,
+"median_rent": 1004,
+"median_home_value": 184300
+},
+"lake-charles-la": {
+"name": "Lake Charles, LA",
+"state": "LA",
+"cost_index": 85.852,
+"median_income": 64764,
+"median_rent": 1025,
+"median_home_value": 195600
+},
+"lake-havasu-city-kingman-az": {
+"name": "Lake Havasu City, AZ",
+"state": "AZ",
+"cost_index": 94.098,
+"median_income": 53592,
+"median_rent": 976,
+"median_home_value": 233700
+},
+"lakeland-winter-haven-fl": {
+"name": "Lakeland, FL",
+"state": "FL",
+"cost_index": 97.141,
+"median_income": 60901,
+"median_rent": 1192,
+"median_home_value": 215700
+},
+"lancaster-pa": {
+"name": "Lancaster, PA",
+"state": "PA",
+"cost_index": 98.257,
+"median_income": 81458,
+"median_rent": 1221,
+"median_home_value": 263600
+},
+"lansing-east-lansing-mi": {
+"name": "Lansing, MI",
+"state": "MI",
+"cost_index": 94.991,
+"median_income": 68270,
+"median_rent": 1007,
+"median_home_value": 183800
+},
+"laredo-tx": {
+"name": "Laredo, TX",
+"state": "TX",
+"cost_index": 86.956,
+"median_income": 59984,
+"median_rent": 964,
+"median_home_value": 161000
+},
+"las-cruces-nm": {
+"name": "Las Cruces, NM",
+"state": "NM",
+"cost_index": 90.212,
+"median_income": 51232,
+"median_rent": 858,
+"median_home_value": 187400
+},
+"las-vegas-henderson-north-las-vegas-nv": {
+"name": "Las Vegas, NV",
+"state": "NV",
+"cost_index": 100.215,
+"median_income": 69911,
+"median_rent": 1406,
+"median_home_value": 368800
+},
+"lawrence-ks": {
+"name": "Lawrence, KS",
+"state": "KS",
+"cost_index": 90.243,
+"median_income": 66153,
+"median_rent": 1041,
+"median_home_value": 259500
+},
+"lawton-ok": {
+"name": "Lawton, OK",
+"state": "OK",
+"cost_index": 85.941,
+"median_income": 57196,
+"median_rent": 898,
+"median_home_value": 143200
+},
+"lebanon-pa": {
+"name": "Lebanon, PA",
+"state": "PA",
+"cost_index": 93.214,
+"median_income": 72532,
+"median_rent": 1023,
+"median_home_value": 211400
+},
+"lewiston-id-wa": {
+"name": "Lewiston, ID",
+"state": "ID",
+"cost_index": 91.16,
+"median_income": 64488,
+"median_rent": 907,
+"median_home_value": 262000
+},
+"lewiston-auburn-me": {
+"name": "Lewiston, ME",
+"state": "ME",
+"cost_index": 94.736,
+"median_income": 64500,
+"median_rent": 916,
+"median_home_value": 211800
+},
+"lexington-fayette-ky": {
+"name": "Lexington, KY",
+"state": "KY",
+"cost_index": 92.889,
+"median_income": 68089,
+"median_rent": 1032,
+"median_home_value": 238300
+},
+"lexington-park-md": {
+"name": "Lexington Park, MD",
+"state": "MD",
+"cost_index": 100.76,
+"median_income": null,
+"median_rent": null,
+"median_home_value": null
+},
+"lima-oh": {
+"name": "Lima, OH",
+"state": "OH",
+"cost_index": 89.669,
+"median_income": 58976,
+"median_rent": 844,
+"median_home_value": 147000
+},
+"lincoln-ne": {
+"name": "Lincoln, NE",
+"state": "NE",
+"cost_index": 91.581,
+"median_income": 70899,
+"median_rent": 994,
+"median_home_value": 238300
+},
+"little-rock-north-little-rock-conway-ar": {
+"name": "Little Rock, AR",
+"state": "AR",
+"cost_index": 89.364,
+"median_income": 62664,
+"median_rent": 964,
+"median_home_value": 185700
+},
+"logan-ut-id": {
+"name": "Logan, UT",
+"state": "UT",
+"cost_index": 95.927,
+"median_income": 71739,
+"median_rent": 1011,
+"median_home_value": 343200
+},
+"longview-tx": {
+"name": "Longview, TX",
+"state": "TX",
+"cost_index": 89.485,
+"median_income": 62910,
+"median_rent": 975,
+"median_home_value": 165100
+},
+"longview-kelso-wa": {
+"name": "Longview, WA",
+"state": "WA",
+"cost_index": 97.545,
+"median_income": 70912,
+"median_rent": 1090,
+"median_home_value": 332200
+},
+"los-angeles-long-beach-anaheim-ca": {
+"name": "Los Angeles, CA",
+"state": "CA",
+"cost_index": 113.566,
+"median_income": 89105,
+"median_rent": 1892,
+"median_home_value": 772000,
+"avg_salary": 95971,
+"top_salary": 205900,
+"total_employment": 2712620
+},
+"louisville-jefferson-county-ky-in": {
+"name": "Louisville/Jefferson County, KY",
+"state": "KY",
+"cost_index": 93.074,
+"median_income": 69771,
+"median_rent": 1017,
+"median_home_value": 222400,
+"avg_salary": 71747,
+"top_salary": 154780,
+"total_employment": 265790
+},
+"lubbock-tx": {
+"name": "Lubbock, TX",
+"state": "TX",
+"cost_index": 91.317,
+"median_income": 61535,
+"median_rent": 1082,
+"median_home_value": 180100
+},
+"lynchburg-va": {
+"name": "Lynchburg, VA",
+"state": "VA",
+"cost_index": 89.363,
+"median_income": 64307,
+"median_rent": 920,
+"median_home_value": 209000
+},
+"macon-bibb-county-ga": {
+"name": "Macon, GA",
+"state": "GA",
+"cost_index": 88.528,
+"median_income": 54700,
+"median_rent": 946,
+"median_home_value": 160100
+},
+"madison-wi": {
+"name": "Madison, WI",
+"state": "WI",
+"cost_index": 97.287,
+"median_income": 82996,
+"median_rent": 1228,
+"median_home_value": 320700
+},
+"manchester-nashua-nh": {
+"name": "Manchester, NH",
+"state": "NH",
+"cost_index": 105.657,
+"median_income": 95112,
+"median_rent": 1444,
+"median_home_value": 356200
+},
+"manhattan-ks": {
+"name": "Manhattan, KS",
+"state": "KS",
+"cost_index": 90.162,
+"median_income": 61270,
+"median_rent": 1056,
+"median_home_value": 210300
+},
+"mankato-mn": {
+"name": "Mankato, MN",
+"state": "MN",
+"cost_index": 90.955,
+"median_income": 73472,
+"median_rent": 978,
+"median_home_value": 239800
+},
+"mansfield-oh": {
+"name": "Mansfield, OH",
+"state": "OH",
+"cost_index": 88.872,
+"median_income": 56557,
+"median_rent": 768,
+"median_home_value": 140500
+},
+"mcallen-edinburg-mission-tx": {
+"name": "McAllen, TX",
+"state": "TX",
+"cost_index": 85.895,
+"median_income": 49371,
+"median_rent": 875,
+"median_home_value": 112700
+},
+"medford-or": {
+"name": "Medford, OR",
+"state": "OR",
+"cost_index": 101.433,
+"median_income": 67690,
+"median_rent": 1208,
+"median_home_value": 369500
+},
+"memphis-tn-ms-ar": {
+"name": "Memphis, TN",
+"state": "TN",
+"cost_index": 92.179,
+"median_income": 62178,
+"median_rent": 1091,
+"median_home_value": 207500,
+"avg_salary": 71912,
+"top_salary": 173990,
+"total_employment": 229680
+},
+"merced-ca": {
+"name": "Merced, CA",
+"state": "CA",
+"cost_index": 98.275,
+"median_income": 64772,
+"median_rent": 1200,
+"median_home_value": 342300
+},
+"miami-fort-lauderdale-west-palm-beach-fl": {
+"name": "Miami, FL",
+"state": "FL",
+"cost_index": 114.155,
+"median_income": 69085,
+"median_rent": 1657,
+"median_home_value": 369500
+},
+"michigan-city-la-porte-in": {
+"name": "Michigan City, IN",
+"state": "IN",
+"cost_index": 91.682,
+"median_income": 66854,
+"median_rent": 860,
+"median_home_value": 166200
+},
+"midland-mi": {
+"name": "Midland, MI",
+"state": "MI",
+"cost_index": 91.921,
+"median_income": 73643,
+"median_rent": 931,
+"median_home_value": 171600
+},
+"midland-tx": {
+"name": "Midland, TX",
+"state": "TX",
+"cost_index": 95.783,
+"median_income": 89345,
+"median_rent": 1366,
+"median_home_value": 270900
+},
+"milwaukee-waukesha-wi": {
+"name": "Milwaukee, WI",
+"state": "WI",
+"cost_index": 96.937,
+"median_income": 72937,
+"median_rent": 1052,
+"median_home_value": 267200
+},
+"minneapolis-st-paul-bloomington-mn-wi": {
+"name": "Minneapolis, MN",
+"state": "MN",
+"cost_index": 104.822,
+"median_income": 94673,
+"median_rent": 1324,
+"median_home_value": 334200,
+"avg_salary": 88249,
+"top_salary": 173630,
+"total_employment": 922230
+},
+"minot-nd": {
+"name": "Minot, ND",
+"state": "ND",
+"cost_index": 87.028,
+"median_income": 78112,
+"median_rent": 999,
+"median_home_value": 238100
+},
+"missoula-mt": {
+"name": "Missoula, MT",
+"state": "MT",
+"cost_index": 96.445,
+"median_income": 66840,
+"median_rent": 1068,
+"median_home_value": 382400
+},
+"mobile-al": {
+"name": "Mobile, AL",
+"state": "AL",
+"cost_index": 88.098,
+"median_income": 55247,
+"median_rent": 970,
+"median_home_value": 163600
+},
+"modesto-ca": {
+"name": "Modesto, CA",
+"state": "CA",
+"cost_index": 104.108,
+"median_income": 74872,
+"median_rent": 1433,
+"median_home_value": 393300
+},
+"monroe-la": {
+"name": "Monroe, LA",
+"state": "LA",
+"cost_index": 83.597,
+"median_income": 47351,
+"median_rent": 859,
+"median_home_value": 158100
+},
+"monroe-mi": {
+"name": "Monroe, MI",
+"state": "MI",
+"cost_index": 93.492,
+"median_income": 72573,
+"median_rent": 996,
+"median_home_value": 202200
+},
+"montgomery-al": {
+"name": "Montgomery, AL",
+"state": "AL",
+"cost_index": 89.682,
+"median_income": 60849,
+"median_rent": 1032,
+"median_home_value": 170300
+},
+"morgantown-wv": {
+"name": "Morgantown, WV",
+"state": "WV",
+"cost_index": 93.323,
+"median_income": 60670,
+"median_rent": 914,
+"median_home_value": 215300
+},
+"morristown-tn": {
+"name": "Morristown, TN",
+"state": "TN",
+"cost_index": 86.364,
+"median_income": 52913,
+"median_rent": 803,
+"median_home_value": 170100
+},
+"mount-vernon-anacortes-wa": {
+"name": "Mount Vernon, WA",
+"state": "WA",
+"cost_index": 102.443,
+"median_income": 82029,
+"median_rent": 1350,
+"median_home_value": 444300
+},
+"muncie-in": {
+"name": "Muncie, IN",
+"state": "IN",
+"cost_index": 88.148,
+"median_income": 53377,
+"median_rent": 841,
+"median_home_value": 120500
+},
+"muskegon-norton-shores-mi": {
+"name": "Muskegon, MI",
+"state": "MI",
+"cost_index": 92.519,
+"median_income": 61347,
+"median_rent": 915,
+"median_home_value": 162300
+},
+"myrtle-beach-conway-north-myrtle-beach-sc": {
+"name": "Myrtle Beach, SC",
+"state": "SC",
+"cost_index": 93.642,
+"median_income": 63296,
+"median_rent": 1138,
+"median_home_value": 247600
+},
+"napa-ca": {
+"name": "Napa, CA",
+"state": "CA",
+"cost_index": 112.554,
+"median_income": 105809,
+"median_rent": 2037,
+"median_home_value": 794500
+},
+"naples-marco-island-fl": {
+"name": "Naples, FL",
+"state": "FL",
+"cost_index": 103.2,
+"median_income": 82011,
+"median_rent": 1599,
+"median_home_value": 443700
+},
+"nashville-davidson-murfreesboro-franklin-tn": {
+"name": "Nashville, TN",
+"state": "TN",
+"cost_index": 96.338,
+"median_income": 79020,
+"median_rent": 1346,
+"median_home_value": 344700,
+"avg_salary": 75980,
+"top_salary": 203770,
+"total_employment": 454090
+},
+"new-haven-ct": {
+"name": "New Haven, CT",
+"state": "CT",
+"cost_index": 104.559,
+"median_income": 81544,
+"median_rent": 1339,
+"median_home_value": 291900
+},
+"new-orleans-metairie-la": {
+"name": "New Orleans, LA",
+"state": "LA",
+"cost_index": 92.597,
+"median_income": 62748,
+"median_rent": 1151,
+"median_home_value": 242600,
+"avg_salary": 72868,
+"top_salary": 163880,
+"total_employment": 171970
+},
+"new-york-newark-jersey-city-ny-nj": {
+"name": "New York, NY",
+"state": "NY",
+"cost_index": 112.563,
+"median_income": 93610,
+"median_rent": 1711,
+"median_home_value": 553500
+},
+"niles-mi": {
+"name": "Niles, MI",
+"state": "MI",
+"cost_index": 92.37,
+"median_income": 60379,
+"median_rent": 885,
+"median_home_value": 193600
+},
+"north-port-bradenton-sarasota-fl": {
+"name": "North Port, FL",
+"state": "FL",
+"cost_index": 102.417,
+"median_income": 74469,
+"median_rent": 1500,
+"median_home_value": 332300
+},
+"norwich-new-london-willimantic-ct": {
+"name": "Norwich, CT",
+"state": "CT",
+"cost_index": 100.445,
+"median_income": 84755,
+"median_rent": 1278,
+"median_home_value": 290400
+},
+"ocala-fl": {
+"name": "Ocala, FL",
+"state": "FL",
+"cost_index": 95.234,
+"median_income": 55265,
+"median_rent": 1092,
+"median_home_value": 194900
+},
+"odessa-tx": {
+"name": "Odessa, TX",
+"state": "TX",
+"cost_index": 93.896,
+"median_income": 70566,
+"median_rent": 1232,
+"median_home_value": 175600
+},
+"ogden-ut": {
+"name": "Ogden, UT",
+"state": "UT",
+"cost_index": 100.349,
+"median_income": 91022,
+"median_rent": 1254,
+"median_home_value": 384700
+},
+"oklahoma-city-ok": {
+"name": "Oklahoma City, OK",
+"state": "OK",
+"cost_index": 90.408,
+"median_income": 67963,
+"median_rent": 1017,
+"median_home_value": 196800,
+"avg_salary": 70858,
+"top_salary": 154420,
+"total_employment": 296260
+},
+"olympia-lacey-tumwater-wa": {
+"name": "Olympia, WA",
+"state": "WA",
+"cost_index": 103.67,
+"median_income": 88895,
+"median_rent": 1499,
+"median_home_value": 411700
+},
+"omaha-ne-ia": {
+"name": "Omaha, NE",
+"state": "NE",
+"cost_index": 91.911,
+"median_income": 79634,
+"median_rent": 1101,
+"median_home_value": 229500
+},
+"orlando-kissimmee-sanford-fl": {
+"name": "Orlando, FL",
+"state": "FL",
+"cost_index": 101.418,
+"median_income": 71551,
+"median_rent": 1530,
+"median_home_value": 308100,
+"avg_salary": 75363,
+"top_salary": 172530,
+"total_employment": 596610
+},
+"oshkosh-neenah-wi": {
+"name": "Oshkosh, WI",
+"state": "WI",
+"cost_index": 92.929,
+"median_income": 70041,
+"median_rent": 880,
+"median_home_value": 190600
+},
+"owensboro-ky": {
+"name": "Owensboro, KY",
+"state": "KY",
+"cost_index": 88.61,
+"median_income": 64366,
+"median_rent": 874,
+"median_home_value": 164600
+},
+"oxnard-thousand-oaks-ventura-ca": {
+"name": "Oxnard, CA",
+"state": "CA",
+"cost_index": 110.534,
+"median_income": 102141,
+"median_rent": 2140,
+"median_home_value": 719100
+},
+"paducah-ky-il": {
+"name": "Paducah, KY",
+"state": "KY",
+"cost_index": 86.084,
+"median_income": 57960,
+"median_rent": 837,
+"median_home_value": 152900
+},
+"palm-bay-melbourne-titusville-fl": {
+"name": "Palm Bay, FL",
+"state": "FL",
+"cost_index": 100.005,
+"median_income": 71308,
+"median_rent": 1327,
+"median_home_value": 278000
+},
+"panama-city-panama-city-beach-fl": {
+"name": "Panama City, FL",
+"state": "FL",
+"cost_index": 97.296,
+"median_income": 65999,
+"median_rent": 1311,
+"median_home_value": 246800
+},
+"parkersburg-vienna-wv": {
+"name": "Parkersburg, WV",
+"state": "WV",
+"cost_index": 87.066,
+"median_income": 54175,
+"median_rent": 776,
+"median_home_value": 138200
+},
+"pensacola-ferry-pass-brent-fl": {
+"name": "Pensacola, FL",
+"state": "FL",
+"cost_index": 97.717,
+"median_income": 69374,
+"median_rent": 1205,
+"median_home_value": 232800
+},
+"peoria-il": {
+"name": "Peoria, IL",
+"state": "IL",
+"cost_index": 91.231,
+"median_income": 67718,
+"median_rent": 881,
+"median_home_value": 151300
+},
+"philadelphia-camden-wilmington-pa-nj-de-md": {
+"name": "Philadelphia, PA",
+"state": "PA",
+"cost_index": 102.554,
+"median_income": 85555,
+"median_rent": 1347,
+"median_home_value": 304900,
+"avg_salary": 86382,
+"top_salary": 168360,
+"total_employment": 1328390
+},
+"phoenix-mesa-chandler-az": {
+"name": "Phoenix, AZ",
+"state": "AZ",
+"cost_index": 103.316,
+"median_income": 79935,
+"median_rent": 1432,
+"median_home_value": 360600,
+"avg_salary": 79981,
+"top_salary": 163220,
+"total_employment": 1063060
+},
+"pinehurst-southern-pines-nc": {
+"name": "Pinehurst, NC",
+"state": "NC",
+"cost_index": 88.336,
+"median_income": 77981,
+"median_rent": 1084,
+"median_home_value": 284000
+},
+"pittsburgh-pa": {
+"name": "Pittsburgh, PA",
+"state": "PA",
+"cost_index": 94.671,
+"median_income": 71283,
+"median_rent": 968,
+"median_home_value": 192400,
+"avg_salary": 75034,
+"top_salary": 144570,
+"total_employment": 498180
+},
+"pittsfield-ma": {
+"name": "Pittsfield, MA",
+"state": "MA",
+"cost_index": 95.106,
+"median_income": 69744,
+"median_rent": 1003,
+"median_home_value": 266400
+},
+"pocatello-id": {
+"name": "Pocatello, ID",
+"state": "ID",
+"cost_index": 88.906,
+"median_income": 60704,
+"median_rent": 816,
+"median_home_value": 229800
+},
+"portland-south-portland-me": {
+"name": "Portland, ME",
+"state": "ME",
+"cost_index": 101.858,
+"median_income": 84095,
+"median_rent": 1282,
+"median_home_value": 344900
+},
+"portland-vancouver-hillsboro-or-wa": {
+"name": "Portland, OR",
+"state": "OR",
+"cost_index": 105.421,
+"median_income": 90451,
+"median_rent": 1577,
+"median_home_value": 484800,
+"avg_salary": 90068,
+"top_salary": 170410,
+"total_employment": 514170
+},
+"port-st-lucie-fl": {
+"name": "Port St. Lucie, FL",
+"state": "FL",
+"cost_index": 100.228,
+"median_income": 69429,
+"median_rent": 1366,
+"median_home_value": 293400
+},
+"prescott-valley-prescott-az": {
+"name": "Prescott Valley, AZ",
+"state": "AZ",
+"cost_index": 98.255,
+"median_income": 62430,
+"median_rent": 1128,
+"median_home_value": 354300
+},
+"providence-warwick-ri-ma": {
+"name": "Providence, RI",
+"state": "RI",
+"cost_index": 101.773,
+"median_income": 81136,
+"median_rent": 1165,
+"median_home_value": 358200,
+"avg_salary": 85338,
+"top_salary": 221720,
+"total_employment": 308610
+},
+"provo-orem-lehi-ut": {
+"name": "Provo, UT",
+"state": "UT",
+"cost_index": 98.232,
+"median_income": 91190,
+"median_rent": 1325,
+"median_home_value": 440800
+},
+"pueblo-co": {
+"name": "Pueblo, CO",
+"state": "CO",
+"cost_index": 91.762,
+"median_income": 59436,
+"median_rent": 967,
+"median_home_value": 238400
+},
+"punta-gorda-fl": {
+"name": "Punta Gorda, FL",
+"state": "FL",
+"cost_index": 100.525,
+"median_income": 62164,
+"median_rent": 1206,
+"median_home_value": 265800
+},
+"racine-mount-pleasant-wi": {
+"name": "Racine, WI",
+"state": "WI",
+"cost_index": 95.961,
+"median_income": 72658,
+"median_rent": 985,
+"median_home_value": 226500
+},
+"raleigh-cary-nc": {
+"name": "Raleigh, NC",
+"state": "NC",
+"cost_index": 98.157,
+"median_income": 91818,
+"median_rent": 1366,
+"median_home_value": 347600,
+"avg_salary": 78202,
+"top_salary": 166250,
+"total_employment": 319230
+},
+"rapid-city-sd": {
+"name": "Rapid City, SD",
+"state": "SD",
+"cost_index": 89.16,
+"median_income": 68363,
+"median_rent": 1014,
+"median_home_value": 248700
+},
+"reading-pa": {
+"name": "Reading, PA",
+"state": "PA",
+"cost_index": 97.06,
+"median_income": 74617,
+"median_rent": 1078,
+"median_home_value": 225700
+},
+"redding-ca": {
+"name": "Redding, CA",
+"state": "CA",
+"cost_index": 100.684,
+"median_income": 68347,
+"median_rent": 1232,
+"median_home_value": 327500
+},
+"reno-nv": {
+"name": "Reno, NV",
+"state": "NV",
+"cost_index": 101.014,
+"median_income": 81576,
+"median_rent": 1400,
+"median_home_value": 458700
+},
+"richmond-va": {
+"name": "Richmond, VA",
+"state": "VA",
+"cost_index": 97.858,
+"median_income": 80877,
+"median_rent": 1307,
+"median_home_value": 299100,
+"avg_salary": 81371,
+"top_salary": 201570,
+"total_employment": 293190
+},
+"riverside-san-bernardino-ontario-ca": {
+"name": "Riverside, CA",
+"state": "CA",
+"cost_index": 106.442,
+"median_income": 81041,
+"median_rent": 1643,
+"median_home_value": 452400,
+"avg_salary": 86917,
+"top_salary": 234800,
+"total_employment": 655230
+},
+"roanoke-va": {
+"name": "Roanoke, VA",
+"state": "VA",
+"cost_index": 93.618,
+"median_income": 65687,
+"median_rent": 949,
+"median_home_value": 221100
+},
+"rochester-mn": {
+"name": "Rochester, MN",
+"state": "MN",
+"cost_index": 90.821,
+"median_income": 86788,
+"median_rent": 1115,
+"median_home_value": 266900
+},
+"rochester-ny": {
+"name": "Rochester, NY",
+"state": "NY",
+"cost_index": 97.035,
+"median_income": 71349,
+"median_rent": 1056,
+"median_home_value": 175300,
+"avg_salary": 79943,
+"top_salary": 215210,
+"total_employment": 211560
+},
+"rockford-il": {
+"name": "Rockford, IL",
+"state": "IL",
+"cost_index": 92.154,
+"median_income": 63834,
+"median_rent": 941,
+"median_home_value": 152800
+},
+"rocky-mount-nc": {
+"name": "Rocky Mount, NC",
+"state": "NC",
+"cost_index": 88.012,
+"median_income": 53553,
+"median_rent": 852,
+"median_home_value": 141800
+},
+"rome-ga": {
+"name": "Rome, GA",
+"state": "GA",
+"cost_index": 90.161,
+"median_income": 57868,
+"median_rent": 890,
+"median_home_value": 174000
+},
+"sacramento-roseville-folsom-ca": {
+"name": "Sacramento, CA",
+"state": "CA",
+"cost_index": 106.67,
+"median_income": 89227,
+"median_rent": 1633,
+"median_home_value": 511500,
+"avg_salary": 94399,
+"top_salary": 189270,
+"total_employment": 495080
+},
+"saginaw-mi": {
+"name": "Saginaw, MI",
+"state": "MI",
+"cost_index": 90.891,
+"median_income": 56579,
+"median_rent": 876,
+"median_home_value": 131100
+},
+"st-cloud-mn": {
+"name": "St. Cloud, MN",
+"state": "MN",
+"cost_index": 87.632,
+"median_income": 72564,
+"median_rent": 956,
+"median_home_value": 238400
+},
+"st-george-ut": {
+"name": "St. George, UT",
+"state": "UT",
+"cost_index": 97.321,
+"median_income": 71976,
+"median_rent": 1321,
+"median_home_value": 417400
+},
+"st-joseph-mo-ks": {
+"name": "St. Joseph, MO",
+"state": "MO",
+"cost_index": 86.382,
+"median_income": 61030,
+"median_rent": 846,
+"median_home_value": 152500
+},
+"st-louis-mo-il": {
+"name": "St. Louis, MO",
+"state": "MO",
+"cost_index": 95.088,
+"median_income": 75316,
+"median_rent": 1033,
+"median_home_value": 219000,
+"avg_salary": 78020,
+"top_salary": 161450,
+"total_employment": 603580
+},
+"salem-or": {
+"name": "Salem, OR",
+"state": "OR",
+"cost_index": 103.649,
+"median_income": 72154,
+"median_rent": 1227,
+"median_home_value": 358700
+},
+"salinas-ca": {
+"name": "Salinas, CA",
+"state": "CA",
+"cost_index": 109.042,
+"median_income": 91043,
+"median_rent": 1873,
+"median_home_value": 683700
+},
+"salisbury-md": {
+"name": "Salisbury, MD",
+"state": "MD",
+"cost_index": 95.617,
+"median_income": 72964,
+"median_rent": 1154,
+"median_home_value": 289000
+},
+"salt-lake-city-murray-ut": {
+"name": "Salt Lake City, UT",
+"state": "UT",
+"cost_index": 100.868,
+"median_income": 90277,
+"median_rent": 1386,
+"median_home_value": 434300
+},
+"san-angelo-tx": {
+"name": "San Angelo, TX",
+"state": "TX",
+"cost_index": 92.453,
+"median_income": 66832,
+"median_rent": 1024,
+"median_home_value": 177100
+},
+"san-antonio-new-braunfels-tx": {
+"name": "San Antonio, TX",
+"state": "TX",
+"cost_index": 94.716,
+"median_income": 70910,
+"median_rent": 1219,
+"median_home_value": 234900,
+"avg_salary": 78264,
+"top_salary": 225650,
+"total_employment": 506590
+},
+"san-diego-chula-vista-carlsbad-ca": {
+"name": "San Diego, CA",
+"state": "CA",
+"cost_index": 111.887,
+"median_income": 96974,
+"median_rent": 2011,
+"median_home_value": 725200,
+"avg_salary": 95628,
+"top_salary": 199590,
+"total_employment": 656160
+},
+"sandusky-oh": {
+"name": "Sandusky, OH",
+"state": "OH",
+"cost_index": 89.281,
+"median_income": 65171,
+"median_rent": 884,
+"median_home_value": 169400
+},
+"san-francisco-oakland-fremont-ca": {
+"name": "San Francisco, CA",
+"state": "CA",
+"cost_index": 115.613,
+"median_income": 129315,
+"median_rent": 2336,
+"median_home_value": 1073300
+},
+"san-jose-sunnyvale-santa-clara-ca": {
+"name": "San Jose, CA",
+"state": "CA",
+"cost_index": 110.423,
+"median_income": 151713,
+"median_rent": 2697,
+"median_home_value": 1282400,
+"avg_salary": 118315,
+"top_salary": 226940,
+"total_employment": 588760
+},
+"san-luis-obispo-paso-robles-ca": {
+"name": "San Luis Obispo, CA",
+"state": "CA",
+"cost_index": 108.596,
+"median_income": 90158,
+"median_rent": 1800,
+"median_home_value": 726700
+},
+"santa-cruz-watsonville-ca": {
+"name": "Santa Cruz, CA",
+"state": "CA",
+"cost_index": 109.896,
+"median_income": 104409,
+"median_rent": 2094,
+"median_home_value": 951300
+},
+"santa-fe-nm": {
+"name": "Santa Fe, NM",
+"state": "NM",
+"cost_index": 98.767,
+"median_income": 70522,
+"median_rent": 1252,
+"median_home_value": 374200
+},
+"santa-maria-santa-barbara-ca": {
+"name": "Santa Maria, CA",
+"state": "CA",
+"cost_index": 108.798,
+"median_income": 92332,
+"median_rent": 1964,
+"median_home_value": 714800
+},
+"santa-rosa-petaluma-ca": {
+"name": "Santa Rosa, CA",
+"state": "CA",
+"cost_index": 107.784,
+"median_income": 99266,
+"median_rent": 2029,
+"median_home_value": 748500
+},
+"savannah-ga": {
+"name": "Savannah, GA",
+"state": "GA",
+"cost_index": 95.206,
+"median_income": 70705,
+"median_rent": 1266,
+"median_home_value": 250000
+},
+"scranton-wilkes-barre-pa": {
+"name": "Scranton, PA",
+"state": "PA",
+"cost_index": 93.556,
+"median_income": 62318,
+"median_rent": 909,
+"median_home_value": 163500
+},
+"seattle-tacoma-bellevue-wa": {
+"name": "Seattle, WA",
+"state": "WA",
+"cost_index": 111.133,
+"median_income": 107206,
+"median_rent": 1850,
+"median_home_value": 628500,
+"avg_salary": 103480,
+"top_salary": 212450,
+"total_employment": 1001660
+},
+"sebastian-vero-beach-west-vero-corridor-fl": {
+"name": "Sebastian, FL",
+"state": "FL",
+"cost_index": 98.308,
+"median_income": 67543,
+"median_rent": 1183,
+"median_home_value": 284400
+},
+"sebring-fl": {
+"name": "Sebring, FL",
+"state": "FL",
+"cost_index": 92.47,
+"median_income": 53679,
+"median_rent": 919,
+"median_home_value": 155900
+},
+"sheboygan-wi": {
+"name": "Sheboygan, WI",
+"state": "WI",
+"cost_index": 94.014,
+"median_income": 68969,
+"median_rent": 863,
+"median_home_value": 198900
+},
+"sherman-denison-tx": {
+"name": "Sherman, TX",
+"state": "TX",
+"cost_index": 93.771,
+"median_income": 66608,
+"median_rent": 1096,
+"median_home_value": 206900
+},
+"shreveport-bossier-city-la": {
+"name": "Shreveport, LA",
+"state": "LA",
+"cost_index": 84.766,
+"median_income": 53053,
+"median_rent": 956,
+"median_home_value": 176700
+},
+"sierra-vista-douglas-az": {
+"name": "Sierra Vista, AZ",
+"state": "AZ",
+"cost_index": 89.243,
+"median_income": 58421,
+"median_rent": 893,
+"median_home_value": 183000
+},
+"sioux-city-ia-ne-sd": {
+"name": "Sioux City, IA",
+"state": "IA",
+"cost_index": 86.454,
+"median_income": 69065,
+"median_rent": 924,
+"median_home_value": 163700
+},
+"sioux-falls-sd-mn": {
+"name": "Sioux Falls, SD",
+"state": "SD",
+"cost_index": 90.631,
+"median_income": 78552,
+"median_rent": 961,
+"median_home_value": 255400
+},
+"slidell-mandeville-covington-la": {
+"name": "Slidell, LA",
+"state": "LA",
+"cost_index": 92.726,
+"median_income": null,
+"median_rent": null,
+"median_home_value": null
+},
+"south-bend-mishawaka-in-mi": {
+"name": "South Bend, IN",
+"state": "IN",
+"cost_index": 92.858,
+"median_income": 62448,
+"median_rent": 958,
+"median_home_value": 168300
+},
+"spartanburg-sc": {
+"name": "Spartanburg, SC",
+"state": "SC",
+"cost_index": 91.051,
+"median_income": 61955,
+"median_rent": 960,
+"median_home_value": 195800
+},
+"spokane-spokane-valley-wa": {
+"name": "Spokane, WA",
+"state": "WA",
+"cost_index": 100.346,
+"median_income": 69752,
+"median_rent": 1112,
+"median_home_value": 326800
+},
+"springfield-il": {
+"name": "Springfield, IL",
+"state": "IL",
+"cost_index": 92.745,
+"median_income": 72445,
+"median_rent": 921,
+"median_home_value": 163400
+},
+"springfield-ma": {
+"name": "Springfield, MA",
+"state": "MA",
+"cost_index": 96.061,
+"median_income": 70547,
+"median_rent": 1095,
+"median_home_value": 278900
+},
+"springfield-mo": {
+"name": "Springfield, MO",
+"state": "MO",
+"cost_index": 88.585,
+"median_income": 58291,
+"median_rent": 881,
+"median_home_value": 191500
+},
+"springfield-oh": {
+"name": "Springfield, OH",
+"state": "OH",
+"cost_index": 90.482,
+"median_income": 58954,
+"median_rent": 820,
+"median_home_value": 144900
+},
+"state-college-pa": {
+"name": "State College, PA",
+"state": "PA",
+"cost_index": 96.762,
+"median_income": 70087,
+"median_rent": 1118,
+"median_home_value": 289800
+},
+"staunton-stuarts-draft-va": {
+"name": "Staunton, VA",
+"state": "VA",
+"cost_index": 91.128,
+"median_income": 67711,
+"median_rent": 974,
+"median_home_value": 250600
+},
+"stockton-lodi-ca": {
+"name": "Stockton, CA",
+"state": "CA",
+"cost_index": 105.089,
+"median_income": 82837,
+"median_rent": 1542,
+"median_home_value": 462000
+},
+"sumter-sc": {
+"name": "Sumter, SC",
+"state": "SC",
+"cost_index": 88.02,
+"median_income": 52942,
+"median_rent": 927,
+"median_home_value": 144500
+},
+"syracuse-ny": {
+"name": "Syracuse, NY",
+"state": "NY",
+"cost_index": 95.742,
+"median_income": 70096,
+"median_rent": 978,
+"median_home_value": 164400
+},
+"tallahassee-fl": {
+"name": "Tallahassee, FL",
+"state": "FL",
+"cost_index": 93.919,
+"median_income": 59757,
+"median_rent": 1127,
+"median_home_value": 230200
+},
+"tampa-st-petersburg-clearwater-fl": {
+"name": "Tampa, FL",
+"state": "FL",
+"cost_index": 100.89,
+"median_income": 67197,
+"median_rent": 1377,
+"median_home_value": 273000,
+"avg_salary": 75737,
+"top_salary": 166630,
+"total_employment": 657540
+},
+"terre-haute-in": {
+"name": "Terre Haute, IN",
+"state": "IN",
+"cost_index": 87.797,
+"median_income": 56449,
+"median_rent": 833,
+"median_home_value": 123700
+},
+"texarkana-tx-ar": {
+"name": "Texarkana, TX",
+"state": "TX",
+"cost_index": 84.012,
+"median_income": 53628,
+"median_rent": 864,
+"median_home_value": 141900
+},
+"toledo-oh": {
+"name": "Toledo, OH",
+"state": "OH",
+"cost_index": 91.455,
+"median_income": 61620,
+"median_rent": 880,
+"median_home_value": 159500
+},
+"topeka-ks": {
+"name": "Topeka, KS",
+"state": "KS",
+"cost_index": 88.82,
+"median_income": 65665,
+"median_rent": 921,
+"median_home_value": 161700
+},
+"traverse-city-mi": {
+"name": "Traverse City, MI",
+"state": "MI",
+"cost_index": 93.372,
+"median_income": 73845,
+"median_rent": 1100,
+"median_home_value": 263500
+},
+"trenton-princeton-nj": {
+"name": "Trenton, NJ",
+"state": "NJ",
+"cost_index": 103.18,
+"median_income": 92697,
+"median_rent": 1454,
+"median_home_value": 327600
+},
+"tucson-az": {
+"name": "Tucson, AZ",
+"state": "AZ",
+"cost_index": 96.896,
+"median_income": 64323,
+"median_rent": 1071,
+"median_home_value": 258300,
+"avg_salary": 73865,
+"top_salary": 225970,
+"total_employment": 172680
+},
+"tulsa-ok": {
+"name": "Tulsa, OK",
+"state": "OK",
+"cost_index": 89.214,
+"median_income": 65784,
+"median_rent": 982,
+"median_home_value": 188400
+},
+"tuscaloosa-al": {
+"name": "Tuscaloosa, AL",
+"state": "AL",
+"cost_index": 87.722,
+"median_income": 58132,
+"median_rent": 944,
+"median_home_value": 201800
+},
+"twin-falls-id": {
+"name": "Twin Falls, ID *",
+"state": "ID",
+"cost_index": 92.108,
+"median_income": 62912,
+"median_rent": 929,
+"median_home_value": 255000
+},
+"tyler-tx": {
+"name": "Tyler, TX",
+"state": "TX",
+"cost_index": 92.156,
+"median_income": 69053,
+"median_rent": 1129,
+"median_home_value": 201400
+},
+"urban-honolulu-hi": {
+"name": "Urban Honolulu, HI",
+"state": "HI",
+"cost_index": 110.961,
+"median_income": 99816,
+"median_rent": 1976,
+"median_home_value": 832200
+},
+"utica-rome-ny": {
+"name": "Utica, NY",
+"state": "NY",
+"cost_index": 92.678,
+"median_income": 66823,
+"median_rent": 868,
+"median_home_value": 151600
+},
+"valdosta-ga": {
+"name": "Valdosta, GA",
+"state": "GA",
+"cost_index": 88.271,
+"median_income": 51216,
+"median_rent": 931,
+"median_home_value": 167400
+},
+"vallejo-ca": {
+"name": "Vallejo, CA",
+"state": "CA",
+"cost_index": 108.479,
+"median_income": 97037,
+"median_rent": 1981,
+"median_home_value": 549100
+},
+"victoria-tx": {
+"name": "Victoria, TX",
+"state": "TX",
+"cost_index": 89.839,
+"median_income": 66105,
+"median_rent": 1080,
+"median_home_value": 180500
+},
+"vineland-nj": {
+"name": "Vineland, NJ",
+"state": "NJ",
+"cost_index": 95.968,
+"median_income": 62310,
+"median_rent": 1202,
+"median_home_value": 192900
+},
+"virginia-beach-chesapeake-norfolk-va-nc": {
+"name": "Virginia Beach, VA",
+"state": "VA",
+"cost_index": 97.941,
+"median_income": 77082,
+"median_rent": 1341,
+"median_home_value": 295900
+},
+"visalia-ca": {
+"name": "Visalia, CA",
+"state": "CA",
+"cost_index": 99.825,
+"median_income": 64474,
+"median_rent": 1137,
+"median_home_value": 280900
+},
+"waco-tx": {
+"name": "Waco, TX",
+"state": "TX",
+"cost_index": 92.55,
+"median_income": 59193,
+"median_rent": 1042,
+"median_home_value": 190100
+},
+"walla-walla-wa": {
+"name": "Walla Walla, WA",
+"state": "WA",
+"cost_index": 98.519,
+"median_income": 66635,
+"median_rent": 1044,
+"median_home_value": 331600
+},
+"warner-robins-ga": {
+"name": "Warner Robins, GA",
+"state": "GA",
+"cost_index": 93.789,
+"median_income": 73788,
+"median_rent": 1059,
+"median_home_value": 186300
+},
+"washington-arlington-alexandria-dc-va-md-wv": {
+"name": "Washington, DC",
+"state": "DC",
+"cost_index": 108.884,
+"median_income": 119803,
+"median_rent": 1904,
+"median_home_value": 513300,
+"avg_salary": 99104,
+"top_salary": 224330,
+"total_employment": 1632980
+},
+"waterbury-shelton-ct": {
+"name": "Waterbury, CT",
+"state": "CT",
+"cost_index": 99.778,
+"median_income": null,
+"median_rent": null,
+"median_home_value": null
+},
+"waterloo-cedar-falls-ia": {
+"name": "Waterloo, IA",
+"state": "IA",
+"cost_index": 87.057,
+"median_income": 66732,
+"median_rent": 916,
+"median_home_value": 176100
+},
+"watertown-fort-drum-ny": {
+"name": "Watertown, NY",
+"state": "NY",
+"cost_index": 87.69,
+"median_income": 62782,
+"median_rent": 1143,
+"median_home_value": 169600
+},
+"wausau-wi": {
+"name": "Wausau, WI",
+"state": "WI",
+"cost_index": 92.651,
+"median_income": 71675,
+"median_rent": 876,
+"median_home_value": 189500
+},
+"weirton-steubenville-wv-oh": {
+"name": "Weirton, WV",
+"state": "WV",
+"cost_index": 89.024,
+"median_income": 54142,
+"median_rent": 720,
+"median_home_value": 114100
+},
+"wenatchee-east-wenatchee-wa": {
+"name": "Wenatchee, WA",
+"state": "WA",
+"cost_index": 103.855,
+"median_income": 75185,
+"median_rent": 1156,
+"median_home_value": 395300
+},
+"wheeling-wv-oh": {
+"name": "Wheeling, WV",
+"state": "WV",
+"cost_index": 88.323,
+"median_income": 56691,
+"median_rent": 765,
+"median_home_value": 136600
+},
+"wichita-ks": {
+"name": "Wichita, KS",
+"state": "KS",
+"cost_index": 88.946,
+"median_income": 66643,
+"median_rent": 931,
+"median_home_value": 173400
+},
+"wichita-falls-tx": {
+"name": "Wichita Falls, TX",
+"state": "TX",
+"cost_index": 89.513,
+"median_income": 60641,
+"median_rent": 929,
+"median_home_value": 131500
+},
+"wildwood-the-villages-fl": {
+"name": "Wildwood, FL",
+"state": "FL",
+"cost_index": 85.424,
+"median_income": null,
+"median_rent": null,
+"median_home_value": null
+},
+"williamsport-pa": {
+"name": "Williamsport, PA",
+"state": "PA",
+"cost_index": 92.35,
+"median_income": 63437,
+"median_rent": 886,
+"median_home_value": 182500
+},
+"wilmington-nc": {
+"name": "Wilmington, NC",
+"state": "NC",
+"cost_index": 96.422,
+"median_income": 68845,
+"median_rent": 1235,
+"median_home_value": 301900
+},
+"winchester-va-wv": {
+"name": "Winchester, VA",
+"state": "VA",
+"cost_index": 96.45,
+"median_income": 79416,
+"median_rent": 1246,
+"median_home_value": 301100
+},
+"winston-salem-nc": {
+"name": "Winston, NC",
+"state": "NC",
+"cost_index": 92.043,
+"median_income": 60145,
+"median_rent": 912,
+"median_home_value": 193800
+},
+"worcester-ma": {
+"name": "Worcester, MA",
+"state": "MA",
+"cost_index": 102.523,
+"median_income": 86708,
+"median_rent": 1241,
+"median_home_value": 347400
+},
+"yakima-wa": {
+"name": "Yakima, WA",
+"state": "WA",
+"cost_index": 95.545,
+"median_income": 64910,
+"median_rent": 1010,
+"median_home_value": 254700
+},
+"york-hanover-pa": {
+"name": "York, PA",
+"state": "PA",
+"cost_index": 96.0,
+"median_income": 79183,
+"median_rent": 1094,
+"median_home_value": 220700
+},
+"youngstown-warren-oh": {
+"name": "Youngstown, OH",
+"state": "OH",
+"cost_index": 87.394,
+"median_income": 54650,
+"median_rent": 754,
+"median_home_value": 130400
+},
+"yuba-city-ca": {
+"name": "Yuba City, CA",
+"state": "CA",
+"cost_index": 104.233,
+"median_income": 70176,
+"median_rent": 1218,
+"median_home_value": 365300
+},
+"yuma-az": {
+"name": "Yuma, AZ",
+"state": "AZ",
+"cost_index": 92.706,
+"median_income": 56439,
+"median_rent": 950,
+"median_home_value": 173500
+},
+"atlanta-sandy-springs-alpharetta-ga": {
+"name": "atlanta-sandy-springs-alpharetta-ga",
+"avg_salary": 81447,
+"top_salary": 168990,
+"total_employment": 1273630
+},
+"austin-round-rock-georgetown-tx": {
+"name": "austin-round-rock-georgetown-tx",
+"avg_salary": 82249,
+"top_salary": 175940,
+"total_employment": 538460
+},
+"birmingham-hoover-al": {
+"name": "birmingham-hoover-al",
+"avg_salary": 73570,
+"top_salary": 236160,
+"total_employment": 215120
+},
+"boston-cambridge-nashua-ma-nh": {
+"name": "boston-cambridge-nashua-ma-nh",
+"avg_salary": 99022,
+"top_salary": 219380,
+"total_employment": 1307950
+},
+"chicago-naperville-elgin-il-in-wi": {
+"name": "chicago-naperville-elgin-il-in-wi",
+"avg_salary": 87420,
+"top_salary": 182830,
+"total_employment": 1948950
+},
+"cleveland-elyria-oh": {
+"name": "cleveland-elyria-oh",
+"avg_salary": 80040,
+"top_salary": 235230,
+"total_employment": 467130
+},
+"denver-aurora-lakewood-co": {
+"name": "denver-aurora-lakewood-co",
+"avg_salary": 91194,
+"top_salary": 183050,
+"total_employment": 741850
+},
+"hartford-east-hartford-middletown-ct": {
+"name": "hartford-east-hartford-middletown-ct",
+"avg_salary": 88205,
+"top_salary": 216840,
+"total_employment": 264740
+},
+"houston-the-woodlands-sugar-land-tx": {
+"name": "houston-the-woodlands-sugar-land-tx",
+"avg_salary": 80239,
+"top_salary": 172810,
+"total_employment": 1389810
+},
+"indianapolis-carmel-anderson-in": {
+"name": "indianapolis-carmel-anderson-in",
+"avg_salary": 77062,
+"top_salary": 156820,
+"total_employment": 457830
+},
+"las-vegas-henderson-paradise-nv": {
+"name": "las-vegas-henderson-paradise-nv",
+"avg_salary": 74800,
+"top_salary": 159930,
+"total_employment": 437950
+},
+"miami-fort-lauderdale-pompano-beach-fl": {
+"name": "miami-fort-lauderdale-pompano-beach-fl",
+"avg_salary": 80098,
+"top_salary": 168160,
+"total_employment": 1231080
+},
+"new-york-newark-jersey-city-ny-nj-pa": {
+"name": "new-york-newark-jersey-city-ny-nj-pa",
+"avg_salary": 100050,
+"top_salary": 216520,
+"total_employment": 4563650
+},
+"salt-lake-city-ut": {
+"name": "salt-lake-city-ut",
+"avg_salary": 76133,
+"top_salary": 148160,
+"total_employment": 356900
+},
+"san-francisco-oakland-berkeley-ca": {
+"name": "san-francisco-oakland-berkeley-ca",
+"avg_salary": 115027,
+"top_salary": 222840,
+"total_employment": 1166450
+}
+},
+"states": {
+"alabama": {
+"name": "Alabama",
+"avg_income": 56781,
+"avg_rent": 851,
+"avg_home_value": 156575,
+"population": 4997443,
+"college_count": 34,
+"avg_grad_earnings": 45542,
+"avg_tuition": 14251
+},
+"alaska": {
+"name": "Alaska",
+"avg_income": 64795,
+"avg_rent": 1069,
+"avg_home_value": 193441,
+"population": 728191,
+"college_count": 2,
+"avg_grad_earnings": 50368,
+"avg_tuition": 8237
+},
+"arizona": {
+"name": "Arizona",
+"avg_income": 66355,
+"avg_rent": 1181,
+"avg_home_value": 275683,
+"population": 7159185,
+"college_count": 26,
+"avg_grad_earnings": 47364,
+"avg_tuition": 17697
+},
+"arkansas": {
+"name": "Arkansas",
+"avg_income": 53083,
+"avg_rent": 753,
+"avg_home_value": 127080,
+"population": 2990713,
+"college_count": 27,
+"avg_grad_earnings": 46511,
+"avg_tuition": 15791
+},
+"california": {
+"name": "California",
+"avg_income": 94282,
+"avg_rent": 1811,
+"avg_home_value": 703383,
+"population": 39239414,
+"college_count": 229,
+"avg_grad_earnings": 56182,
+"avg_tuition": 18619
+},
+"colorado": {
+"name": "Colorado",
+"avg_income": 79985,
+"avg_rent": 1375,
+"avg_home_value": 408390,
+"population": 5747114,
+"college_count": 29,
+"avg_grad_earnings": 53439,
+"avg_tuition": 19517
+},
+"connecticut": {
+"name": "Connecticut",
+"avg_income": 95446,
+"avg_rent": 1373,
+"avg_home_value": 342121,
+"population": 3827943,
+"college_count": 27,
+"avg_grad_earnings": 64442,
+"avg_tuition": 34264
+},
+"delaware": {
+"name": "Delaware",
+"avg_income": 82016,
+"avg_rent": 1284,
+"avg_home_value": 334116,
+"population": 987675,
+"college_count": 6,
+"avg_grad_earnings": 52922,
+"avg_tuition": 12402
+},
+"district-of-columbia": {
+"name": "District of Columbia",
+"avg_income": 137106,
+"avg_rent": 1964,
+"avg_home_value": 656348,
+"population": 1676627,
+"college_count": 11,
+"avg_grad_earnings": 60394,
+"avg_tuition": 34101
+},
+"florida": {
+"name": "Florida",
+"avg_income": 70686,
+"avg_rent": 1415,
+"avg_home_value": 306983,
+"population": 21587237,
+"college_count": 106,
+"avg_grad_earnings": 46873,
+"avg_tuition": 18263
+},
+"georgia": {
+"name": "Georgia",
+"avg_income": 64816,
+"avg_rent": 1030,
+"avg_home_value": 202943,
+"population": 10578389,
+"college_count": 66,
+"avg_grad_earnings": 47209,
+"avg_tuition": 18143
+},
+"hawaii": {
+"name": "Hawaii",
+"avg_income": 87967,
+"avg_rent": 1727,
+"avg_home_value": 678870,
+"population": 1437357,
+"college_count": 13,
+"avg_grad_earnings": 46113,
+"avg_tuition": 10188
+},
+"idaho": {
+"name": "Idaho",
+"avg_income": 66480,
+"avg_rent": 946,
+"avg_home_value": 300383,
+"population": 1843845,
+"college_count": 11,
+"avg_grad_earnings": 45636,
+"avg_tuition": 15788
+},
+"illinois": {
+"name": "Illinois",
+"avg_income": 75793,
+"avg_rent": 985,
+"avg_home_value": 177666,
+"population": 12747547,
+"college_count": 76,
+"avg_grad_earnings": 56052,
+"avg_tuition": 27335
+},
+"indiana": {
+"name": "Indiana",
+"avg_income": 69181,
+"avg_rent": 899,
+"avg_home_value": 165553,
+"population": 6752200,
+"college_count": 49,
+"avg_grad_earnings": 55100,
+"avg_tuition": 28570
+},
+"iowa": {
+"name": "Iowa",
+"avg_income": 72044,
+"avg_rent": 792,
+"avg_home_value": 154182,
+"population": 3177649,
+"college_count": 41,
+"avg_grad_earnings": 52078,
+"avg_tuition": 26779
+},
+"kansas": {
+"name": "Kansas",
+"avg_income": 67474,
+"avg_rent": 844,
+"avg_home_value": 144685,
+"population": 2924834,
+"college_count": 38,
+"avg_grad_earnings": 49076,
+"avg_tuition": 20148
+},
+"kentucky": {
+"name": "Kentucky",
+"avg_income": 55639,
+"avg_rent": 803,
+"avg_home_value": 142166,
+"population": 4468861,
+"college_count": 33,
+"avg_grad_earnings": 46863,
+"avg_tuition": 24145
+},
+"louisiana": {
+"name": "Louisiana",
+"avg_income": 55539,
+"avg_rent": 878,
+"avg_home_value": 164991,
+"population": 4612488,
+"college_count": 29,
+"avg_grad_earnings": 50218,
+"avg_tuition": 16552
+},
+"maine": {
+"name": "Maine",
+"avg_income": 66582,
+"avg_rent": 966,
+"avg_home_value": 230660,
+"population": 1360943,
+"college_count": 25,
+"avg_grad_earnings": 51501,
+"avg_tuition": 24001
+},
+"maryland": {
+"name": "Maryland",
+"avg_income": 108006,
+"avg_rent": 1556,
+"avg_home_value": 405206,
+"population": 6134082,
+"college_count": 44,
+"avg_grad_earnings": 55557,
+"avg_tuition": 19392
+},
+"massachusetts": {
+"name": "Massachusetts",
+"avg_income": 107464,
+"avg_rent": 1564,
+"avg_home_value": 526073,
+"population": 6961640,
+"college_count": 85,
+"avg_grad_earnings": 64207,
+"avg_tuition": 36290
+},
+"michigan": {
+"name": "Michigan",
+"avg_income": 68144,
+"avg_rent": 950,
+"avg_home_value": 190238,
+"population": 10038485,
+"college_count": 68,
+"avg_grad_earnings": 49912,
+"avg_tuition": 19740
+},
+"minnesota": {
+"name": "Minnesota",
+"avg_income": 77411,
+"avg_rent": 954,
+"avg_home_value": 224492,
+"population": 5685748,
+"college_count": 59,
+"avg_grad_earnings": 52997,
+"avg_tuition": 22102
+},
+"mississippi": {
+"name": "Mississippi",
+"avg_income": 48827,
+"avg_rent": 790,
+"avg_home_value": 122190,
+"population": 2920259,
+"college_count": 30,
+"avg_grad_earnings": 37904,
+"avg_tuition": 10083
+},
+"missouri": {
+"name": "Missouri",
+"avg_income": 62777,
+"avg_rent": 825,
+"avg_home_value": 164591,
+"population": 6134153,
+"college_count": 71,
+"avg_grad_earnings": 49859,
+"avg_tuition": 18372
+},
+"montana": {
+"name": "Montana",
+"avg_income": 63780,
+"avg_rent": 846,
+"avg_home_value": 268487,
+"population": 1084366,
+"college_count": 20,
+"avg_grad_earnings": 38817,
+"avg_tuition": 9779
+},
+"nebraska": {
+"name": "Nebraska",
+"avg_income": 70940,
+"avg_rent": 833,
+"avg_home_value": 160217,
+"population": 1951582,
+"college_count": 27,
+"avg_grad_earnings": 52812,
+"avg_tuition": 18445
+},
+"nevada": {
+"name": "Nevada",
+"avg_income": 77928,
+"avg_rent": 1307,
+"avg_home_value": 386086,
+"population": 3095618,
+"college_count": 12,
+"avg_grad_earnings": 55787,
+"avg_tuition": 11952
+},
+"new-hampshire": {
+"name": "New Hampshire",
+"avg_income": 93430,
+"avg_rent": 1302,
+"avg_home_value": 326711,
+"population": 1377499,
+"college_count": 18,
+"avg_grad_earnings": 56047,
+"avg_tuition": 21991
+},
+"new-jersey": {
+"name": "New Jersey",
+"avg_income": 113906,
+"avg_rent": 1726,
+"avg_home_value": 456976,
+"population": 9235549,
+"college_count": 59,
+"avg_grad_earnings": 55187,
+"avg_tuition": 19991
+},
+"new-mexico": {
+"name": "New Mexico",
+"avg_income": 55102,
+"avg_rent": 899,
+"avg_home_value": 188913,
+"population": 2086901,
+"college_count": 21,
+"avg_grad_earnings": 41421,
+"avg_tuition": 7252
+},
+"new-york": {
+"name": "New York",
+"avg_income": 86513,
+"avg_rent": 1330,
+"avg_home_value": 342846,
+"population": 19921546,
+"college_count": 195,
+"avg_grad_earnings": 57623,
+"avg_tuition": 25786
+},
+"north-carolina": {
+"name": "North Carolina",
+"avg_income": 63349,
+"avg_rent": 970,
+"avg_home_value": 214771,
+"population": 10423349,
+"college_count": 91,
+"avg_grad_earnings": 44626,
+"avg_tuition": 17880
+},
+"north-dakota": {
+"name": "North Dakota",
+"avg_income": 78836,
+"avg_rent": 769,
+"avg_home_value": 167347,
+"population": 767984,
+"college_count": 17,
+"avg_grad_earnings": 46564,
+"avg_tuition": 9663
+},
+"ohio": {
+"name": "Ohio",
+"avg_income": 68482,
+"avg_rent": 889,
+"avg_home_value": 170789,
+"population": 11734932,
+"college_count": 112,
+"avg_grad_earnings": 50649,
+"avg_tuition": 22360
+},
+"oklahoma": {
+"name": "Oklahoma",
+"avg_income": 58996,
+"avg_rent": 817,
+"avg_home_value": 134767,
+"population": 3961953,
+"college_count": 41,
+"avg_grad_earnings": 44480,
+"avg_tuition": 13445
+},
+"oregon": {
+"name": "Oregon",
+"avg_income": 71506,
+"avg_rent": 1163,
+"avg_home_value": 373903,
+"population": 4218548,
+"college_count": 33,
+"avg_grad_earnings": 53598,
+"avg_tuition": 22888
+},
+"pennsylvania": {
+"name": "Pennsylvania",
+"avg_income": 73593,
+"avg_rent": 994,
+"avg_home_value": 201201,
+"population": 12920982,
+"college_count": 140,
+"avg_grad_earnings": 58395,
+"avg_tuition": 30478
+},
+"pr": {
+"name": "PR",
+"avg_income": 23694,
+"avg_rent": 552,
+"avg_home_value": 127907,
+"population": 3267392,
+"college_count": 54,
+"avg_grad_earnings": 26938,
+"avg_tuition": 6423
+},
+"rhode-island": {
+"name": "Rhode Island",
+"avg_income": 92091,
+"avg_rent": 1332,
+"avg_home_value": 384367,
+"population": 1083452,
+"college_count": 12,
+"avg_grad_earnings": 65514,
+"avg_tuition": 39308
+},
+"south-carolina": {
+"name": "South Carolina",
+"avg_income": 58636,
+"avg_rent": 964,
+"avg_home_value": 189571,
+"population": 5104056,
+"college_count": 48,
+"avg_grad_earnings": 45516,
+"avg_tuition": 18714
+},
+"south-dakota": {
+"name": "South Dakota",
+"avg_income": 68538,
+"avg_rent": 755,
+"avg_home_value": 157908,
+"population": 877403,
+"college_count": 18,
+"avg_grad_earnings": 46426,
+"avg_tuition": 13598
+},
+"tennessee": {
+"name": "Tennessee",
+"avg_income": 60948,
+"avg_rent": 923,
+"avg_home_value": 201950,
+"population": 6898908,
+"college_count": 57,
+"avg_grad_earnings": 47173,
+"avg_tuition": 20393
+},
+"texas": {
+"name": "Texas",
+"avg_income": 70626,
+"avg_rent": 1125,
+"avg_home_value": 208896,
+"population": 29154234,
+"college_count": 149,
+"avg_grad_earnings": 50192,
+"avg_tuition": 15866
+},
+"utah": {
+"name": "Utah",
+"avg_income": 79091,
+"avg_rent": 1177,
+"avg_home_value": 350587,
+"population": 3276346,
+"college_count": 19,
+"avg_grad_earnings": 51142,
+"avg_tuition": 14490
+},
+"vermont": {
+"name": "Vermont",
+"avg_income": 80807,
+"avg_rent": 1168,
+"avg_home_value": 284209,
+"population": 407459,
+"college_count": 9,
+"avg_grad_earnings": 53192,
+"avg_tuition": 43041
+},
+"virginia": {
+"name": "Virginia",
+"avg_income": 76201,
+"avg_rent": 1173,
+"avg_home_value": 276931,
+"population": 7546448,
+"college_count": 67,
+"avg_grad_earnings": 53701,
+"avg_tuition": 22064
+},
+"washington": {
+"name": "Washington",
+"avg_income": 83457,
+"avg_rent": 1324,
+"avg_home_value": 432758,
+"population": 7668295,
+"college_count": 52,
+"avg_grad_earnings": 53665,
+"avg_tuition": 17256
+},
+"west-virginia": {
+"name": "West Virginia",
+"avg_income": 53891,
+"avg_rent": 771,
+"avg_home_value": 126775,
+"population": 1737853,
+"college_count": 33,
+"avg_grad_earnings": 40330,
+"avg_tuition": 12710
+},
+"wisconsin": {
+"name": "Wisconsin",
+"avg_income": 73190,
+"avg_rent": 889,
+"avg_home_value": 216511,
+"population": 5875000,
+"college_count": 41,
+"avg_grad_earnings": 53556,
+"avg_tuition": 25687
+},
+"wyoming": {
+"name": "Wyoming",
+"avg_income": 75621,
+"avg_rent": 893,
+"avg_home_value": 291188,
+"population": 568533,
+"college_count": 8,
+"avg_grad_earnings": 41561,
+"avg_tuition": 4995
+},
+"xx": {
+"name": "XX",
+"avg_income": 45458,
+"avg_rent": 709,
+"avg_home_value": 103864,
+"population": 106500
+},
+"as": {
+"college_count": 1,
+"avg_grad_earnings": 30087,
+"avg_tuition": 5300
+},
+"fm": {
+"college_count": 1,
+"avg_grad_earnings": 24651,
+"avg_tuition": 5050
+},
+"gu": {
+"college_count": 2,
+"avg_grad_earnings": 31883,
+"avg_tuition": 4762
+},
+"mp": {
+"college_count": 1,
+"avg_grad_earnings": 27836,
+"avg_tuition": 4038
+},
+"pw": {
+"college_count": 1,
+"avg_grad_earnings": 29898,
+"avg_tuition": 3730
+},
+"vi": {
+"college_count": 1,
+"avg_grad_earnings": 38681,
+"avg_tuition": 5957
+}
+},
+"meta": {
+"us_avg_income": 75149,
+"us_avg_rent": 1163,
+"us_avg_home_value": 281900,
+"us_avg_cost_index": 100
+}
+}

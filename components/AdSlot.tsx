@@ -1,11 +1,18 @@
-export function AdSlot({ id, className = '' }: { id: string; className?: string }) {
+export function AdSlot({ id, className = "" }: { id: string; className?: string }) {
   return (
     <div
-      className={`ad-slot my-6 min-h-[90px] bg-slate-50 border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-sm ${className}`}
+      className={`ad-slot my-6 ${className}`}
       data-ad-slot={id}
+      style={{ minHeight: "250px", contain: "layout" }}
     >
-      {/* AdSense will fill this slot. Replace with actual ad code after approval. */}
-      <span className="hidden">Ad</span>
+      <ins
+        className="adsbygoogle block w-full"
+        style={{ display: "block", minHeight: "250px" }}
+        data-ad-client="ca-pub-5724806562146685"
+        data-ad-slot={id}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
     </div>
   );
 }

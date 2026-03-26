@@ -30,7 +30,7 @@ interface Props {
 export async function generateStaticParams() {
   // Generate top pages first; rest will be ISR
   const total = countAllWagePages();
-  const limit = Math.min(total, 10000); // First 10K pages at build time
+  const limit = Math.min(total, 5000); // First 5K pages at build time, rest ISR
   const pages = getWagePagesChunk(0, limit);
   return pages.map((p) => ({ slug: p.occ_slug, location: p.area_slug }));
 }

@@ -41,7 +41,7 @@ export default async function LocationDetailPage({ params }: Props) {
   if (!area) notFound();
 
   const topJobs = getTopPayingJobs(area.area_code, 20);
-  const allJobs = getWagesByArea(area.area_code, 50);
+  // Top 20 already shown above, no need for duplicate large table
   const cityName = shortAreaName(area.area_title);
   const year = getDataYear();
 
@@ -60,7 +60,7 @@ export default async function LocationDetailPage({ params }: Props) {
       <h1 className="text-3xl font-bold mb-2">Salaries in {cityName}</h1>
       <p className="text-slate-500 mb-2">{area.area_title}</p>
       <p className="text-slate-600 mb-6">
-        {year} wage data for {allJobs.length} occupations
+        {year} wage data from Bureau of Labor Statistics
       </p>
 
       {topJobs.length > 0 && (
@@ -74,14 +74,6 @@ export default async function LocationDetailPage({ params }: Props) {
 
       <AdSlot id="location-mid" />
 
-      {allJobs.length > 20 && (
-        <section>
-          <h2 className="text-xl font-bold mb-3">
-            Top 50 Occupations by Salary
-          </h2>
-          <JobComparisonTable rows={allJobs} areaSlug={slug} />
-        </section>
-      )}
 
       <script
         type="application/ld+json"

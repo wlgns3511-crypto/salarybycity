@@ -227,3 +227,7 @@ export function getTopPayingJobs(areaCode: string, limit = 10): WageWithOccupati
     LIMIT ?
   `).all(areaCode, limit) as WageWithOccupation[];
 }
+
+export function getPopularJobs(limit = 10): Occupation[] {
+  return getDb().prepare('SELECT * FROM occupations ORDER BY soc_code LIMIT ?').all(limit) as Occupation[];
+}

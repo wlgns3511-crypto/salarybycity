@@ -123,6 +123,28 @@ export default async function JobDetailPage({ params }: Props) {
         </section>
       )}
 
+      {/* Cross-site links */}
+      <section className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-5">
+        <h2 className="text-lg font-bold mb-3">Explore More</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+          <a href="https://costbycity.com" className="text-blue-600 hover:underline">
+            Cost of Living by City →
+          </a>
+          <a href="https://guidebycity.com" className="text-blue-600 hover:underline">
+            City Guides & Rankings →
+          </a>
+          <a href="https://zippeek.com" className="text-blue-600 hover:underline">
+            ZIP Code Demographics →
+          </a>
+          <a href="https://degreewize.com" className="text-blue-600 hover:underline">
+            College & University Data →
+          </a>
+          <a href="https://calcpeek.com" className="text-blue-600 hover:underline">
+            Salary Calculators →
+          </a>
+        </div>
+      </section>
+
       <AdSlot id="job-detail-bottom" />
 
       {related.length > 0 && (

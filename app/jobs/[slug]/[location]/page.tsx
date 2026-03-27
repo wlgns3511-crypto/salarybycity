@@ -24,6 +24,7 @@ import {
 import { analyzeSalary } from "@/lib/salary-analysis";
 import { getCrossRefInsights } from '@/lib/crossref';
 import { DataFeedback } from "@/components/DataFeedback";
+import { EmbedButton } from "@/components/EmbedButton";
 
 interface Props {
   params: Promise<{ slug: string; location: string }>;
@@ -218,7 +219,9 @@ export default async function JobLocationPage({ params }: Props) {
         </div>
       </section>
 
-      <DataFeedback />
+      <EmbedButton url="https://salarybycity.com" title="Data from SalaryByCity" site="SalaryByCity" siteUrl="https://salarybycity.com" />
+
+          <DataFeedback />
 
           <section className="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-100">
         <h3 className="text-lg font-semibold text-blue-900 mb-3">Planning Your Career Move?</h3>

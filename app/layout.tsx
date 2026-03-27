@@ -82,6 +82,8 @@ export default function RootLayout({
                 <a href="https://calcpeek.com" className="hover:text-blue-600">Calculators</a>
                 <a href="https://tariffpeek.com" className="hover:text-blue-600">HS Codes &amp; Tariffs</a>
                 <a href="https://ingredipeek.com" className="hover:text-blue-600">Food Allergens</a>
+              
+                <a href="https://sunpowerpeek.com" className="hover:text-blue-600">Solar Power</a>
               </div>
             </div>
             <p className="mt-1">

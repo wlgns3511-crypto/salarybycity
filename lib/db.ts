@@ -231,3 +231,21 @@ export function getTopPayingJobs(areaCode: string, limit = 10): WageWithOccupati
 export function getPopularJobs(limit = 10): Occupation[] {
   return getDb().prepare('SELECT * FROM occupations ORDER BY soc_code LIMIT ?').all(limit) as Occupation[];
 }
+
+// --- Comparison queries ---
+
+export interface Comparison {
+  slugA: string;
+  slugB: string;
+  titleA: string;
+  titleB: string;
+  popularity_score: number;
+}
+
+export function getTopComparisons(limit = 5000): Comparison[] {
+  return getDb().prepare("SELECT slugA, slugB, titleA, titleB, popularity_score FROM comparisons ORDER BY popularity_score DESC LIMIT ?").all(limit) as Comparison[];
+}
+
+export function getComparisonBySlugs(slugA: string, slugB: string): Comparison | undefined {
+  return getDb().prepare("SELECT * FROM comparisons WHERE (slugA = ? AND slugB = ?) OR (slugA = ? AND slugB = ?)").get(slugA, slugB, slugB, slugA) as Comparison | undefined;
+}

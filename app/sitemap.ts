@@ -4,6 +4,7 @@ import {
   getAllMetroAreas,
   getWagePagesChunk,
   countAllWagePages,
+  getTopComparisons,
 } from "@/lib/db";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://salarybycity.com";
@@ -46,5 +47,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  return [...staticPages, ...jobPages, ...locationPages, ...jobLocationPages];
+  // Comparison pages (up to 8,256)
+  const comparisons = getTopComparisons(8256);
+  const comparisonPages: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/compare`, changeFrequency: "monthly", priority: 0.8 },
+    ...comparisons.map((c) => ({
+      url: `${SITE_URL}/compare/${c.slugA}-vs-${c.slugB}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  ];
+
+  return [...staticPages, ...jobPages, ...locationPages, ...jobLocationPages, ...comparisonPages];
 }

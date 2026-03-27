@@ -25,6 +25,7 @@ import { analyzeSalary } from "@/lib/salary-analysis";
 import { getCrossRefInsights } from '@/lib/crossref';
 import { DataFeedback } from "@/components/DataFeedback";
 import { EmbedButton } from "@/components/EmbedButton";
+import { FreshnessTag } from "@/components/FreshnessTag";
 
 interface Props {
   params: Promise<{ slug: string; location: string }>;
@@ -219,7 +220,9 @@ export default async function JobLocationPage({ params }: Props) {
         </div>
       </section>
 
-      <EmbedButton url="https://salarybycity.com" title="Data from SalaryByCity" site="SalaryByCity" siteUrl="https://salarybycity.com" />
+      <FreshnessTag source="Bureau of Labor Statistics" />
+
+          <EmbedButton url="https://salarybycity.com" title="Data from SalaryByCity" site="SalaryByCity" siteUrl="https://salarybycity.com" />
 
           <DataFeedback />
 

@@ -23,6 +23,7 @@ import {
 } from "@/lib/schema";
 import { analyzeSalary } from "@/lib/salary-analysis";
 import { getCrossRefInsights } from '@/lib/crossref';
+import { DataFeedback } from "@/components/DataFeedback";
 
 interface Props {
   params: Promise<{ slug: string; location: string }>;
@@ -217,7 +218,9 @@ export default async function JobLocationPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-100">
+      <DataFeedback />
+
+          <section className="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-100">
         <h3 className="text-lg font-semibold text-blue-900 mb-3">Planning Your Career Move?</h3>
         <p className="text-blue-800 text-sm leading-relaxed">
           Considering a move for this role? Compare <a href={`https://costbycity.com/cities/${location}`} className="underline font-medium">cost of living in {cityName}</a> to make an informed decision.

@@ -12,6 +12,7 @@ import { formatSalary, getDataYear } from "@/lib/format";
 import { SalaryOverview, SalaryBar, CityComparisonTable } from "@/components/SalaryTable";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
+import { TakeHomeCalculator } from "@/components/TakeHomeCalculator";
 import { occupationSchema, breadcrumbSchema } from "@/lib/schema";
 
 interface Props {
@@ -114,6 +115,13 @@ export default async function JobDetailPage({ params }: Props) {
         </section>
       )}
 
+
+      {/* Take-Home Calculator */}
+      {nationalWage?.annual_median && (
+        <section className="mt-8">
+          <TakeHomeCalculator defaultSalary={nationalWage.annual_median} />
+        </section>
+      )}
 
       {/* Cross-site links */}
       <section className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-5">

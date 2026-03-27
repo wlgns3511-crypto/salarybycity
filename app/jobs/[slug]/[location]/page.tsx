@@ -15,6 +15,7 @@ import { SalaryOverview, SalaryBar, CityComparisonTable, JobComparisonTable } fr
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { FAQ } from "@/components/FAQ";
 import { AdSlot } from "@/components/AdSlot";
+import { TakeHomeCalculator } from "@/components/TakeHomeCalculator";
 import {
   occupationSchema,
   faqSchema,
@@ -194,6 +195,13 @@ export default async function JobLocationPage({ params }: Props) {
             Highest Paying Jobs in {cityName}
           </h2>
           <JobComparisonTable rows={topJobs} areaSlug={location} />
+        </section>
+      )}
+
+      {/* Take-Home Calculator */}
+      {wage?.annual_median && (
+        <section className="mt-8">
+          <TakeHomeCalculator defaultSalary={wage.annual_median} />
         </section>
       )}
 

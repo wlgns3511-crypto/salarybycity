@@ -30,7 +30,7 @@ function parseSlugs(slugs: string): { slugA: string; slugB: string } | null {
 }
 
 export async function generateStaticParams() {
-  const comparisons = getTopComparisons(5000);
+  const comparisons = getTopComparisons(1000);
   return comparisons.map((c) => ({
     slugs: `${c.slugA}-vs-${c.slugB}`,
   }));

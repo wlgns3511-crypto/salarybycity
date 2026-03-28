@@ -14,6 +14,8 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { TakeHomeCalculator } from "@/components/TakeHomeCalculator";
 import { occupationSchema, breadcrumbSchema } from "@/lib/schema";
+import { SalaryChart } from "@/components/SalaryChart";
+import { CiteButton } from "@/components/CiteButton";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -83,6 +85,10 @@ export default async function JobDetailPage({ params }: Props) {
       <p className="text-slate-500 mb-1">SOC Code: {occ.soc_code}</p>
       <p className="text-slate-500 mb-6">Category: {occ.major_group_title}</p>
 
+      <div className="flex items-center gap-4 mt-4">
+        <CiteButton title={`${occ.title} Salary Data`} url={`https://salarybycity.com/jobs/${slug}`} source="SalaryByCity (BLS Data)" />
+      </div>
+
       {nationalWage && (
         <>
           <div className="bg-blue-50 rounded-lg p-6 mb-6">
@@ -113,6 +119,14 @@ export default async function JobDetailPage({ params }: Props) {
               </div>
             </div>
           </div>
+
+          <SalaryChart
+            p10={nationalWage.annual_p10 ?? 0}
+            p25={nationalWage.annual_p25 ?? 0}
+            median={nationalWage.annual_median ?? 0}
+            p75={nationalWage.annual_p75 ?? 0}
+            p90={nationalWage.annual_p90 ?? 0}
+          />
 
           <h2 className="text-xl font-bold mb-3">National Salary Distribution</h2>
           <SalaryBar wage={nationalWage} />

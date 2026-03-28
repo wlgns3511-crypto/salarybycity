@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   // Using standalone mode for Cloudflare/Vercel deployment
   // SSG pages are pre-rendered at build time via generateStaticParams
   trailingSlash: true,
+  serverExternalPackages: ["better-sqlite3"],
+  outputFileTracingIncludes: {
+    "/**": ["./data/**"],
+  },
   async headers() {
     return [
       {

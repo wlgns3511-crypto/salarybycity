@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import {
   getAllOccupations,
   getAllMetroAreas,
+  getAllStateCodes,
   getWagePagesChunk,
   countAllWagePages,
   getTopComparisons,
@@ -12,6 +13,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://salarybycity.com";
 export default function sitemap(): MetadataRoute.Sitemap {
   const occupations = getAllOccupations();
   const areas = getAllMetroAreas();
+  const stateCodes = getAllStateCodes();
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: SITE_URL, changeFrequency: "monthly", priority: 1.0 },
@@ -58,5 +60,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
-  return [...staticPages, ...jobPages, ...locationPages, ...jobLocationPages, ...comparisonPages];
+  const statePages: MetadataRoute.Sitemap = stateCodes.map((code) => ({
+    url: `${SITE_URL}/states/${code.toLowerCase()}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...jobPages, ...locationPages, ...statePages, ...jobLocationPages, ...comparisonPages];
 }

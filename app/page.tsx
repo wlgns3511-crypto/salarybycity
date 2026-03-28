@@ -1,9 +1,10 @@
-import { getOccupationsByMajorGroup, getAllMetroAreas } from "@/lib/db";
+import { getOccupationsByMajorGroup, getAllMetroAreas, getAllStateCodes } from "@/lib/db";
 import { getDataYear } from "@/lib/format";
 
 export default function Home() {
   const groups = getOccupationsByMajorGroup();
   const areas = getAllMetroAreas();
+  const stateCodes = getAllStateCodes();
   const year = getDataYear();
 
   return (
@@ -45,6 +46,21 @@ export default function Home() {
                 </ul>
               </div>
             ))}
+        </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-4">Browse by State</h2>
+        <div className="flex flex-wrap gap-2">
+          {stateCodes.map((code) => (
+            <a
+              key={code}
+              href={`/states/${code.toLowerCase()}`}
+              className="px-3 py-1 rounded-full text-sm border border-slate-200 hover:bg-blue-50 text-slate-600 hover:text-blue-600"
+            >
+              {code}
+            </a>
+          ))}
         </div>
       </section>
 

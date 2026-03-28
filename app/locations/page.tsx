@@ -31,8 +31,10 @@ export default function LocationsPage() {
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([state, areas]) => (
           <section key={state} className="mb-6">
-            <h2 className="text-lg font-semibold text-blue-800 mb-2">
-              {state}
+            <h2 className="text-lg font-semibold mb-2">
+              <a href={`/states/${state.toLowerCase()}`} className="text-blue-800 hover:text-blue-600 hover:underline">
+                {state}
+              </a>
             </h2>
             <div className="grid gap-1 sm:grid-cols-2 lg:grid-cols-3 text-sm">
               {areas.map((area) => (

@@ -57,6 +57,22 @@ export default async function JobDetailPage({ params }: Props) {
 
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "name": `${occ.title} Salary Data (${year})`,
+            "description": `National and metro-area wage data for ${occ.title} including median salary, salary range, and employment statistics.`,
+            "url": `https://salarybycity.com/jobs/${slug}`,
+            "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+            "creator": { "@type": "Organization", "name": "DataPeek Facts", "url": "https://datapeekfacts.com" },
+            "temporalCoverage": "2024/2026",
+            "distribution": { "@type": "DataDownload", "encodingFormat": "text/html" }
+          })
+        }}
+      />
       <Breadcrumb
         items={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))}
       />

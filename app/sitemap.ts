@@ -7,6 +7,7 @@ import {
   countAllWagePages,
   getTopComparisons,
 } from "@/lib/db";
+import { getAllPosts } from "@/lib/blog";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://salarybycity.com";
 
@@ -14,6 +15,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const occupations = getAllOccupations();
   const areas = getAllMetroAreas();
   const stateCodes = getAllStateCodes();
+
+  const posts = getAllPosts();
+  const blogPages: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/blog/`, changeFrequency: "weekly", priority: 0.8 },
+    ...posts.map((p) => ({
+      url: `${SITE_URL}/blog/${p.slug}/`,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: SITE_URL, changeFrequency: "monthly", priority: 1.0 },
@@ -66,5 +77,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...jobPages, ...locationPages, ...statePages, ...jobLocationPages, ...comparisonPages];
+  return [...staticPages, ...blogPages, ...jobPages, ...locationPages, ...statePages, ...jobLocationPages, ...comparisonPages];
 }

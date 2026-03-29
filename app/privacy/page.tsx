@@ -76,6 +76,24 @@ export default function PrivacyPage() {
         If you have any questions about this privacy policy, please visit our{" "}
         <a href="/contact" className="text-blue-600 hover:underline">Contact page</a>.
       </p>
+
+      <h2 className="text-xl font-semibold mt-8 mb-3">Part of DataPeek Facts Network</h2>
+      <p>
+        SalaryByCity is part of the{" "}
+        <a href="https://datapeekfacts.com" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+          DataPeek Facts
+        </a>{" "}
+        network of free US data tools. For general inquiries about our data network, privacy practices, or partnership
+        opportunities, please contact the DataPeek Facts team at{" "}
+        <a href="mailto:datapeekfacts@gmail.com" className="text-blue-600 hover:underline">
+          datapeekfacts@gmail.com
+        </a>
+        . You can also visit the{" "}
+        <a href="https://datapeekfacts.com/privacy/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+          DataPeek Facts Privacy Policy
+        </a>{" "}
+        for network-wide privacy information.
+      </p>
     </article>
   );
 }

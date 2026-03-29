@@ -247,5 +247,12 @@ export function getTopComparisons(limit = 5000): Comparison[] {
 }
 
 export function getComparisonBySlugs(slugA: string, slugB: string): Comparison | undefined {
-  return getDb().prepare("SELECT * FROM comparisons WHERE (slugA = ? AND slugB = ?) OR (slugA = ? AND slugB = ?)").get(slugA, slugB, slugB, slugA) as Comparison | undefined;
+  const row = getDb().prepare("SELECT * FROM comparisons WHERE (slugA = ? AND slugB = ?) OR (slugA = ? AND slugB = ?)").get(slugA, slugB, slugB, slugA) as Comparison | undefined;
+  if (row) return row;
+
+  // Fallback: dynamically build comparison if both occupations exist
+  const occA = getOccupationBySlug(slugA);
+  const occB = getOccupationBySlug(slugB);
+  if (!occA || !occB) return undefined;
+  return { slugA: occA.slug, slugB: occB.slug, titleA: occA.title, titleB: occB.title, popularity_score: 0 };
 }

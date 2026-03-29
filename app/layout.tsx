@@ -38,6 +38,25 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5724806562146685"
           crossOrigin="anonymous"
         />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "name": "SalaryByCity",
+              "url": "https://salarybycity.com",
+              "description": "Explore salary data for 800+ occupations across 400+ US metro areas. Compare wages, see percentile ranges, and find the highest-paying cities for your career.",
+              "inLanguage": "en-US"
+            },
+            {
+              "@type": "Organization",
+              "name": "SalaryByCity",
+              "url": "https://salarybycity.com",
+              "description": "Explore salary data for 800+ occupations across 400+ US metro areas. Compare wages, see percentile ranges, and find the highest-paying cities for your career.",
+              "sameAs": []
+            }
+          ]
+        }) }} />
       </head>
       <body className={`${inter.className} antialiased bg-white text-slate-900 min-h-screen flex flex-col`}>
         <header className="border-b border-slate-200">

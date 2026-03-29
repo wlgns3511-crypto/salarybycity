@@ -1,0 +1,25 @@
+{
+  "common": {
+    "home": "Inicio",
+    "occupations": "Ocupaciones",
+    "locations": "Ubicaciones",
+    "compare": "Comparar",
+    "about": "Acerca de",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "contact": "Contacto",
+    "langSwitch": "EN",
+    "langSwitchPrefix": ""
+  },
+  "job": {
+    "salary": "Salario",
+    "medianSalary": "Salario Mediano",
+    "averageSalary": "Salario Promedio",
+    "salaryRange": "Rango Salarial",
+    "totalEmployed": "Total de Empleados",
+    "occupation": "Ocupación",
+    "percentile": "Percentil",
+    "highestPaying": "Ciudades con Mayor Salario",
+    "relatedOccupations": "Ocupaciones Relacionadas"
+  }
+}

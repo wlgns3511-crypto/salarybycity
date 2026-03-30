@@ -12,13 +12,14 @@ import { getAllPosts } from "@/lib/blog";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://salarybycity.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
   const occupations = getAllOccupations();
   const areas = getAllMetroAreas();
   const stateCodes = getAllStateCodes();
 
   const posts = getAllPosts();
   const blogPages: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/blog/`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${SITE_URL}/blog/`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     ...posts.map((p) => ({
       url: `${SITE_URL}/blog/${p.slug}/`,
       changeFrequency: "monthly" as const,
@@ -27,9 +28,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const staticPages: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/`, changeFrequency: "monthly", priority: 1.0 },
-    { url: `${SITE_URL}/jobs/`, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${SITE_URL}/locations/`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "monthly", priority: 1.0 },
+    { url: `${SITE_URL}/jobs/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/locations/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
   ];
 
   const jobPages: MetadataRoute.Sitemap = occupations.map((occ) => ({
@@ -63,7 +64,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Comparison pages (up to 8,256)
   const comparisons = getTopComparisons(8256);
   const comparisonPages: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/compare/`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/compare/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     ...comparisons.map((c) => ({
       url: `${SITE_URL}/compare/${c.slugA}-vs-${c.slugB}/`,
       changeFrequency: "monthly" as const,

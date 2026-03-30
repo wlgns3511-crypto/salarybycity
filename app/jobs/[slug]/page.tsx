@@ -17,6 +17,10 @@ import { occupationSchema, breadcrumbSchema } from "@/lib/schema";
 import { SalaryChart } from "@/components/SalaryChart";
 import { CiteButton } from "@/components/CiteButton";
 import { AuthorBox } from "@/components/AuthorBox";
+import { EditorNote } from "@/components/EditorNote";
+import { DidYouKnow } from "@/components/DidYouKnow";
+import { DataSourceBadge } from "@/components/DataSourceBadge";
+import { CrossSiteLinks } from "@/components/CrossSiteLinks";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -75,6 +79,8 @@ export default async function JobDetailPage({ params }: Props) {
             "url": `https://salarybycity.com/jobs/${slug}`,
             "license": "https://creativecommons.org/publicdomain/zero/1.0/",
             "creator": { "@type": "Organization", "name": "DataPeek Facts", "url": "https://datapeekfacts.com" },
+            "author": { "@type": "Organization", "name": "DataPeek" },
+            "dateModified": "2026-03-31",
             "temporalCoverage": "2024/2026",
             "distribution": { "@type": "DataDownload", "encodingFormat": "text/html" }
           })
@@ -89,6 +95,8 @@ export default async function JobDetailPage({ params }: Props) {
       </h1>
       <p className="text-slate-500 mb-1">SOC Code: {occ.soc_code}</p>
       <p className="text-slate-500 mb-6">Category: {occ.major_group_title}</p>
+
+      <EditorNote note={`${occ.title} salary figures reflect ${year} BLS Occupational Employment and Wage Statistics. Actual compensation varies by experience, location, and employer.`} />
 
       <div className="flex items-center gap-4 mt-4">
         <CiteButton title={`${occ.title} Salary Data`} url={`https://salarybycity.com/jobs/${slug}`} source="SalaryByCity (BLS Data)" />
@@ -151,6 +159,8 @@ export default async function JobDetailPage({ params }: Props) {
       )}
 
 
+      <DidYouKnow fact={`The BLS tracks wage data for over 800 occupations across 400+ metro areas, making it the most comprehensive source for U.S. salary benchmarks.`} />
+
       {/* Take-Home Calculator */}
       {nationalWage?.annual_median && (
         <section className="mt-8">
@@ -160,27 +170,7 @@ export default async function JobDetailPage({ params }: Props) {
 
       <AuthorBox />
 
-      {/* Cross-site links */}
-      <section className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-5">
-        <h2 className="text-lg font-bold mb-3">Explore More</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-          <a href="https://costbycity.com" className="text-blue-600 hover:underline">
-            Cost of Living by City →
-          </a>
-          <a href="https://guidebycity.com" className="text-blue-600 hover:underline">
-            City Guides & Rankings →
-          </a>
-          <a href="https://zippeek.com" className="text-blue-600 hover:underline">
-            ZIP Code Demographics →
-          </a>
-          <a href="https://degreewize.com" className="text-blue-600 hover:underline">
-            College & University Data →
-          </a>
-          <a href="https://calcpeek.com" className="text-blue-600 hover:underline">
-            Salary Calculators →
-          </a>
-        </div>
-      </section>
+      <CrossSiteLinks current="SalaryData" />
 
       <AdSlot id="job-detail-bottom" />
 
@@ -201,6 +191,11 @@ export default async function JobDetailPage({ params }: Props) {
           </ul>
         </section>
       )}
+
+      <DataSourceBadge sources={[
+        { name: "BLS", url: "https://www.bls.gov/oes/" },
+        { name: "O*NET", url: "https://www.onetonline.org" },
+      ]} />
 
       {/* JSON-LD */}
       {nationalWage && (

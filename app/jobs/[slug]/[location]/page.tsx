@@ -32,11 +32,12 @@ interface Props {
   params: Promise<{ slug: string; location: string }>;
 }
 
+export const dynamicParams = true;
+export const revalidate = 86400;
+
 export async function generateStaticParams() {
-  // Generate top pages first; rest will be ISR
-  const total = countAllWagePages();
-  const limit = Math.min(total, 1000); // First 1K pages at build, rest ISR on demand
-  const pages = getWagePagesChunk(0, limit);
+  // Pre-build top 500 pages; rest served via ISR
+  const pages = getWagePagesChunk(0, 500);
   return pages.map((p) => ({ slug: p.occ_slug, location: p.area_slug }));
 }
 

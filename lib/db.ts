@@ -232,6 +232,15 @@ export function getPopularJobs(limit = 10): Occupation[] {
   return getDb().prepare('SELECT * FROM occupations ORDER BY soc_code LIMIT ?').all(limit) as Occupation[];
 }
 
+export function searchOccupations(query: string, limit = 30): Occupation[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return getDb().prepare(`
+    SELECT * FROM occupations WHERE LOWER(title) LIKE ? OR LOWER(slug) LIKE ?
+    ORDER BY title LIMIT ?
+  `).all('%' + q + '%', '%' + q + '%', limit) as Occupation[];
+}
+
 // --- Comparison queries ---
 
 export interface Comparison {

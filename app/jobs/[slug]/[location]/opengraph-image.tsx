@@ -10,11 +10,12 @@ import { shortAreaName } from '@/lib/format';
 
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export function generateStaticParams() {
-  const total = countAllWagePages();
-  const limit = Math.min(total, 1000);
-  const pages = getWagePagesChunk(0, limit);
+  // Match parent page subset
+  const pages = getWagePagesChunk(0, 500);
   return pages.map((p) => ({ slug: p.occ_slug, location: p.area_slug }));
 }
 

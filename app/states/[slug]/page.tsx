@@ -4,6 +4,9 @@ import { getAllStateCodes, getAreasByState } from "@/lib/db";
 
 interface Props { params: Promise<{ slug: string }> }
 
+export const dynamicParams = true;
+export const revalidate = 86400;
+
 export function generateStaticParams() {
   return getAllStateCodes().map((s) => ({ slug: s.toLowerCase() }));
 }

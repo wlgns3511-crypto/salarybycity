@@ -16,14 +16,19 @@ import { TakeHomeCalculator } from "@/components/TakeHomeCalculator";
 import { occupationSchema, breadcrumbSchema } from "@/lib/schema";
 import { SalaryChart } from "@/components/SalaryChart";
 import { CiteButton } from "@/components/CiteButton";
+import { AuthorBox } from "@/components/AuthorBox";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamicParams = true;
+export const revalidate = 86400;
+
 export async function generateStaticParams() {
+  // Pre-build top occupations; rest served via ISR
   const occupations = getAllOccupations();
-  return occupations.map((occ) => ({ slug: occ.slug }));
+  return occupations.slice(0, 50).map((occ) => ({ slug: occ.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -152,6 +157,8 @@ export default async function JobDetailPage({ params }: Props) {
           <TakeHomeCalculator defaultSalary={nationalWage.annual_median} />
         </section>
       )}
+
+      <AuthorBox />
 
       {/* Cross-site links */}
       <section className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-5">

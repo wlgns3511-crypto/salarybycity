@@ -9,6 +9,9 @@ function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
+export const dynamicParams = true;
+export const revalidate = 86400;
+
 export function generateStaticParams() {
   return getMajorGroups().map((g) => ({ slug: slugify(g.major_group_title) }));
 }

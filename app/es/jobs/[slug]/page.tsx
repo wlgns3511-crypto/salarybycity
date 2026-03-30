@@ -13,7 +13,8 @@ export const dynamicParams = true;
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return getAllOccupations().slice(0, 300).map((occ) => ({ slug: occ.slug }));
+  // Pre-build top 50; rest served via ISR
+  return getAllOccupations().slice(0, 50).map((occ) => ({ slug: occ.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

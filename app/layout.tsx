@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 const SITE_NAME = "SalaryByCity";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://salarybycity.com";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description:
     "Explore salary data for 800+ occupations across 400+ US metro areas. Compare wages, see percentile ranges, and find the highest-paying cities for your career.",
   metadataBase: new URL(SITE_URL),
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
@@ -31,6 +31,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-BS7CD7RF8N" />
         <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BS7CD7RF8N');` }} />
         <script
@@ -86,6 +88,8 @@ export default function RootLayout({
               <a href="/privacy" className="hover:text-blue-600">Privacy</a>
               {" | "}
               <a href="/terms" className="hover:text-blue-600">Terms</a>
+              {" | "}
+              <a href="/disclaimer" className="hover:text-blue-600">Disclaimer</a>
               {" | "}
               <a href="/contact" className="hover:text-blue-600">Contact</a>
             </p>

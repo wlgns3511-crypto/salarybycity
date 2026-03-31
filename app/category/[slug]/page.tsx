@@ -10,7 +10,7 @@ function slugify(text: string): string {
 }
 
 export const dynamicParams = true;
-export const revalidate = 86400;
+export const revalidate = false;
 
 export function generateStaticParams() {
   return getMajorGroups().map((g) => ({ slug: slugify(g.major_group_title) }));

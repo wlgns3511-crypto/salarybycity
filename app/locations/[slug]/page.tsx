@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const dynamicParams = true;
-export const revalidate = 86400;
+export const revalidate = false;
 
 export async function generateStaticParams() {
   // Pre-build top areas; rest served via ISR

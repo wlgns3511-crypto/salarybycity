@@ -10,7 +10,7 @@ import {
 import { formatSalary, getDataYear } from "@/lib/format";
 
 export const dynamicParams = true;
-export const revalidate = 86400;
+export const revalidate = false;
 
 export function generateStaticParams() {
   // Pre-build top 50; rest served via ISR

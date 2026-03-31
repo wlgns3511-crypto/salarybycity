@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getHighestPayingJobsNational } from "@/lib/db";
 import { formatSalary } from "@/lib/format";
+import { itemListSchema, datasetSchema } from "@/lib/schema";
 
 const RANKINGS: Record<string, { title: string; desc: string }> = {
   'highest-paying-jobs': { title: 'Highest Paying Jobs in the US', desc: 'Top occupations ranked by median annual salary.' },
@@ -10,7 +11,7 @@ const RANKINGS: Record<string, { title: string; desc: string }> = {
 interface Props { params: Promise<{ type: string }> }
 
 export const dynamicParams = true;
-export const revalidate = 86400;
+export const revalidate = false;
 
 export function generateStaticParams() {
   return Object.keys(RANKINGS).map((type) => ({ type }));
@@ -30,8 +31,12 @@ export default async function RankingPage({ params }: Props) {
 
   const jobs = getHighestPayingJobsNational(50);
 
+  const listItems = jobs.map(j => ({ name: j.occ_title, url: `/jobs/${j.occ_slug}` }));
+
   return (
     <div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema(r.title, `/rankings/${type}`, listItems)) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema(r.title, r.desc, `/rankings/${type}`)) }} />
       <nav className="text-sm text-slate-500 mb-4">
         <a href="/" className="hover:underline">Home</a> / <span className="text-slate-800">{r.title}</span>
       </nav>

@@ -33,7 +33,7 @@ interface Props {
 }
 
 export const dynamicParams = true;
-export const revalidate = 86400;
+export const revalidate = false;
 
 export async function generateStaticParams() {
   // Pre-build top 500 pages; rest served via ISR

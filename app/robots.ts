@@ -3,6 +3,6 @@ import type { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [{ userAgent: "*", allow: "/" }],
-    sitemap: "https://www.salarybycity.com/sitemap.xml",
+    sitemap: "https://salarybycity.com/sitemap.xml",
   };
 }

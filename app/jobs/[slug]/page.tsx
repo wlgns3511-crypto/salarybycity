@@ -161,6 +161,12 @@ export default async function JobDetailPage({ params }: Props) {
 
       <DidYouKnow fact={`The BLS tracks wage data for over 800 occupations across 400+ metro areas, making it the most comprehensive source for U.S. salary benchmarks.`} />
 
+      <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 my-6 text-sm">
+        <p className="text-slate-600">
+          <strong>Related:</strong> See how salary relates to <a href="https://costbycity.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">cost of living</a> and <a href="https://fairrentwize.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">rent prices</a> in your area.
+        </p>
+      </div>
+
       {/* Take-Home Calculator */}
       {nationalWage?.annual_median && (
         <section className="mt-8">

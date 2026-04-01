@@ -16,8 +16,10 @@ export const metadata: Metadata = {
     "Explore salary data for 800+ occupations across 400+ US metro areas. Compare wages, see percentile ranges, and find the highest-paying cities for your career.",
   metadataBase: new URL(SITE_URL),
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
+  alternates: { canonical: '/' },
   openGraph: {
     type: "website",
+    url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_US",
   },

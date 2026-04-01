@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Our Methodology",
   description: "Learn how SalaryDataPeek collects, processes, and verifies occupational wage statistics and employment data.",
+  alternates: { canonical: "/methodology/" },
 };
 
 export default function MethodologyPage() {

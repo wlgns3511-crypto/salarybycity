@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { getOccupationsByMajorGroup, getAllMetroAreas, getAllStateCodes } from "@/lib/db";
 import { getDataYear } from "@/lib/format";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   const groups = getOccupationsByMajorGroup();

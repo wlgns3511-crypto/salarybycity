@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "All Locations - Salary Data by Metro Area",
   description:
     "Browse salary data for 400+ US metropolitan areas. Find the highest paying cities and compare wages across locations.",
+  alternates: { canonical: "/locations/" },
 };
 
 export default function LocationsPage() {

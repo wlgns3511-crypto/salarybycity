@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy policy for SalaryByCity.",
+  alternates: { canonical: "/privacy/" },
 };
 
 export default function PrivacyPage() {
@@ -41,7 +42,8 @@ export default function PrivacyPage() {
         other sites on the internet. You may opt out of personalized advertising by visiting{" "}
         <a href="https://www.google.com/settings/ads" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
           Google Ads Settings
-        </a>.
+        </a>{" "}or visit{" "}
+        <a href="https://www.aboutads.info/choices/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.
       </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">Third-Party Services</h2>

@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "All Occupations - Salary Data",
   description:
     "Browse salary data for 800+ occupations in the United States. Find average and median salaries by job title.",
+  alternates: { canonical: "/jobs/" },
 };
 
 export default function JobsPage() {

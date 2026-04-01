@@ -55,6 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${occ.title} Salary in ${cityName} (${year})`,
     description: `The median ${occ.title} salary in ${cityName} is ${formatSalary(wage?.annual_median ?? null)} per year. See full salary range, compare with other cities and occupations.`,
     alternates: { canonical: `/jobs/${slug}/${location}` },
+    openGraph: { url: `/jobs/${slug}/${location}` },
   };
 }
 

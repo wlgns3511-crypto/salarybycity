@@ -46,6 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${occ.title} Salary - ${year} National Wage Data`,
     description: `The median ${occ.title} salary in the US is ${formatSalary(wage?.annual_median ?? null)}. Compare salaries across 400+ metro areas.`,
     alternates: { canonical: `/jobs/${slug}` },
+    openGraph: { url: `/jobs/${slug}` },
   };
 }
 

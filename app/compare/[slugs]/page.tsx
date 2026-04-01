@@ -63,6 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${occA.title} vs ${occB.title} Salary Comparison (${year})`,
     description: `Compare ${occA.title} (${medianA}) and ${occB.title} (${medianB}) salaries side by side. See median, percentile ranges, employment numbers, and top paying cities.`,
     alternates: { canonical: `/compare/${slugs}` },
+    openGraph: { url: `/compare/${slugs}` },
   };
 }
 

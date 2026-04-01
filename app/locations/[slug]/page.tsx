@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `Salaries in ${cityName} - ${year} Wage Data`,
     description: `Explore salary data for all occupations in ${cityName}. Find the highest paying jobs and compare wages.`,
     alternates: { canonical: `/locations/${slug}` },
+    openGraph: { url: `/locations/${slug}` },
   };
 }
 

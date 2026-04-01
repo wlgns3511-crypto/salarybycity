@@ -24,6 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${group.major_group_title} Salaries`,
     description: `Salary data for ${group.major_group_title} occupations. Compare wages across ${group.count} jobs.`,
+    alternates: { canonical: `/category/${slug}` },
+    openGraph: { url: `/category/${slug}` },
   };
 }
 

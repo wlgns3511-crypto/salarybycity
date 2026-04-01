@@ -17,6 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `Salaries in ${state} - All Metro Areas`,
     description: `Browse salary data for all metro areas in ${state}. Compare wages across cities.`,
+    alternates: { canonical: `/states/${slug}` },
+    openGraph: { url: `/states/${slug}` },
   };
 }
 

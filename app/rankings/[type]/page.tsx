@@ -21,7 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { type } = await params;
   const r = RANKINGS[type];
   if (!r) return {};
-  return { title: r.title, description: r.desc };
+  return {
+    title: r.title,
+    description: r.desc,
+    alternates: { canonical: `/rankings/${type}` },
+    openGraph: { url: `/rankings/${type}` },
+  };
 }
 
 export default async function RankingPage({ params }: Props) {

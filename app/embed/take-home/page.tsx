@@ -4,6 +4,7 @@ import { TakeHomeCalculator } from "@/components/TakeHomeCalculator";
 export const metadata: Metadata = {
   title: "Take-Home Pay Calculator - Embeddable Widget",
   robots: "noindex, nofollow",
+  openGraph: { url: "/embed/take-home/" },
 };
 
 export default function EmbedTakeHomePage() {

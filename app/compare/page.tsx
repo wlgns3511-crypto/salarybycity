@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description:
     "Compare salaries between occupations. See side-by-side salary data, percentile ranges, and employment numbers for 800+ US occupations.",
   alternates: { canonical: "/compare" },
+  openGraph: { url: "/compare/" },
 };
 
 export default function CompareIndexPage() {

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "Expert guides on salary negotiation, cost of living adjustments, remote work pay, and career advancement strategies — backed by real wage data.",
   alternates: { canonical: "/blog/" },
+  openGraph: { url: "/blog/" },
 };
 
 function formatDate(dateStr: string) {

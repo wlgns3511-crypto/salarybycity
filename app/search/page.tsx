@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Search Salary Data — Occupation Wages & Pay by City",
   description: "Search salary data for 800+ occupations. Find median wages, salary ranges, and highest-paying cities.",
   alternates: { canonical: "/search" },
+  openGraph: { url: "/search/" },
 };
 
 interface Props {

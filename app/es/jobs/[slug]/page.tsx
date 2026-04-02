@@ -9,7 +9,7 @@ import {
 } from "@/lib/db";
 import { formatSalary, getDataYear } from "@/lib/format";
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = false;
 
 export function generateStaticParams() {

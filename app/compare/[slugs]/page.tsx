@@ -37,7 +37,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

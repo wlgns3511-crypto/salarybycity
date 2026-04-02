@@ -10,8 +10,8 @@ import { shortAreaName } from '@/lib/format';
 
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-export const dynamicParams = true;
-export const revalidate = 86400;
+export const dynamicParams = false;
+export const revalidate = false;
 
 export function generateStaticParams() {
   // Match parent page subset

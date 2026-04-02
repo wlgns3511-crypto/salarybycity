@@ -22,7 +22,7 @@ export const revalidate = false;
 export async function generateStaticParams() {
   // Pre-build top areas; rest served via ISR
   const areas = getAllMetroAreas();
-  return areas.slice(0, 50).map((a) => ({ slug: a.slug }));
+  return areas.slice(0, 300).map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

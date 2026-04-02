@@ -37,7 +37,7 @@ export const revalidate = false;
 
 export async function generateStaticParams() {
   // Pre-build top 500 pages; rest served via ISR
-  const pages = getWagePagesChunk(0, 500);
+  const pages = getWagePagesChunk(0, 1500);
   return pages.map((p) => ({ slug: p.occ_slug, location: p.area_slug }));
 }
 

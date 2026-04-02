@@ -34,7 +34,7 @@ export const revalidate = false;
 export async function generateStaticParams() {
   // Pre-build top occupations; rest served via ISR
   const occupations = getAllOccupations();
-  return occupations.slice(0, 50).map((occ) => ({ slug: occ.slug }));
+  return occupations.slice(0, 300).map((occ) => ({ slug: occ.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

@@ -7,6 +7,7 @@ import {
   getTopPayingCities,
   getRelatedOccupations,
   getWagesByOccupation,
+  getHighestPayingJobsNational,
 } from "@/lib/db";
 import { formatSalary, getDataYear } from "@/lib/format";
 import { SalaryOverview, SalaryBar, CityComparisonTable } from "@/components/SalaryTable";
@@ -21,6 +22,7 @@ import { EditorNote } from "@/components/EditorNote";
 import { DidYouKnow } from "@/components/DidYouKnow";
 import { DataSourceBadge } from "@/components/DataSourceBadge";
 import { CrossSiteLinks } from "@/components/CrossSiteLinks";
+import { SalaryGuessGame } from "@/components/SalaryGuessGame";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -59,6 +61,10 @@ export default async function JobDetailPage({ params }: Props) {
   const topCities = getTopPayingCities(occ.soc_code, 20);
   // Removed allCityWages to stay under Vercel body size limit
   const related = getRelatedOccupations(occ.major_group, occ.soc_code, 8);
+  const quizJobs = getHighestPayingJobsNational(30)
+    .filter(j => j.annual_median && j.occ_slug !== slug)
+    .slice(0, 20)
+    .map(j => ({ title: j.occ_title, slug: j.occ_slug, median: j.annual_median! }));
   const year = getDataYear();
 
   const breadcrumbs = [
@@ -149,6 +155,8 @@ export default async function JobDetailPage({ params }: Props) {
       )}
 
       <AdSlot id="job-detail-mid" />
+
+      {quizJobs.length >= 5 && <SalaryGuessGame jobs={quizJobs} />}
 
       {topCities.length > 0 && (
         <section className="mt-8">

@@ -9,8 +9,8 @@ function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-export const dynamicParams = false;
-export const revalidate = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   return getMajorGroups().map((g) => ({ slug: slugify(g.major_group_title) }));
@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${group.major_group_title} Salaries`,
     description: `Salary data for ${group.major_group_title} occupations. Compare wages across ${group.count} jobs.`,
-    alternates: { canonical: `/category/${slug}` },
-    openGraph: { url: `/category/${slug}` },
+    alternates: { canonical: `/category/${slug}/` },
+    openGraph: { url: `/category/${slug}/` },
   };
 }
 
@@ -40,7 +40,7 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <div>
       <nav className="text-sm text-slate-500 mb-4">
-        <a href="/" className="hover:underline">Home</a> / <a href="/jobs" className="hover:underline">Occupations</a> / <span className="text-slate-800">{group.major_group_title}</span>
+        <a href="/" className="hover:underline">Home</a> / <a href="/jobs/" className="hover:underline">Occupations</a> / <span className="text-slate-800">{group.major_group_title}</span>
       </nav>
 
       <h1 className="text-3xl font-bold mb-2">{group.major_group_title} Salaries</h1>

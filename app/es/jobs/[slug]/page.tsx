@@ -9,12 +9,12 @@ import {
 } from "@/lib/db";
 import { formatSalary, getDataYear } from "@/lib/format";
 
-export const dynamicParams = false;
-export const revalidate = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   // Pre-build top 50; rest served via ISR
-  return getAllOccupations().slice(0, 50).map((occ) => ({ slug: occ.slug }));
+  return getAllOccupations().map((occ) => ({ slug: occ.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -27,10 +27,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `Salario de ${occ.title} - Datos Salariales ${year}`,
     description: `El salario mediano de ${occ.title} en EE.UU. es ${formatSalary(wage?.annual_median ?? null)}. Compare salarios en 400+ ciudades.`,
     alternates: {
-      canonical: `/es/jobs/${slug}`,
+      canonical: `/es/jobs/${slug}/`,
       languages: { en: `/jobs/${slug}`, es: `/es/jobs/${slug}`, "x-default": `/jobs/${slug}` },
     },
-    openGraph: { url: `/es/jobs/${slug}` },
+    openGraph: { url: `/es/jobs/${slug}/` },
   };
 }
 

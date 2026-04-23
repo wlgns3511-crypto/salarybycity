@@ -14,7 +14,8 @@ import { SalaryOverview, SalaryBar, CityComparisonTable } from "@/components/Sal
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { TakeHomeCalculator } from "@/components/TakeHomeCalculator";
-import { occupationSchema, breadcrumbSchema } from "@/lib/schema";
+import { occupationSchema, breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { generateAutoFaqs } from "@/lib/auto-faqs";
 import { SalaryChart } from "@/components/SalaryChart";
 import { CiteButton } from "@/components/CiteButton";
 import { AuthorBox } from "@/components/AuthorBox";
@@ -22,19 +23,26 @@ import { EditorNote } from "@/components/EditorNote";
 import { DidYouKnow } from "@/components/DidYouKnow";
 import { DataSourceBadge } from "@/components/DataSourceBadge";
 import { CrossSiteLinks } from "@/components/CrossSiteLinks";
+import { FeedbackButton } from "@/components/FeedbackButton";
 import { SalaryGuessGame } from "@/components/SalaryGuessGame";
+import { RelatedEntities } from "@/components/upgrades/RelatedEntities";
+import { TableOfContents } from '@/components/upgrades/TableOfContents';
+import { SalaryPercentile } from "@/components/tools/SalaryPercentile";
+import { InsightBlock } from "@/components/upgrades/InsightBlock";
+import { getJobInsights } from "@/lib/insights";
+import { DB_UPDATED } from "@/lib/authorship";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = false;
-export const revalidate = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
   // Pre-build top occupations; rest served via ISR
   const occupations = getAllOccupations();
-  return occupations.slice(0, 300).map((occ) => ({ slug: occ.slug }));
+  return occupations.map((occ) => ({ slug: occ.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -47,8 +55,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${occ.title} Salary - ${year} National Wage Data`,
     description: `The median ${occ.title} salary in the US is ${formatSalary(wage?.annual_median ?? null)}. Compare salaries across 400+ metro areas.`,
-    alternates: { canonical: `/jobs/${slug}` },
-    openGraph: { url: `/jobs/${slug}` },
+    alternates: { canonical: `/jobs/${slug}/` },
+    openGraph: { url: `/jobs/${slug}/` },
   };
 }
 
@@ -63,14 +71,15 @@ export default async function JobDetailPage({ params }: Props) {
   const related = getRelatedOccupations(occ.major_group, occ.soc_code, 8);
   const quizJobs = getHighestPayingJobsNational(30)
     .filter(j => j.annual_median && j.occ_slug !== slug)
-    .slice(0, 20)
+    
     .map(j => ({ title: j.occ_title, slug: j.occ_slug, median: j.annual_median! }));
   const year = getDataYear();
+  const faqs = nationalWage ? generateAutoFaqs(occ, nationalWage, topCities) : [];
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
-    { name: "Occupations", url: "/jobs" },
-    { name: occ.title, url: `/jobs/${slug}` },
+    { name: "Occupations", url: "/jobs/" },
+    { name: occ.title, url: `/jobs/${slug}/` },
   ];
 
   return (
@@ -83,13 +92,13 @@ export default async function JobDetailPage({ params }: Props) {
             "@type": "Dataset",
             "name": `${occ.title} Salary Data (${year})`,
             "description": `National and metro-area wage data for ${occ.title} including median salary, salary range, and employment statistics.`,
-            "url": `https://salarybycity.com/jobs/${slug}`,
+            "url": `https://salarybycity.com/jobs/${slug}/`,
             "license": "https://creativecommons.org/publicdomain/zero/1.0/",
             "creator": { "@type": "Organization", "name": "DataPeek Facts", "url": "https://datapeekfacts.com" },
             "author": { "@type": "Organization", "name": "DataPeek" },
-            "dateModified": "2026-03-31",
-            "temporalCoverage": "2024/2026",
-            "distribution": { "@type": "DataDownload", "encodingFormat": "text/html" }
+            "dateModified": DB_UPDATED,
+            "temporalCoverage": `${year}/${year}`,
+            "distribution": { "@type": "DataDownload", "encodingFormat": "text/html", "contentUrl": `https://salarybycity.com/jobs/${slug}/` }
           })
         }}
       />
@@ -103,10 +112,19 @@ export default async function JobDetailPage({ params }: Props) {
       <p className="text-slate-500 mb-1">SOC Code: {occ.soc_code}</p>
       <p className="text-slate-500 mb-6">Category: {occ.major_group_title}</p>
 
+      <TableOfContents />
+
+      {nationalWage && (
+        <InsightBlock
+          entityName={occ.title}
+          insights={getJobInsights(occ.title, nationalWage, topCities)}
+        />
+      )}
+
       <EditorNote note={`${occ.title} salary figures reflect ${year} BLS Occupational Employment and Wage Statistics. Actual compensation varies by experience, location, and employer.`} />
 
       <div className="flex items-center gap-4 mt-4">
-        <CiteButton title={`${occ.title} Salary Data`} url={`https://salarybycity.com/jobs/${slug}`} source="SalaryByCity (BLS Data)" />
+        <CiteButton title={`${occ.title} Salary Data`} url={`https://salarybycity.com/jobs/${slug}/`} source="SalaryByCity (BLS Data)" />
       </div>
 
       {nationalWage && (
@@ -158,6 +176,18 @@ export default async function JobDetailPage({ params }: Props) {
 
       {quizJobs.length >= 5 && <SalaryGuessGame jobs={quizJobs} />}
 
+      {nationalWage?.annual_median && nationalWage.annual_p10 && nationalWage.annual_p25 && nationalWage.annual_p75 && nationalWage.annual_p90 && (
+        <SalaryPercentile
+          occupationTitle={occ.title}
+          medianSalary={nationalWage.annual_median}
+          p10={nationalWage.annual_p10}
+          p25={nationalWage.annual_p25}
+          p75={nationalWage.annual_p75}
+          p90={nationalWage.annual_p90}
+          nationalMedian={46310}
+        />
+      )}
+
       {topCities.length > 0 && (
         <section className="mt-8">
           <h2 className="text-xl font-bold mb-3">
@@ -189,28 +219,36 @@ export default async function JobDetailPage({ params }: Props) {
 
       <AdSlot id="job-detail-bottom" />
 
-      {related.length > 0 && (
-        <section className="mt-8">
-          <h2 className="text-xl font-bold mb-3">Related Occupations</h2>
-          <ul className="grid gap-2 sm:grid-cols-2 text-sm">
-            {related.map((r) => (
-              <li key={r.soc_code}>
-                <a
-                  href={`/jobs/${r.slug}`}
-                  className="text-blue-600 hover:underline"
-                >
-                  {r.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <RelatedEntities
+        entityName={occ.title}
+        heading={`Related Occupations`}
+        items={related.map((r) => ({
+          name: r.title,
+          href: `/jobs/${r.slug}/`,
+        }))}
+      />
+
+      <FeedbackButton pageId={slug} />
 
       <DataSourceBadge sources={[
         { name: "BLS", url: "https://www.bls.gov/oes/" },
         { name: "O*NET", url: "https://www.onetonline.org" },
       ]} />
+
+      {/* FAQ Section */}
+      {faqs.length > 0 && (
+        <section className="mt-8 mb-8">
+          <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqs.map((faq) => (
+              <details key={faq.question} className="border border-slate-200 rounded-lg">
+                <summary className="px-4 py-3 font-medium cursor-pointer hover:bg-slate-50">{faq.question}</summary>
+                <p className="px-4 pb-3 text-sm text-slate-600">{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* JSON-LD */}
       {nationalWage && (
@@ -230,6 +268,12 @@ export default async function JobDetailPage({ params }: Props) {
             }}
           />
         </>
+      )}
+      {faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
+        />
       )}
     </div>
   );

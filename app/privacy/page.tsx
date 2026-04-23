@@ -77,7 +77,7 @@ export default function PrivacyPage() {
       <h2 className="text-xl font-semibold mt-8 mb-3">Contact Us</h2>
       <p>
         If you have any questions about this privacy policy, please visit our{" "}
-        <a href="/contact" className="text-blue-600 hover:underline">Contact page</a>.
+        <a href="/contact/" className="text-blue-600 hover:underline">Contact page</a>.
       </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">Part of DataPeek Facts Network</h2>

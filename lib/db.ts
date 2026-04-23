@@ -178,6 +178,17 @@ export function getHighestPayingJobsNational(limit = 20): WageWithOccupation[] {
   `).all(limit) as WageWithOccupation[];
 }
 
+export function getHighestPayingJobsByState(stateCode: string, limit = 50): WageWithOccupation[] {
+  return getDb().prepare(`
+    SELECT w.*, o.title as occ_title, o.slug as occ_slug
+    FROM wages w
+    JOIN occupations o ON w.soc_code = o.soc_code
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE a.area_type = 'S' AND a.state = ? AND w.annual_median IS NOT NULL
+    ORDER BY w.annual_median DESC LIMIT ?
+  `).all(stateCode, limit) as WageWithOccupation[];
+}
+
 export function getJobsByMajorGroup(majorGroup: string): WageWithOccupation[] {
   return getDb().prepare(`
     SELECT w.*, o.title as occ_title, o.slug as occ_slug
@@ -232,6 +243,56 @@ export function getPopularJobs(limit = 10): Occupation[] {
   return getDb().prepare('SELECT * FROM occupations ORDER BY soc_code LIMIT ?').all(limit) as Occupation[];
 }
 
+export interface StateWageSummary {
+  total_employment: number;
+  avg_median_salary: number;
+  top_median: number;
+  bottom_median: number;
+  occ_count: number;
+}
+
+export function getStateWageSummary(stateCode: string): StateWageSummary | undefined {
+  return getDb().prepare(`
+    SELECT
+      SUM(w.employment) as total_employment,
+      ROUND(AVG(w.annual_median)) as avg_median_salary,
+      MAX(w.annual_median) as top_median,
+      MIN(w.annual_median) as bottom_median,
+      COUNT(*) as occ_count
+    FROM wages w
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE a.area_type = 'S' AND a.state = ? AND w.annual_median IS NOT NULL
+  `).get(stateCode) as StateWageSummary | undefined;
+}
+
+export function getNationalWageSummary(): StateWageSummary | undefined {
+  return getDb().prepare(`
+    SELECT
+      SUM(w.employment) as total_employment,
+      ROUND(AVG(w.annual_median)) as avg_median_salary,
+      MAX(w.annual_median) as top_median,
+      MIN(w.annual_median) as bottom_median,
+      COUNT(*) as occ_count
+    FROM wages w
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE a.area_type = 'N' AND w.annual_median IS NOT NULL
+  `).get() as StateWageSummary | undefined;
+}
+
+export function getStateTopOccupationsWithNational(stateCode: string, limit = 20): (WageWithOccupation & { national_median: number | null })[] {
+  return getDb().prepare(`
+    SELECT w.*, o.title as occ_title, o.slug as occ_slug,
+      (SELECT w2.annual_median FROM wages w2 JOIN areas a2 ON w2.area_code = a2.area_code
+       WHERE a2.area_type = 'N' AND w2.soc_code = w.soc_code
+       ORDER BY w2.year DESC LIMIT 1) as national_median
+    FROM wages w
+    JOIN occupations o ON w.soc_code = o.soc_code
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE a.area_type = 'S' AND a.state = ? AND w.annual_median IS NOT NULL
+    ORDER BY w.annual_median DESC LIMIT ?
+  `).all(stateCode, limit) as (WageWithOccupation & { national_median: number | null })[];
+}
+
 export function searchOccupations(query: string, limit = 30): Occupation[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
@@ -249,6 +310,10 @@ export interface Comparison {
   titleA: string;
   titleB: string;
   popularity_score: number;
+}
+
+export function getAllComparisons(): Comparison[] {
+  return getDb().prepare("SELECT slugA, slugB, titleA, titleB, popularity_score FROM comparisons ORDER BY popularity_score DESC").all() as Comparison[];
 }
 
 export function getTopComparisons(limit = 5000): Comparison[] {

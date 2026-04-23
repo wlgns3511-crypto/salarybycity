@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import {
-  getTopComparisons,
+  getAllComparisons,
   getComparisonBySlugs,
   getOccupationBySlug,
   getNationalWage,
@@ -29,16 +29,23 @@ function parseSlugs(slugs: string): { slugA: string; slugB: string } | null {
   return { slugA, slugB };
 }
 
+const STATIC_COMPARISON_SLUGS = getAllComparisons().slice(0, 100).map((c) => [c.slugA, c.slugB].sort().join("-vs-"));
+const STATIC_COMPARISON_SET = new Set(STATIC_COMPARISON_SLUGS);
+
+function toCanonicalComparisonSlug(slugA: string, slugB: string): string {
+  return [slugA, slugB].sort().join("-vs-");
+}
+
 export async function generateStaticParams() {
-  // Pre-build top 500 comparisons; rest served via ISR
-  const comparisons = getTopComparisons(500);
-  return comparisons.map((c) => ({
-    slugs: `${c.slugA}-vs-${c.slugB}`,
-  }));
+  return STATIC_COMPARISON_SLUGS.flatMap((slugs) => {
+    const parsed = parseSlugs(slugs);
+    if (!parsed) return [];
+    return [{ slugs }, { slugs: `${parsed.slugB}-vs-${parsed.slugA}` }];
+  });
 }
 
 export const dynamicParams = false;
-export const revalidate = false;
+export const revalidate = 86400;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slugs } = await params;
@@ -47,6 +54,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const comp = getComparisonBySlugs(parsed.slugA, parsed.slugB);
   if (!comp) return {};
+  const canonicalSlugs = toCanonicalComparisonSlug(comp.slugA, comp.slugB);
+  if (!STATIC_COMPARISON_SET.has(canonicalSlugs)) return {};
 
   const occA = getOccupationBySlug(comp.slugA);
   const occB = getOccupationBySlug(comp.slugB);
@@ -62,8 +71,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${occA.title} vs ${occB.title} Salary Comparison (${year})`,
     description: `Compare ${occA.title} (${medianA}) and ${occB.title} (${medianB}) salaries side by side. See median, percentile ranges, employment numbers, and top paying cities.`,
-    alternates: { canonical: `/compare/${slugs}` },
-    openGraph: { url: `/compare/${slugs}` },
+    alternates: { canonical: `/compare/${canonicalSlugs}/` },
+    openGraph: { url: `/compare/${canonicalSlugs}/` },
   };
 }
 
@@ -142,6 +151,11 @@ export default async function ComparePage({ params }: Props) {
 
   const comp = getComparisonBySlugs(parsed.slugA, parsed.slugB);
   if (!comp) notFound();
+  const canonicalSlugs = toCanonicalComparisonSlug(comp.slugA, comp.slugB);
+  if (!STATIC_COMPARISON_SET.has(canonicalSlugs)) notFound();
+  if (canonicalSlugs !== slugs) {
+    redirect(`/compare/${canonicalSlugs}/`);
+  }
 
   const occA = getOccupationBySlug(comp.slugA);
   const occB = getOccupationBySlug(comp.slugB);
@@ -174,8 +188,8 @@ export default async function ComparePage({ params }: Props) {
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
-    { name: "Compare", url: "/compare" },
-    { name: `${occA.title} vs ${occB.title}`, url: `/compare/${slugs}` },
+    { name: "Compare", url: "/compare/" },
+    { name: `${occA.title} vs ${occB.title}`, url: `/compare/${canonicalSlugs}/` },
   ];
 
   // FAQ items

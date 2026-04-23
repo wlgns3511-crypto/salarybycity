@@ -23,7 +23,6 @@ import {
   generateFAQs,
 } from "@/lib/schema";
 import { analyzeSalary } from "@/lib/salary-analysis";
-import { getCrossRefInsights } from '@/lib/crossref';
 import { DataFeedback } from "@/components/DataFeedback";
 import { EmbedButton } from "@/components/EmbedButton";
 import { FreshnessTag } from "@/components/FreshnessTag";
@@ -32,13 +31,19 @@ interface Props {
   params: Promise<{ slug: string; location: string }>;
 }
 
-export const dynamicParams = false;
-export const revalidate = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
-  // Pre-build top 500 pages; rest served via ISR
-  const pages = getWagePagesChunk(0, 1500);
-  return pages.map((p) => ({ slug: p.occ_slug, location: p.area_slug }));
+  const total = countAllWagePages();
+  const params: { slug: string; location: string }[] = [];
+  for (let offset = 0; offset < total; offset += 5000) {
+    const pages = getWagePagesChunk(offset, 5000);
+    for (const p of pages) {
+      params.push({ slug: p.occ_slug, location: p.area_slug });
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -50,12 +55,44 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const wage = getWage(occ.soc_code, area.area_code);
   const year = getDataYear();
   const cityName = shortAreaName(area.area_title);
+  const median = wage?.annual_median ?? null;
+  const p25 = wage?.annual_p25 ?? null;
+  const p75 = wage?.annual_p75 ?? null;
+  const natl = getNationalWage(occ.soc_code);
+
+  // Peer: same occupation, different city with meaningfully different pay
+  let peerCityName: string | null = null;
+  let peerMedian: number | null = null;
+  if (median != null) {
+    const peers = getTopPayingCities(occ.soc_code, 30).filter(p => p.area_slug !== location && p.annual_median != null);
+    const peer = peers.find(p => {
+      const d = Math.abs(((p.annual_median as number) - median) / median);
+      return d > 0.05 && d < 0.8;
+    }) || peers[0];
+    if (peer && peer.annual_median != null) {
+      peerCityName = shortAreaName(peer.area_title);
+      peerMedian = peer.annual_median;
+    }
+  }
+
+  let title: string;
+  let description: string;
+  if (peerCityName && peerMedian != null && median != null) {
+    const pct = Math.round(((peerMedian - median) / peerMedian) * 100);
+    const absPct = Math.abs(pct);
+    const dir = pct > 0 ? 'less' : 'more';
+    title = `${occ.title} Salary in ${cityName}: ${formatSalary(median)} vs ${peerCityName} ${formatSalary(peerMedian)}`;
+    description = `${occ.title} in ${cityName} earns ${formatSalary(median)}/yr — ${absPct}% ${dir} than ${peerCityName}. P25 ${formatSalary(p25)}, P75 ${formatSalary(p75)}${natl?.annual_median ? `, national ${formatSalary(natl.annual_median)}` : ''}. ${year} BLS data.`;
+  } else {
+    title = `${occ.title} Salary in ${cityName}: ${formatSalary(median)} Median`;
+    description = `${occ.title} in ${cityName} median salary ${formatSalary(median)}/yr. P25 ${formatSalary(p25)}, P75 ${formatSalary(p75)}${natl?.annual_median ? `, national median ${formatSalary(natl.annual_median)}` : ''}. ${year} BLS wage data.`;
+  }
 
   return {
-    title: `${occ.title} Salary in ${cityName} (${year})`,
-    description: `The median ${occ.title} salary in ${cityName} is ${formatSalary(wage?.annual_median ?? null)} per year. See full salary range, compare with other cities and occupations.`,
-    alternates: { canonical: `/jobs/${slug}/${location}` },
-    openGraph: { url: `/jobs/${slug}/${location}` },
+    title,
+    description,
+    alternates: { canonical: `/jobs/${slug}/${location}/` },
+    openGraph: { title, description, url: `/jobs/${slug}/${location}/` },
   };
 }
 
@@ -74,7 +111,6 @@ export default async function JobLocationPage({ params }: Props) {
   const cityName = shortAreaName(area.area_title);
   const year = getDataYear();
 
-  const crossInsights = getCrossRefInsights(location, 'salary');
   const analysis = analyzeSalary(occ.title, cityName, wage, nationalWage ?? null);
   const baseFaqs = generateFAQs(occ.title, cityName, wage);
   const faqs = [
@@ -86,9 +122,9 @@ export default async function JobLocationPage({ params }: Props) {
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
-    { name: "Occupations", url: "/jobs" },
-    { name: occ.title, url: `/jobs/${slug}` },
-    { name: cityName, url: `/jobs/${slug}/${location}` },
+    { name: "Occupations", url: "/jobs/" },
+    { name: occ.title, url: `/jobs/${slug}/` },
+    { name: cityName, url: `/jobs/${slug}/${location}/` },
   ];
 
   // Compare with national
@@ -208,19 +244,6 @@ export default async function JobLocationPage({ params }: Props) {
       )}
 
       <AdSlot id="job-location-bottom" />
-
-      {crossInsights.length > 0 && (
-        <section className="mt-8 mb-6">
-          <h2 className="text-xl font-bold mb-3">Related Data Insights</h2>
-          <div className="space-y-2">
-            {crossInsights.map((insight, i) => (
-              <div key={i} className="p-3 bg-slate-50 border-l-4 border-slate-300 rounded-r-lg">
-                <p className="text-sm text-slate-700" dangerouslySetInnerHTML={{ __html: insight }} />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
 
       <section className="mt-8 p-4 bg-slate-50 rounded-lg">
         <h2 className="text-lg font-bold mb-2">Explore More About This Area</h2>

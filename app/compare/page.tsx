@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Salary Comparisons - Compare Occupations Side by Side",
   description:
     "Compare salaries between occupations. See side-by-side salary data, percentile ranges, and employment numbers for 800+ US occupations.",
-  alternates: { canonical: "/compare" },
+  alternates: { canonical: "/compare/" },
   openGraph: { url: "/compare/" },
 };
 
@@ -19,7 +19,7 @@ export default function CompareIndexPage() {
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
-    { name: "Compare Salaries", url: "/compare" },
+    { name: "Compare Salaries", url: "/compare/" },
   ];
 
   // Group into categories for a cleaner grid
@@ -54,7 +54,7 @@ export default function CompareIndexPage() {
           return (
             <a
               key={`${c.slugA}-${c.slugB}`}
-              href={`/compare/${c.slugA}-vs-${c.slugB}`}
+              href={`/compare/${c.slugA}-vs-${c.slugB}/`}
               className="block border border-slate-200 rounded-lg p-4 hover:border-blue-300 hover:bg-blue-50/30 transition-colors"
             >
               <div className="flex justify-between items-start gap-2 mb-2">

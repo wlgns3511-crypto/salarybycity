@@ -58,7 +58,7 @@ export default function DisclaimerPage() {
       <h2 className="text-xl font-semibold mt-8 mb-3">Contact</h2>
       <p>
         If you have concerns about any content on this website, please visit our{" "}
-        <a href="/contact" className="text-blue-700 hover:underline">Contact page</a>.
+        <a href="/contact/" className="text-blue-700 hover:underline">Contact page</a>.
       </p>
     </article>
   );

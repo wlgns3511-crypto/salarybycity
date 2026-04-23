@@ -38,7 +38,7 @@ export default function HomeEs() {
               <div key={group} className="border border-slate-200 rounded-lg p-4">
                 <h3 className="font-semibold text-blue-700 mb-2">{group}</h3>
                 <ul className="space-y-1 text-sm">
-                  {occs.slice(0, 8).map((occ) => (
+                  {occs.map((occ) => (
                     <li key={occ.soc_code}>
                       <a href={`/es/jobs/${occ.slug}`} className="text-blue-600 hover:underline">
                         {occ.title}

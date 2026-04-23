@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { getOccupationsByMajorGroup, getAllMetroAreas, getAllStateCodes } from "@/lib/db";
+import { getOccupationsByMajorGroup, getAllMetroAreas, getAllStateCodes, getHighestPayingJobsNational } from "@/lib/db";
 import { getDataYear } from "@/lib/format";
+import { PopularEntities } from "@/components/upgrades/PopularEntities";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -12,6 +13,7 @@ export default function Home() {
   const areas = getAllMetroAreas();
   const stateCodes = getAllStateCodes();
   const year = getDataYear();
+  const topJobs = getHighestPayingJobsNational(12);
 
   return (
     <div>
@@ -25,6 +27,18 @@ export default function Home() {
         </p>
       </section>
 
+      <PopularEntities
+        heading="Top Metro Areas for Jobs"
+        subheading="Highest-paying occupations nationally"
+        items={topJobs.map(j => ({
+          name: j.occ_title,
+          href: `/jobs/${j.occ_slug}/`,
+          stat: `$${Math.round((j.annual_median ?? 0) / 1000)}K`,
+        }))}
+        viewAllHref="/rankings/highest-paying-jobs/"
+        viewAllLabel="View all rankings →"
+      />
+
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Browse by Occupation</h2>
         <div className="grid gap-6 md:grid-cols-2">
@@ -34,10 +48,10 @@ export default function Home() {
               <div key={group} className="border border-slate-200 rounded-lg p-4">
                 <h3 className="font-semibold text-blue-700 mb-2">{group}</h3>
                 <ul className="space-y-1 text-sm">
-                  {occs.slice(0, 5).map((occ) => (
+                  {occs.map((occ) => (
                     <li key={occ.soc_code}>
                       <a
-                        href={`/jobs/${occ.slug}`}
+                        href={`/jobs/${occ.slug}/`}
                         className="text-slate-600 hover:text-blue-600 hover:underline"
                       >
                         {occ.title}
@@ -61,7 +75,7 @@ export default function Home() {
           {stateCodes.map((code) => (
             <a
               key={code}
-              href={`/states/${code.toLowerCase()}`}
+              href={`/states/${code.toLowerCase()}/`}
               className="px-3 py-1 rounded-full text-sm border border-slate-200 hover:bg-blue-50 text-slate-600 hover:text-blue-600"
             >
               {code}
@@ -73,10 +87,10 @@ export default function Home() {
       <section>
         <h2 className="text-2xl font-bold mb-4">Browse by Location</h2>
         <div className="columns-2 md:columns-3 lg:columns-4 gap-4 text-sm">
-          {areas.slice(0, 100).map((area) => (
+          {areas.map((area) => (
             <div key={area.area_code} className="mb-1">
               <a
-                href={`/locations/${area.slug}`}
+                href={`/locations/${area.slug}/`}
                 className="text-slate-600 hover:text-blue-600 hover:underline"
               >
                 {area.area_title}
@@ -85,7 +99,7 @@ export default function Home() {
           ))}
         </div>
         {areas.length > 100 && (
-          <a href="/locations" className="inline-block mt-4 text-blue-600 hover:underline">
+          <a href="/locations/" className="inline-block mt-4 text-blue-600 hover:underline">
             View all {areas.length} metro areas &rarr;
           </a>
         )}

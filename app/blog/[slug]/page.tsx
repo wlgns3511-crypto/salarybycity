@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { AdSlot } from "@/components/AdSlot";
 
-export const dynamicParams = false;
-export const revalidate = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
@@ -53,7 +53,7 @@ export default async function BlogPostPage({
   const allPosts = getAllPosts().filter((p) => p.slug !== slug);
   const related = allPosts
     .filter((p) => p.category === post.category)
-    .slice(0, 3);
+    ;
   const others = allPosts.filter((p) => p.category !== post.category).slice(0, 3 - related.length);
   const suggestions = [...related, ...others];
 

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { AdSlot } from "@/components/AdSlot";
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = 86400;
 
 export function generateStaticParams() {
@@ -152,10 +152,10 @@ export default async function BlogPostPage({
             Browse Occupations
           </a>
           <a
-            href="/compare/"
+            href="/state/"
             className="text-sm px-4 py-2 bg-white border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50 font-medium"
           >
-            Compare Cities
+            Browse by State
           </a>
           <a
             href="/"

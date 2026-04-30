@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getOccupationsByMajorGroup, getAllMetroAreas, getAllStateCodes, getHighestPayingJobsNational } from "@/lib/db";
+import { getOccupationsByMajorGroup, getAllStateCodes, getHighestPayingJobsNational } from "@/lib/db";
+import { getStateByCode } from "@/lib/states-data";
 import { getDataYear } from "@/lib/format";
 import { PopularEntities } from "@/components/upgrades/PopularEntities";
 
@@ -10,7 +11,6 @@ export const metadata: Metadata = {
 
 export default function Home() {
   const groups = getOccupationsByMajorGroup();
-  const areas = getAllMetroAreas();
   const stateCodes = getAllStateCodes();
   const year = getDataYear();
   const topJobs = getHighestPayingJobsNational(12);
@@ -35,8 +35,8 @@ export default function Home() {
           href: `/jobs/${j.occ_slug}/`,
           stat: `$${Math.round((j.annual_median ?? 0) / 1000)}K`,
         }))}
-        viewAllHref="/rankings/highest-paying-jobs/"
-        viewAllLabel="View all rankings →"
+        viewAllHref="/jobs/"
+        viewAllLabel="Browse all occupations →"
       />
 
       <section className="mb-12">
@@ -72,37 +72,20 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Browse by State</h2>
         <div className="flex flex-wrap gap-2">
-          {stateCodes.map((code) => (
-            <a
-              key={code}
-              href={`/states/${code.toLowerCase()}/`}
-              className="px-3 py-1 rounded-full text-sm border border-slate-200 hover:bg-blue-50 text-slate-600 hover:text-blue-600"
-            >
-              {code}
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-bold mb-4">Browse by Location</h2>
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-4 text-sm">
-          {areas.map((area) => (
-            <div key={area.area_code} className="mb-1">
+          {stateCodes.map((code) => {
+            const state = getStateByCode(code);
+            if (!state) return null;
+            return (
               <a
-                href={`/locations/${area.slug}/`}
-                className="text-slate-600 hover:text-blue-600 hover:underline"
+                key={code}
+                href={`/state/${state.slug}/`}
+                className="px-3 py-1 rounded-full text-sm border border-slate-200 hover:bg-blue-50 text-slate-600 hover:text-blue-600"
               >
-                {area.area_title}
+                {code}
               </a>
-            </div>
-          ))}
+            );
+          })}
         </div>
-        {areas.length > 100 && (
-          <a href="/locations/" className="inline-block mt-4 text-blue-600 hover:underline">
-            View all {areas.length} metro areas &rarr;
-          </a>
-        )}
       </section>
     </div>
   );

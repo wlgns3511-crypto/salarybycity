@@ -1,16 +1,24 @@
 #!/usr/bin/env tsx
 /**
- * build-sitemap.ts — Static sitemap XML generator for salarybycity.
+ * build-sitemap.ts — salarybycity sitemap (HCU Phase C, 2026-04-25).
  *
- * Pre-render limits (from page.tsx files):
- *   /jobs/[slug]/[location] → getWagePagesChunk(0, 5000)
- *   /compare/[slugs]        → getTopComparisons(5000)  (dynamicParams=false)
- *   /locations/[slug]       → getAllMetroAreas() (all)
- *   /jobs/[slug]            → getAllOccupations() (all)
- *   /es/jobs/[slug]         → getAllOccupations() (all)
- *   /rankings/[type]        → national + per state
- *   /states/[slug]          → all state codes
- *   /state/[slug]           → US_STATES (all)
+ * PRUNING HISTORY:
+ *   2026-04-22 Tier S/F: dropped /es/jobs (397) + /salary-ranges (54) + /states (30).
+ *     Sitemap settled at ~16.3K (16,092 of them /jobs/{occ}/{loc}/ leaves).
+ *
+ *   2026-04-25 Phase C (this rewrite):
+ *     GSC after 3 months: 1 click ("architectural and engineering managers" →
+ *     /jobs/{occ}/ hub), 17,226 발견됨-색인X, 11,551 404 (/compare/), 6,429
+ *     크롤링됨-색인X (/jobs/leaves + /es/jobs/). The matrix wasn't earning;
+ *     it was bleeding crawl budget while Google refused to index it.
+ *
+ *     Killed (410 via middleware): /jobs/{occ}/{loc}/ leaves (15,880 doorway URLs),
+ *       /locations, /compare, /category, /rankings, /states, /sitemap, /embed, /es.
+ *     Kept: /jobs/ + /jobs/{occ}/ × 397 (occupation hubs — REAL signal),
+ *       /state/ + /state/{slug}/ × 51 (+ /salary-ranges/ if exists),
+ *       /blog, /guide, /about, /contact, /methodology, /privacy, /terms,
+ *       /disclaimer, /editorial-policy, /corrections-policy, /search.
+ *     Sitemap: ~16.3K → ~570 URLs (-97%, mirror of wagepeek 12,353→333 outcome).
  *
  * USAGE:
  *   npx tsx scripts/build-sitemap.ts
@@ -18,37 +26,16 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import {
-  getAllOccupations, getAllMetroAreas, getAllStateCodes,
-  getWagePagesChunk, countAllWagePages, getMajorGroups,
-} from '../lib/db';
+import { getAllOccupations, getAllStateCodes } from '../lib/db';
 import { getAllPosts } from '../lib/blog';
 import { US_STATES } from '../lib/states-data';
 import { getAllGuides } from '../lib/guides';
+import { getAllListTypes } from '../lib/salary-cluster-insights';
 
 const SITE_URL = 'https://salarybycity.com';
 const NOW = new Date().toISOString().split('T')[0];
 const SHARD_SIZE = 40000;
 const OUT_DIR = path.resolve(__dirname, '..', 'public');
-
-function slugify(text: string): string {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-}
-
-// State code → slug mapping (from rankings/[type]/page.tsx)
-const STATE_SLUG_MAP: Record<string, string> = {
-  'AL': 'alabama', 'AK': 'alaska', 'AZ': 'arizona', 'AR': 'arkansas', 'CA': 'california',
-  'CO': 'colorado', 'CT': 'connecticut', 'DE': 'delaware', 'FL': 'florida', 'GA': 'georgia',
-  'HI': 'hawaii', 'ID': 'idaho', 'IL': 'illinois', 'IN': 'indiana', 'IA': 'iowa',
-  'KS': 'kansas', 'KY': 'kentucky', 'LA': 'louisiana', 'ME': 'maine', 'MD': 'maryland',
-  'MA': 'massachusetts', 'MI': 'michigan', 'MN': 'minnesota', 'MS': 'mississippi', 'MO': 'missouri',
-  'MT': 'montana', 'NE': 'nebraska', 'NV': 'nevada', 'NH': 'new-hampshire', 'NJ': 'new-jersey',
-  'NM': 'new-mexico', 'NY': 'new-york', 'NC': 'north-carolina', 'ND': 'north-dakota', 'OH': 'ohio',
-  'OK': 'oklahoma', 'OR': 'oregon', 'PA': 'pennsylvania', 'RI': 'rhode-island', 'SC': 'south-carolina',
-  'SD': 'south-dakota', 'TN': 'tennessee', 'TX': 'texas', 'UT': 'utah', 'VT': 'vermont',
-  'VA': 'virginia', 'WA': 'washington', 'WV': 'west-virginia', 'WI': 'wisconsin', 'WY': 'wyoming',
-  'DC': 'district-of-columbia', 'PR': 'puerto-rico', 'GU': 'guam', 'VI': 'virgin-islands',
-};
 
 interface Entry { url: string; lastmod?: string; priority?: string; changefreq?: string; }
 function urlTag(e: Entry): string {
@@ -63,97 +50,85 @@ const seen = new Set<string>();
 const entries: Entry[] = [];
 function add(e: Entry) { if (!seen.has(e.url)) { seen.add(e.url); entries.push(e); } }
 
-// Static pages
+// ── Static / hub pages ───────────────────────────────────────────────────────
 for (const [p, pr, cf] of [
-  ['/', '1.0', 'monthly'], ['/jobs/', '0.9', 'monthly'], ['/locations/', '0.9', 'monthly'],
-  ['/editorial-policy/', '0.3', 'yearly'], ['/corrections-policy/', '0.3', 'yearly'],
+  ['/', '1.0', 'monthly'],
+  ['/jobs/', '0.9', 'monthly'],
+  ['/jobs/list/', '0.8', 'monthly'],
+  ['/state/', '0.9', 'monthly'],
+  ['/blog/', '0.8', 'weekly'],
+  ['/guide/', '0.8', 'weekly'],
+  ['/about/', '0.4', 'yearly'],
+  ['/contact/', '0.3', 'yearly'],
+  ['/methodology/', '0.5', 'yearly'],
+  ['/privacy/', '0.3', 'yearly'],
+  ['/terms/', '0.3', 'yearly'],
+  ['/disclaimer/', '0.3', 'yearly'],
+  ['/editorial-policy/', '0.3', 'yearly'],
+  ['/corrections-policy/', '0.3', 'yearly'],
 ] as [string, string, string][]) {
   add({ url: `${SITE_URL}${p}`, priority: pr, changefreq: cf });
 }
 
-// Guide pages
-const guides = getAllGuides();
-add({ url: `${SITE_URL}/guide/`, priority: '0.8', changefreq: 'weekly' });
-for (const g of guides) {
-  add({ url: `${SITE_URL}/guide/${g.slug}/`, lastmod: g.updatedAt ? new Date(g.updatedAt).toISOString().split('T')[0] : NOW, priority: '0.7' });
+// ── Guides (lib/guides.ts) ───────────────────────────────────────────────────
+for (const g of getAllGuides()) {
+  add({
+    url: `${SITE_URL}/guide/${g.slug}/`,
+    lastmod: g.updatedAt ? new Date(g.updatedAt).toISOString().split('T')[0] : NOW,
+    priority: '0.7',
+  });
 }
 
-// Blog pages
-const posts = getAllPosts();
-add({ url: `${SITE_URL}/blog/`, priority: '0.8', changefreq: 'weekly' });
-for (const p of posts) {
+// ── Blog posts (lib/blog.ts) ─────────────────────────────────────────────────
+for (const p of getAllPosts()) {
   const lm = p.updatedAt ?? p.publishedAt;
-  add({ url: `${SITE_URL}/blog/${p.slug}/`, lastmod: lm ? new Date(lm).toISOString().split('T')[0] : NOW, priority: '0.7' });
+  add({
+    url: `${SITE_URL}/blog/${p.slug}/`,
+    lastmod: lm ? new Date(lm).toISOString().split('T')[0] : NOW,
+    priority: '0.7',
+  });
 }
 
-// Occupation pages
-const occupations = getAllOccupations();
-for (const occ of occupations) {
+// ── Occupation hubs — THE PRIMARY KEEPERS (~397) ─────────────────────────────
+// GSC top click: "architectural and engineering managers" → /jobs/{occ}/ hub.
+// All BLS-themed top queries target this surface.
+for (const occ of getAllOccupations()) {
   add({ url: `${SITE_URL}/jobs/${occ.slug}/`, priority: '0.8' });
 }
 
-// ─── /es/jobs/ × 397 DROPPED 2026-04-22 (HCU defense) ───────────────────
-// Thin Spanish translation over identical occupation data. Route stays
-// live via dynamicParams — existing URLs remain 200.
-
-// Category pages
-for (const group of getMajorGroups()) {
-  add({ url: `${SITE_URL}/category/${slugify(group.major_group_title)}/`, priority: '0.7' });
+// ── Curated list hubs (HCU 5-chunk patch, 2026-04-28) ────────────────────────
+// New /jobs/list/[type]/ surface — 12 curated rankings (highest-paying,
+// six-figure, mass-market, mid-market, entry, STEM, healthcare, management,
+// largest-employment, specialist, wide-pay-range, compressed-pay).
+for (const t of getAllListTypes()) {
+  add({ url: `${SITE_URL}/jobs/list/${t}/`, priority: '0.7' });
 }
 
-// Metro area location pages
-const areas = getAllMetroAreas();
-for (const area of areas) {
-  add({ url: `${SITE_URL}/locations/${area.slug}/`, priority: '0.7' });
-}
-
-// State pages via getAllStateCodes
-const stateCodes = getAllStateCodes();
-add({ url: `${SITE_URL}/state/`, priority: '0.8' });
-for (const s of US_STATES) {
+// ── State pages (~30 with BLS metro data) + /salary-ranges/ subpage ──────────
+// US_STATES has all 51, but BLS OEWS only publishes metro-level data for ~30
+// states; the others (VT, WY, MT, ND, etc.) would soft-404 with no metro rows.
+const statesWithData = new Set(getAllStateCodes());
+const liveStates = US_STATES.filter((s) => statesWithData.has(s.code));
+const hasSalaryRanges = fs.existsSync(path.resolve(__dirname, '..', 'app', 'state', '[slug]', 'salary-ranges'));
+for (const s of liveStates) {
   add({ url: `${SITE_URL}/state/${s.slug}/`, priority: '0.7' });
-  // /salary-ranges/ × 54 DROPPED 2026-04-22 — derivative subpage over same state entity.
-}
-// NOTE: /states/ index removed from sitemap (2026-04-17) — no app/states/page.tsx exists.
-// /states/[code]/ × 30 DROPPED 2026-04-22 — duplicate of /state/[slug]/ (slug vs code).
-
-// Rankings: national + per state
-add({ url: `${SITE_URL}/rankings/highest-paying-jobs/`, priority: '0.8' });
-for (const code of stateCodes) {
-  const slug = STATE_SLUG_MAP[code.toUpperCase()];
-  if (slug) {
-    add({ url: `${SITE_URL}/rankings/highest-paying-jobs-in-${slug}/`, priority: '0.7' });
+  if (hasSalaryRanges) {
+    add({ url: `${SITE_URL}/state/${s.slug}/salary-ranges/`, priority: '0.6' });
   }
 }
 
-// Compare pairs excluded from sitemap (2026-04-18)
-// HCU doorway-thin content + scaled-content policy risk.
-// Pages still render via generateStaticParams (CAP=100); just not announced.
-add({ url: `${SITE_URL}/compare/`, priority: '0.8' });
-
-// Job x location pages — full valid set (THE PRODUCT: salary by city × job).
-// Kept intact at ~15,694 URLs per user directive 2026-04-22: "salary×city 조합이
-// 이 사이트의 존재 이유". HCU-defense focuses on thin translations + duplicate
-// routes above; the matrix itself stays.
-const totalWagePages = countAllWagePages();
-for (let offset = 0; offset < totalWagePages; offset += 5000) {
-  const wagePages = getWagePagesChunk(offset, 5000);
-  for (const page of wagePages) {
-    add({ url: `${SITE_URL}/jobs/${page.occ_slug}/${page.area_slug}/`, priority: '0.6' });
-  }
-}
-
-// ─── Cardinality guard ────────────────────────────────────────────────────
-if (entries.length > 17500 && !process.env.SITEMAP_LARGE_OK) {
+// ── Cardinality guard ────────────────────────────────────────────────────────
+// Phase C target ~570. Tripwire at 750.
+if (entries.length > 750 && !process.env.SITEMAP_LARGE_OK) {
   throw new Error(
-    `salarybycity sitemap has ${entries.length.toLocaleString()} URLs — Option B+ budget is ~16.3K.\n` +
-      `Did /es/jobs/ (397), /salary-ranges/ (54), or /states/ (30) get re-added?\n` +
-      `That's exactly the loop that caused the original cardinality collapse.\n` +
+    `salarybycity sitemap has ${entries.length.toLocaleString()} URLs — Phase C budget is ~570.\n` +
+      `Did /jobs/{occ}/{loc}/ leaves (~15.8K) or /locations/ /compare/ /category/ /rankings/ /states/ /es/ get re-added?\n` +
+      `That's the doorway matrix HCU Phase C explicitly killed.\n` +
       `Run with SITEMAP_LARGE_OK=1 if you genuinely meant to expand the tier.`,
   );
 }
 
-// ─── Clean old sitemaps ────────────────────────────────────────────────────
+// ── Clean old sitemaps ───────────────────────────────────────────────────────
 for (const f of fs.readdirSync(OUT_DIR)) {
   if (/^sitemap(-\d+)?\.xml$/.test(f)) fs.unlinkSync(path.join(OUT_DIR, f));
 }

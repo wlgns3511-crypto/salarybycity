@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { US_STATES, getStateBySlug } from '@/lib/states-data';
 import {
+  getAllStateCodes,
   getStateTopOccupationsWithNational,
   getStateWageSummary,
   getNationalWageSummary,
@@ -16,6 +17,7 @@ import { FeedbackButton } from '@/components/FeedbackButton';
 import { FreshnessTag } from '@/components/FreshnessTag';
 import { EditorNote } from '@/components/EditorNote';
 import { AdSlot } from '@/components/AdSlot';
+import { pickVariant } from '@/lib/content-helpers';
 
 export const dynamicParams = false;
 export const revalidate = 86400;
@@ -25,7 +27,9 @@ interface Props {
 }
 
 export function generateStaticParams() {
-  return US_STATES.map((s) => ({ slug: s.slug }));
+  // Mirror /state/[slug]/page.tsx — only emit states with BLS metro data.
+  const codesWithData = new Set(getAllStateCodes());
+  return US_STATES.filter((s) => codesWithData.has(s.code)).map((s) => ({ slug: s.slug }));
 }
 
 const SITE_URL = 'https://salarybycity.com';
@@ -43,9 +47,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const year = getDataYear();
   const top = getStateTopOccupationsWithNational(state.code, 20);
   const topJob = top[0];
+
+  const title = pickVariant(slug, [
+    `${state.name} Salary Ranges — p10 to p90 for the Top 20 Jobs (${year})`,
+    `${state.name} Pay Distribution: 10th, 25th, Median, 75th, 90th Percentile`,
+    `Salary Percentiles in ${state.name} — From Entry Floor to Top-Decile Pay`,
+    `${state.name} Wage Ranges (${year}) — Top 20 Occupations by Percentile`,
+  ], 9);
+
+  const description = topJob
+    ? pickVariant(slug, [
+        `Full salary distribution for the top 20 occupations in ${state.name}: 10th, 25th, 50th, 75th, and 90th percentile wages. ${topJob.occ_title} ranges from ${formatSalary(topJob.annual_p10)} (p10) to ${formatSalary(topJob.annual_p90)} (p90). BLS OEWS data.`,
+        `${state.name} pay percentiles per BLS: ${topJob.occ_title} spans ${formatSalary(topJob.annual_p10)} to ${formatSalary(topJob.annual_p90)} from p10 to p90. The full top-20 occupation table breaks down p10/p25/p50/p75/p90 for each role.`,
+        `Browse ${state.name}'s top-20 occupations by salary percentile. The lead role, ${topJob.occ_title}, runs ${formatSalary(topJob.annual_p10)}–${formatSalary(topJob.annual_p90)} between bottom and top deciles. ${year} BLS OEWS.`,
+      ], 10)
+    : `Salary range data for ${state.name}. ${year} BLS OEWS percentile breakdowns.`;
+
   return {
-    title: `${state.name} Salary Ranges — Top 20 Jobs with 10th–90th Percentile (${year})`,
-    description: `Full salary distribution for the top 20 occupations in ${state.name}: 10th, 25th, 50th, 75th, and 90th percentile wages. ${topJob ? `${topJob.occ_title} ranges from ${formatSalary(topJob.annual_p10)} (p10) to ${formatSalary(topJob.annual_p90)} (p90).` : ''} BLS OEWS data.`,
+    title,
+    description,
     alternates: { canonical: `/state/${slug}/salary-ranges/` },
     openGraph: { url: `/state/${slug}/salary-ranges/` },
   };
@@ -162,19 +182,31 @@ export default async function SalaryRangesPage({ params }: Props) {
         <span className="text-slate-700">Salary Ranges</span>
       </nav>
 
-      {/* Hero */}
+      {/* Hero — slug-hashed across 51 states for diversification */}
       <header className="mb-6">
         <h1 className="text-3xl font-bold text-slate-900 mb-2">
-          {state.name} Salary Ranges — 10th to 90th Percentile ({year})
+          {pickVariant(slug, [
+            `${state.name} Salary Ranges — 10th to 90th Percentile (${year})`,
+            `${state.name} Pay Distribution by Percentile (${year})`,
+            `Salary Percentiles in ${state.name}: From Entry Floor to Top Decile`,
+            `${state.name} Wage Ranges — p10, Median, p90 for the Top 20 Jobs`,
+          ], 11)}
         </h1>
         <p className="text-slate-600 max-w-3xl">
-          The full pay distribution for the top 20 highest-paying occupations in {state.name}. See
-          p10, p25, p50 (median), p75, and p90 wages — the spread that a single median number hides.
+          {pickVariant(slug, [
+            `The full pay distribution for the top 20 highest-paying occupations in ${state.name}. See p10, p25, p50 (median), p75, and p90 wages — the spread that a single median number hides.`,
+            `Top 20 occupations in ${state.name} broken out by 10th, 25th, 50th, 75th, and 90th percentile pay. The percentile range tells you where entry, median, and senior-tier earnings actually fall.`,
+            `For each of the top 20 ${state.name} occupations: bottom-decile (p10), median (p50), and top-decile (p90) wages alongside the interquartile range (p25–p75). One median number does not capture how much variance lives inside a single job title.`,
+          ], 12)}
         </p>
       </header>
 
       <EditorNote
-        note={`A median salary is one number. The real decision range is p25 to p75 — and for high performers, p90. In ${state.name}, ${top.occ_title} spans from ${formatSalary(top.annual_p10)} (p10) to ${formatSalary(top.annual_p90)} (p90). Use the ends of that range to calibrate offers, not just the middle.`}
+        note={pickVariant(slug, [
+          `A median salary is one number. The real decision range is p25 to p75 — and for high performers, p90. In ${state.name}, ${top.occ_title} spans from ${formatSalary(top.annual_p10)} (p10) to ${formatSalary(top.annual_p90)} (p90). Use the ends of that range to calibrate offers, not just the middle.`,
+          `When you compare an offer against a single "median" number, you lose half the picture. ${state.name}'s top role (${top.occ_title}) ranges from ${formatSalary(top.annual_p10)} at p10 to ${formatSalary(top.annual_p90)} at p90 — that's the band an offer should be calibrated against.`,
+          `Pay-percentile data is more honest than a headline median. ${top.occ_title} workers in ${state.name} earn anywhere from ${formatSalary(top.annual_p10)} to ${formatSalary(top.annual_p90)} depending on experience and employer. The table below shows the same breakdown for the next 19 occupations.`,
+        ], 13)}
       />
 
       {/* Spotlight: top 3 occupations' ranges */}
@@ -316,9 +348,16 @@ export default async function SalaryRangesPage({ params }: Props) {
 
       <AdSlot id="4455667789" />
 
-      {/* How to use */}
+      {/* How to use — slug-hashed heading */}
       <section className="mb-10 p-6 rounded-xl bg-slate-50 border border-slate-200">
-        <h2 className="text-xl font-bold text-slate-900 mb-3">How to Use These Ranges</h2>
+        <h2 className="text-xl font-bold text-slate-900 mb-3">
+          {pickVariant(slug, [
+            'How to Use These Ranges',
+            'Reading the Percentile Distribution',
+            'Calibrating Offers Against the Range',
+            'Practical Use of p10, p50, and p90',
+          ], 14)}
+        </h2>
         <ol className="list-decimal pl-5 space-y-2 text-sm text-slate-700">
           <li>
             <strong>For offer calibration:</strong> match your target role to its p25 (entry-level floor), p50 (median), and p75 (senior/experienced target). Negotiate toward p75 once you have ~5+ years and a recent in-demand skill.

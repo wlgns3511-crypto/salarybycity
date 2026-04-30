@@ -5,7 +5,7 @@ import { formatSalary, getDataYear } from "@/lib/format";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { breadcrumbSchema } from "@/lib/schema";
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = 86400;
 
 const year = getDataYear();

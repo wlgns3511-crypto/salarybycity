@@ -5,7 +5,7 @@ const DB_PATH = path.join(process.cwd(), 'data', 'salary.db');
 
 let _db: Database.Database | null = null;
 
-function getDb(): Database.Database {
+export function getDb(): Database.Database {
   if (!_db) {
     _db = new Database(DB_PATH, { readonly: true, fileMustExist: true });
   }
@@ -252,16 +252,28 @@ export interface StateWageSummary {
 }
 
 export function getStateWageSummary(stateCode: string): StateWageSummary | undefined {
+  // The OEWS extract on this site has no area_type='S' rows — state-level
+  // figures must be aggregated from the metro (area_type='M') rows. We first
+  // collapse to one row per occupation (averaging the per-metro medians and
+  // summing employment), then aggregate across occupations so each occupation
+  // contributes equally to top/bottom/avg state stats. (Repaired 2026-04-29.)
   return getDb().prepare(`
+    WITH occ_state AS (
+      SELECT w.soc_code,
+        ROUND(AVG(w.annual_median)) AS state_median,
+        SUM(w.employment) AS state_employment
+      FROM wages w
+      JOIN areas a ON w.area_code = a.area_code
+      WHERE a.area_type = 'M' AND a.state = ? AND w.annual_median IS NOT NULL
+      GROUP BY w.soc_code
+    )
     SELECT
-      SUM(w.employment) as total_employment,
-      ROUND(AVG(w.annual_median)) as avg_median_salary,
-      MAX(w.annual_median) as top_median,
-      MIN(w.annual_median) as bottom_median,
-      COUNT(*) as occ_count
-    FROM wages w
-    JOIN areas a ON w.area_code = a.area_code
-    WHERE a.area_type = 'S' AND a.state = ? AND w.annual_median IS NOT NULL
+      SUM(state_employment) AS total_employment,
+      ROUND(AVG(state_median)) AS avg_median_salary,
+      MAX(state_median) AS top_median,
+      MIN(state_median) AS bottom_median,
+      COUNT(*) AS occ_count
+    FROM occ_state
   `).get(stateCode) as StateWageSummary | undefined;
 }
 
@@ -280,17 +292,44 @@ export function getNationalWageSummary(): StateWageSummary | undefined {
 }
 
 export function getStateTopOccupationsWithNational(stateCode: string, limit = 20): (WageWithOccupation & { national_median: number | null })[] {
+  // Aggregates the per-metro wage rows within a state into one row per occupation
+  // (averaged percentiles, summed employment, year = max year), then attaches
+  // the national median per SOC. The previous implementation queried
+  // area_type='S' which is empty in this dataset. (Repaired 2026-04-29.)
   return getDb().prepare(`
-    SELECT w.*, o.title as occ_title, o.slug as occ_slug,
+    WITH occ_state AS (
+      SELECT
+        w.soc_code,
+        ? AS area_code,
+        SUM(w.employment) AS employment,
+        ROUND(AVG(w.annual_mean)) AS annual_mean,
+        ROUND(AVG(w.annual_median)) AS annual_median,
+        ROUND(AVG(w.annual_p10)) AS annual_p10,
+        ROUND(AVG(w.annual_p25)) AS annual_p25,
+        ROUND(AVG(w.annual_p75)) AS annual_p75,
+        ROUND(AVG(w.annual_p90)) AS annual_p90,
+        ROUND(AVG(w.hourly_mean), 2) AS hourly_mean,
+        ROUND(AVG(w.hourly_median), 2) AS hourly_median,
+        MAX(w.year) AS year
+      FROM wages w
+      JOIN areas a ON w.area_code = a.area_code
+      WHERE a.area_type = 'M' AND a.state = ? AND w.annual_median IS NOT NULL
+      GROUP BY w.soc_code
+    )
+    SELECT
+      os.soc_code, os.area_code, os.employment, os.annual_mean, os.annual_median,
+      os.annual_p10, os.annual_p25, os.annual_p75, os.annual_p90,
+      os.hourly_mean, os.hourly_median, os.year,
+      o.title AS occ_title,
+      o.slug AS occ_slug,
       (SELECT w2.annual_median FROM wages w2 JOIN areas a2 ON w2.area_code = a2.area_code
-       WHERE a2.area_type = 'N' AND w2.soc_code = w.soc_code
-       ORDER BY w2.year DESC LIMIT 1) as national_median
-    FROM wages w
-    JOIN occupations o ON w.soc_code = o.soc_code
-    JOIN areas a ON w.area_code = a.area_code
-    WHERE a.area_type = 'S' AND a.state = ? AND w.annual_median IS NOT NULL
-    ORDER BY w.annual_median DESC LIMIT ?
-  `).all(stateCode, limit) as (WageWithOccupation & { national_median: number | null })[];
+       WHERE a2.area_type = 'N' AND w2.soc_code = os.soc_code
+       ORDER BY w2.year DESC LIMIT 1) AS national_median
+    FROM occ_state os
+    JOIN occupations o ON os.soc_code = o.soc_code
+    ORDER BY os.annual_median DESC
+    LIMIT ?
+  `).all(stateCode, stateCode, limit) as (WageWithOccupation & { national_median: number | null })[];
 }
 
 export function searchOccupations(query: string, limit = 30): Occupation[] {

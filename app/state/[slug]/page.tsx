@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { US_STATES, getStateBySlug } from "@/lib/states-data";
 import {
+  getAllStateCodes,
   getAreasByState,
   getStateTopOccupationsWithNational,
   getStateWageSummary,
@@ -13,16 +14,23 @@ import { FAQ } from "@/components/FAQ";
 import { AdSlot } from "@/components/AdSlot";
 import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { StateRich } from '@/components/state/StateRich';
+import { getStateFacts } from "@/lib/salary-facts";
+import { getStateNarrative } from "@/lib/salary-cluster-insights";
+import { pickVariant } from "@/lib/content-helpers";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return US_STATES.map((s) => ({ slug: s.slug }));
+  // Only emit the ~30 states that actually have BLS metro data in this dataset.
+  // The other 21 (small/rural states without an OEWS metro) would render an empty
+  // state page and trigger notFound(); excluding them keeps the sitemap honest.
+  const codesWithData = new Set(getAllStateCodes());
+  return US_STATES.filter((s) => codesWithData.has(s.code)).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -30,9 +38,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const state = getStateBySlug(slug);
   if (!state) return {};
   const year = getDataYear();
+
+  const title = pickVariant(slug, [
+    `${state.name} Salaries — Top Occupations and Wage Data (${year})`,
+    `Salary by Occupation in ${state.name} — BLS ${year} Data`,
+    `${state.name} Pay: Highest-Paying Jobs and Wage Distribution`,
+    `${state.name} Wages — Top Jobs, National Comparison, ${year}`,
+  ], 7);
+  const description = pickVariant(slug, [
+    `Explore salary data for ${state.name}. Highest-paying occupations, state-vs-national comparison, and percentile breakdowns. ${year} BLS OEWS data.`,
+    `${state.name} salary tables: top 20 highest-paying jobs, average median wage, and how state pay stacks up against the national figure. ${year} BLS data.`,
+    `Salaries in ${state.name} (${year}): browse the highest-paying occupations, see state-vs-national pay gaps, and dive into per-occupation percentile breakdowns.`,
+  ], 8);
+
   return {
-    title: `${state.name} Salaries - Top Occupations & Wage Data (${year})`,
-    description: `Explore salary data for ${state.name}. See the highest-paying occupations, compare state wages vs national averages, and browse metro areas. ${year} BLS OEWS data.`,
+    title,
+    description,
     alternates: { canonical: `/state/${slug}/` },
     openGraph: { url: `/state/${slug}/` },
   };
@@ -124,6 +145,10 @@ export default async function StateDetailPage({ params }: Props) {
   const diff = natAvg ? summary.avg_median_salary - natAvg : 0;
   const diffPct = natAvg ? ((diff / natAvg) * 100).toFixed(1) : "0";
 
+  // Layer 2 cluster narrative — slug-hashed across 51 state pages.
+  const stateFacts = getStateFacts(state.code, topJobs, summary);
+  const narrative = getStateNarrative(slug, state.name, stateFacts);
+
   return (
     <div>
       <Breadcrumb items={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))} />
@@ -157,6 +182,14 @@ export default async function StateDetailPage({ params }: Props) {
           <div className="text-2xl font-bold text-slate-800">{summary.occ_count.toLocaleString()}</div>
         </div>
       </div>
+
+      {/* Layer 2 cluster narrative — slug-hashed per state */}
+      <section className="mb-8 rounded-lg border border-slate-200 bg-white p-5 md:p-6">
+        <h2 className="text-xl md:text-2xl font-bold mb-3 text-slate-900">{narrative.headline}</h2>
+        <p className="text-slate-700 leading-relaxed mb-3"><strong className="text-slate-900">By the numbers.</strong> {narrative.fact}</p>
+        <p className="text-slate-700 leading-relaxed mb-3"><strong className="text-slate-900">Reading the spread.</strong> {narrative.context}</p>
+        <p className="text-slate-700 leading-relaxed"><strong className="text-slate-900">For comparison.</strong> {narrative.implication}</p>
+      </section>
 
       {/* Top occupations with national comparison */}
       {topJobs.length > 0 && (
@@ -240,19 +273,10 @@ export default async function StateDetailPage({ params }: Props) {
         <section className="mb-8">
           <h2 className="text-xl font-bold mb-3">Metro Areas in {state.name}</h2>
           <p className="text-slate-600 text-sm mb-4">
-            {metros.length} metropolitan areas with BLS wage data. Click any metro to see detailed salary breakdowns by occupation.
+            {state.name} contains {metros.length} BLS-tracked metropolitan areas. State-level
+            wage aggregates are shown above; metro-level breakdowns are not separately published
+            on this site.
           </p>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {metros.map((area) => (
-              <a
-                key={area.area_code}
-                href={`/locations/${area.slug}/`}
-                className="p-3 border border-slate-100 rounded-lg hover:bg-blue-50"
-              >
-                {area.area_title}
-              </a>
-            ))}
-          </div>
         </section>
       )}
 

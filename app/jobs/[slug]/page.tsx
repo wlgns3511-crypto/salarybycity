@@ -31,12 +31,14 @@ import { SalaryPercentile } from "@/components/tools/SalaryPercentile";
 import { InsightBlock } from "@/components/upgrades/InsightBlock";
 import { getJobInsights } from "@/lib/insights";
 import { DB_UPDATED } from "@/lib/authorship";
+import { getOccupationFacts } from "@/lib/salary-facts";
+import { getOccupationCommentary, getOccupationTitle, getOccupationDescription } from "@/lib/salary-commentary";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = 86400;
 
 export async function generateStaticParams() {
@@ -52,9 +54,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const wage = getNationalWage(occ.soc_code);
   const year = getDataYear();
 
+  // Diversified title/description per slug-hash, with safe fallback.
+  let title = `${occ.title} Salary - ${year} National Wage Data`;
+  let description = `The median ${occ.title} salary in the US is ${formatSalary(wage?.annual_median ?? null)}. Compare salaries across 400+ metro areas.`;
+  if (wage) {
+    const topCities = getTopPayingCities(occ.soc_code, 10);
+    const facts = getOccupationFacts(occ, wage, topCities);
+    if (facts) {
+      title = getOccupationTitle(facts);
+      description = getOccupationDescription(facts);
+    }
+  }
+
   return {
-    title: `${occ.title} Salary - ${year} National Wage Data`,
-    description: `The median ${occ.title} salary in the US is ${formatSalary(wage?.annual_median ?? null)}. Compare salaries across 400+ metro areas.`,
+    title,
+    description,
     alternates: { canonical: `/jobs/${slug}/` },
     openGraph: { url: `/jobs/${slug}/` },
   };
@@ -69,6 +83,8 @@ export default async function JobDetailPage({ params }: Props) {
   const topCities = getTopPayingCities(occ.soc_code, 20);
   // Removed allCityWages to stay under Vercel body size limit
   const related = getRelatedOccupations(occ.major_group, occ.soc_code, 8);
+  const facts = nationalWage ? getOccupationFacts(occ, nationalWage, topCities) : null;
+  const commentary = facts ? getOccupationCommentary(facts) : null;
   const quizJobs = getHighestPayingJobsNational(30)
     .filter(j => j.annual_median && j.occ_slug !== slug)
     
@@ -114,7 +130,17 @@ export default async function JobDetailPage({ params }: Props) {
 
       <TableOfContents />
 
-      {nationalWage && (
+      {commentary && (
+        <section className="mt-6 mb-8 rounded-lg border border-slate-200 bg-white p-5 md:p-6">
+          <h2 className="text-xl md:text-2xl font-bold mb-3 text-slate-900">{commentary.headline}</h2>
+          <p className="text-slate-700 leading-relaxed mb-3"><strong className="text-slate-900">By the numbers.</strong> {commentary.fact}</p>
+          <p className="text-slate-700 leading-relaxed mb-3"><strong className="text-slate-900">What it means.</strong> {commentary.context}</p>
+          <p className="text-slate-700 leading-relaxed"><strong className="text-slate-900">For workers and employers.</strong> {commentary.implication}</p>
+        </section>
+      )}
+
+      {/* Legacy insight block kept for historical continuity below the v2 commentary. */}
+      {nationalWage && !commentary && (
         <InsightBlock
           entityName={occ.title}
           insights={getJobInsights(occ.title, nationalWage, topCities)}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { searchOccupations, getHighestPayingJobsNational, getMajorGroups } from "@/lib/db";
+import { searchOccupations, getHighestPayingJobsNational } from "@/lib/db";
 import { formatSalary, getDataYear } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -19,7 +19,6 @@ export default async function SearchPage({ searchParams }: Props) {
   const query = q?.trim() ?? "";
   const results = query ? searchOccupations(query, 40) : [];
   const topJobs = !query ? getHighestPayingJobsNational(10) : [];
-  const majorGroups = !query ? getMajorGroups() : [];
   const year = getDataYear();
 
   return (
@@ -83,17 +82,6 @@ export default async function SearchPage({ searchParams }: Props) {
                 <a key={j.occ_slug} href={`/jobs/${j.occ_slug}`} className="p-3 border border-slate-200 rounded-lg hover:border-violet-300 hover:bg-violet-50 transition-all flex justify-between items-center">
                   <span className="font-medium text-slate-900">{j.occ_title}</span>
                   <span className="text-xs text-violet-600 font-medium ml-2 flex-shrink-0">{formatSalary(j.annual_median)}/yr</span>
-                </a>
-              ))}
-            </div>
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold mb-3 text-slate-700">Browse by Occupation Category</h2>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {majorGroups.map((g) => (
-                <a key={g.major_group} href={`/category/${g.major_group}`} className="p-3 border border-slate-200 rounded-lg hover:border-violet-300 hover:bg-violet-50 transition-all flex justify-between items-center">
-                  <span className="font-medium text-slate-900 text-sm">{g.major_group_title}</span>
-                  <span className="text-xs text-slate-400 ml-2 flex-shrink-0">{g.count} jobs</span>
                 </a>
               ))}
             </div>

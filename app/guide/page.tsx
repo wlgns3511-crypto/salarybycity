@@ -65,12 +65,8 @@ export default function GuidesIndex() {
             <span className="text-slate-500"> BLS percentile data by job</span>
           </li>
           <li>
-            <Link href="/locations/" className="text-blue-700 hover:underline font-medium">Salary by location →</Link>
-            <span className="text-slate-500"> median pay across US metros</span>
-          </li>
-          <li>
-            <Link href="/compare/" className="text-blue-700 hover:underline font-medium">Compare two roles →</Link>
-            <span className="text-slate-500"> side-by-side comp analysis</span>
+            <Link href="/state/" className="text-blue-700 hover:underline font-medium">Salary by state →</Link>
+            <span className="text-slate-500"> median pay across US states</span>
           </li>
         </ul>
       </section>

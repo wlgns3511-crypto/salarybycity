@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { UpgradeAnalytics } from "@/components/upgrades/UpgradeAnalytics";
@@ -17,14 +16,13 @@ export const metadata: Metadata = {
   description:
     "Explore salary data for 800+ occupations across 400+ US metro areas. Compare wages, see percentile ranges, and find the highest-paying cities for your career.",
   metadataBase: new URL(SITE_URL),
+  // HCU 2026-04-25 — /es/ killed (zero clicks ever, 5-locale relic).
   alternates: {
     languages: {
       en: `${SITE_URL}/`,
-      es: `${SITE_URL}/es/`,
       "x-default": `${SITE_URL}/`,
     },
   },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
@@ -34,13 +32,11 @@ export const metadata: Metadata = {
   other: { "google-adsense-account": "ca-pub-5724806562146685" },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = (await headers()).get("x-pathname") ?? "/";
-  const htmlLang = pathname === "/es" || pathname.startsWith("/es/") ? "es" : "en";
   const schemaGraph = [
     {
       "@type": "WebSite",
@@ -68,7 +64,7 @@ export default async function RootLayout({
   ];
 
   return (
-    <html lang={htmlLang}>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
@@ -94,12 +90,9 @@ export default async function RootLayout({
             </a>
             <nav className="flex gap-6 text-sm">
               <a href="/jobs/" className="hover:text-blue-600">Occupations</a>
-              <a href="/locations/" className="hover:text-blue-600">Locations</a>
               <a href="/state/" className="hover:text-blue-600">States</a>
-              <a href="/compare/" className="hover:text-blue-600">Compare</a>
               <a href="/guide/" className="hover:text-blue-600">Guides</a>
               <a href="/blog/" className="hover:text-blue-600">Articles</a>
-              <a href="/es/" className="text-slate-400 hover:text-blue-600 text-xs">ES</a>
             </nav>
           </div>
         </header>

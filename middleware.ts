@@ -35,21 +35,29 @@ import { NextResponse } from 'next/server';
 const KILLED_ROUTES =
   /^(?:\/(?:es))?\/jobs\/(?!list(?:\/|$))[^/]+\/[^/]+|^\/(?:locations|compare|category|rankings|states|sitemap|embed)(?:\/|$)|^\/es(?:\/|$)/;
 
+// Cache-bust + diagnostic header. Flip on every meaningful middleware/data
+// change so curl -sI can confirm the latest deploy reached the edge (Cloudflare
+// + the Vercel-style edge cache otherwise serve stale responses without warning).
+const EDGE_VERSION = '2026-05-02-tier-s-expansion';
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (KILLED_ROUTES.test(pathname)) {
-    return new NextResponse('Gone', { status: 410 });
+    return new NextResponse('Gone', {
+      status: 410,
+      headers: { 'x-salary-edge-version': EDGE_VERSION },
+    });
   }
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-pathname', pathname);
 
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
+  const response = NextResponse.next({
+    request: { headers: requestHeaders },
   });
+  response.headers.set('x-salary-edge-version', EDGE_VERSION);
+  return response;
 }
 
 export const config = {

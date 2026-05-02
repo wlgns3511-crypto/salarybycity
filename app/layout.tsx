@@ -88,9 +88,11 @@ export default function RootLayout({
             <a href="/" className="text-xl font-bold text-blue-700">
               {SITE_NAME}
             </a>
-            <nav className="flex gap-6 text-sm">
+            <nav className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
               <a href="/jobs/" className="hover:text-blue-600">Occupations</a>
               <a href="/state/" className="hover:text-blue-600">States</a>
+              <a href="/tools/col-calculator/" className="hover:text-blue-600">COL calculator</a>
+              <a href="/glossary/" className="hover:text-blue-600">Glossary</a>
               <a href="/guide/" className="hover:text-blue-600">Guides</a>
               <a href="/blog/" className="hover:text-blue-600">Articles</a>
             </nav>

@@ -8,7 +8,12 @@ import {
   getRelatedOccupations,
   getWagesByOccupation,
   getHighestPayingJobsNational,
+  getNationalWagesAcrossYears,
+  getRelatedByPay,
 } from "@/lib/db";
+import { SalaryTrendChart } from "@/components/SalaryTrendChart";
+import { RelatedCareersSection } from "@/components/RelatedCareersSection";
+import { deflateSeries } from "@/lib/cpi";
 import { formatSalary, getDataYear } from "@/lib/format";
 import { SalaryOverview, SalaryBar, CityComparisonTable } from "@/components/SalaryTable";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -83,6 +88,15 @@ export default async function JobDetailPage({ params }: Props) {
   const topCities = getTopPayingCities(occ.soc_code, 20);
   // Removed allCityWages to stay under Vercel body size limit
   const related = getRelatedOccupations(occ.major_group, occ.soc_code, 8);
+  const wageHistory = getNationalWagesAcrossYears(occ.soc_code);
+  const trendBaseYear = wageHistory.at(-1)?.year ?? 2024;
+  const trendSeries = deflateSeries(
+    wageHistory
+      .filter((w) => w.annual_median != null)
+      .map((w) => ({ year: w.year, nominal: w.annual_median as number })),
+    trendBaseYear
+  );
+  const relatedByPay = getRelatedByPay(occ.soc_code, occ.major_group, 6);
   const facts = nationalWage ? getOccupationFacts(occ, nationalWage, topCities) : null;
   const commentary = facts ? getOccupationCommentary(facts) : null;
   const quizJobs = getHighestPayingJobsNational(30)
@@ -192,6 +206,14 @@ export default async function JobDetailPage({ params }: Props) {
             p90={nationalWage.annual_p90 ?? 0}
           />
 
+          {trendSeries.length >= 2 && (
+            <SalaryTrendChart
+              series={trendSeries}
+              baseYear={trendBaseYear}
+              title={`National median wage trend, ${trendSeries[0].year}–${trendSeries.at(-1)!.year}`}
+            />
+          )}
+
           <h2 className="text-xl font-bold mb-3">National Salary Distribution</h2>
           <SalaryBar wage={nationalWage} />
           <SalaryOverview wage={nationalWage} jobTitle={occ.title} />
@@ -245,14 +267,22 @@ export default async function JobDetailPage({ params }: Props) {
 
       <AdSlot id="job-detail-bottom" />
 
-      <RelatedEntities
-        entityName={occ.title}
-        heading={`Related Occupations`}
-        items={related.map((r) => ({
-          name: r.title,
-          href: `/jobs/${r.slug}/`,
-        }))}
-      />
+      {relatedByPay.length > 0 && nationalWage?.annual_median ? (
+        <RelatedCareersSection
+          source={{ title: occ.title, nationalMedian: nationalWage.annual_median }}
+          related={relatedByPay}
+          majorGroupTitle={occ.major_group_title}
+        />
+      ) : (
+        <RelatedEntities
+          entityName={occ.title}
+          heading={`Related Occupations`}
+          items={related.map((r) => ({
+            name: r.title,
+            href: `/jobs/${r.slug}/`,
+          }))}
+        />
+      )}
 
       <FeedbackButton pageId={slug} />
 

@@ -1,0 +1,314 @@
+{
+  "0000000": {
+    "state": "US",
+    "stateRpp": 100.0,
+    "msaRpp": 100.0,
+    "year": 2024
+  },
+  "0035620": {
+    "state": "NY",
+    "stateRpp": 107.921,
+    "msaRpp": 112.563,
+    "year": 2024
+  },
+  "0031080": {
+    "state": "CA",
+    "stateRpp": 110.72,
+    "msaRpp": 113.566,
+    "year": 2024
+  },
+  "0016980": {
+    "state": "IL",
+    "stateRpp": 99.958,
+    "msaRpp": 103.595,
+    "year": 2024
+  },
+  "0019100": {
+    "state": "TX",
+    "stateRpp": 97.057,
+    "msaRpp": 103.09,
+    "year": 2024
+  },
+  "0026420": {
+    "state": "TX",
+    "stateRpp": 97.057,
+    "msaRpp": 98.629,
+    "year": 2024
+  },
+  "0047900": {
+    "state": "DC",
+    "stateRpp": 109.901,
+    "msaRpp": 108.884,
+    "year": 2024
+  },
+  "0033100": {
+    "state": "FL",
+    "stateRpp": 103.414,
+    "msaRpp": 114.155,
+    "year": 2024
+  },
+  "0037980": {
+    "state": "PA",
+    "stateRpp": 97.572,
+    "msaRpp": 102.554,
+    "year": 2024
+  },
+  "0012060": {
+    "state": "GA",
+    "stateRpp": 96.293,
+    "msaRpp": 100.058,
+    "year": 2024
+  },
+  "0014460": {
+    "state": "MA",
+    "stateRpp": 105.757,
+    "msaRpp": 108.266,
+    "year": 2024
+  },
+  "0038060": {
+    "state": "AZ",
+    "stateRpp": 100.677,
+    "msaRpp": 103.316,
+    "year": 2024
+  },
+  "0041860": {
+    "state": "CA",
+    "stateRpp": 110.72,
+    "msaRpp": 115.613,
+    "year": 2024
+  },
+  "0040140": {
+    "state": "CA",
+    "stateRpp": 110.72,
+    "msaRpp": 106.442,
+    "year": 2024
+  },
+  "0019820": {
+    "state": "MI",
+    "stateRpp": 96.217,
+    "msaRpp": 100.298,
+    "year": 2024
+  },
+  "0042660": {
+    "state": "WA",
+    "stateRpp": 107.013,
+    "msaRpp": 111.133,
+    "year": 2024
+  },
+  "0033460": {
+    "state": "MN",
+    "stateRpp": 98.621,
+    "msaRpp": 104.822,
+    "year": 2024
+  },
+  "0041740": {
+    "state": "CA",
+    "stateRpp": 110.72,
+    "msaRpp": 111.887,
+    "year": 2024
+  },
+  "0045300": {
+    "state": "FL",
+    "stateRpp": 103.414,
+    "msaRpp": 100.89,
+    "year": 2024
+  },
+  "0019740": {
+    "state": "CO",
+    "stateRpp": 103.052,
+    "msaRpp": 105.782,
+    "year": 2024
+  },
+  "0041180": {
+    "state": "MO",
+    "stateRpp": 90.817,
+    "msaRpp": 95.088,
+    "year": 2024
+  },
+  "0012580": {
+    "state": "MD",
+    "stateRpp": 104.959,
+    "msaRpp": 104.487,
+    "year": 2024
+  },
+  "0036740": {
+    "state": "FL",
+    "stateRpp": 103.414,
+    "msaRpp": 101.418,
+    "year": 2024
+  },
+  "0016740": {
+    "state": "NC",
+    "stateRpp": 94.326,
+    "msaRpp": 97.348,
+    "year": 2024
+  },
+  "0041940": {
+    "state": "CA",
+    "stateRpp": 110.72,
+    "msaRpp": 110.423,
+    "year": 2024
+  },
+  "0040900": {
+    "state": "CA",
+    "stateRpp": 110.72,
+    "msaRpp": 106.67,
+    "year": 2024
+  },
+  "0038900": {
+    "state": "OR",
+    "stateRpp": 103.361,
+    "msaRpp": 105.421,
+    "year": 2024
+  },
+  "0038300": {
+    "state": "PA",
+    "stateRpp": 97.572,
+    "msaRpp": 94.671,
+    "year": 2024
+  },
+  "0012420": {
+    "state": "TX",
+    "stateRpp": 97.057,
+    "msaRpp": 98.066,
+    "year": 2024
+  },
+  "0029820": {
+    "state": "NV",
+    "stateRpp": 99.979,
+    "msaRpp": 100.215,
+    "year": 2024
+  },
+  "0017460": {
+    "state": "OH",
+    "stateRpp": 92.774,
+    "msaRpp": 95.37,
+    "year": 2024
+  },
+  "0028140": {
+    "state": "MO",
+    "stateRpp": 90.817,
+    "msaRpp": 92.543,
+    "year": 2024
+  },
+  "0018140": {
+    "state": "OH",
+    "stateRpp": 92.774,
+    "msaRpp": 95.469,
+    "year": 2024
+  },
+  "0026900": {
+    "state": "IN",
+    "stateRpp": 93.329,
+    "msaRpp": 95.696,
+    "year": 2024
+  },
+  "0017140": {
+    "state": "OH",
+    "stateRpp": 92.774,
+    "msaRpp": 95.37,
+    "year": 2024
+  },
+  "0041700": {
+    "state": "TX",
+    "stateRpp": 97.057,
+    "msaRpp": 94.716,
+    "year": 2024
+  },
+  "0034980": {
+    "state": "TN",
+    "stateRpp": 91.87,
+    "msaRpp": 96.338,
+    "year": 2024
+  },
+  "0046060": {
+    "state": "AZ",
+    "stateRpp": 100.677,
+    "msaRpp": 96.896,
+    "year": 2024
+  },
+  "0027260": {
+    "state": "FL",
+    "stateRpp": 103.414,
+    "msaRpp": 99.484,
+    "year": 2024
+  },
+  "0036420": {
+    "state": "OK",
+    "stateRpp": 87.843,
+    "msaRpp": 90.408,
+    "year": 2024
+  },
+  "0039300": {
+    "state": "RI",
+    "stateRpp": 102.28,
+    "msaRpp": 101.773,
+    "year": 2024
+  },
+  "0040060": {
+    "state": "VA",
+    "stateRpp": 101.104,
+    "msaRpp": 97.858,
+    "year": 2024
+  },
+  "0032820": {
+    "state": "TN",
+    "stateRpp": 91.87,
+    "msaRpp": 92.179,
+    "year": 2024
+  },
+  "0031140": {
+    "state": "KY",
+    "stateRpp": 90.159,
+    "msaRpp": 93.074,
+    "year": 2024
+  },
+  "0040380": {
+    "state": "NY",
+    "stateRpp": 107.921,
+    "msaRpp": 97.035,
+    "year": 2024
+  },
+  "0039580": {
+    "state": "NC",
+    "stateRpp": 94.326,
+    "msaRpp": 98.157,
+    "year": 2024
+  },
+  "0025540": {
+    "state": "CT",
+    "stateRpp": 103.61,
+    "msaRpp": 102.746,
+    "year": 2024
+  },
+  "0035380": {
+    "state": "LA",
+    "stateRpp": 88.207,
+    "msaRpp": 92.597,
+    "year": 2024
+  },
+  "0041620": {
+    "state": "UT",
+    "stateRpp": 98.864,
+    "msaRpp": 100.868,
+    "year": 2024
+  },
+  "0013820": {
+    "state": "AL",
+    "stateRpp": 88.823,
+    "msaRpp": 91.644,
+    "year": 2024
+  },
+  "0015380": {
+    "state": "NY",
+    "stateRpp": 107.921,
+    "msaRpp": 95.844,
+    "year": 2024
+  },
+  "_meta": {
+    "year": 2024,
+    "source": "BEA Regional Price Parities, 2024",
+    "stateBaseline": "US=100",
+    "note": "Higher RPP = costlier area. Use to convert nominal to real wages."
+  }
+}

@@ -133,6 +133,30 @@ export function getNationalWage(socCode: string): WageData | undefined {
   `).get(socCode) as WageData | undefined;
 }
 
+/**
+ * All available years of wage data for one occupation × area.
+ * Used by SalaryTrendChart to render a multi-year nominal+real line.
+ */
+export function getWagesAcrossYears(socCode: string, areaCode: string): WageData[] {
+  return getDb().prepare(`
+    SELECT * FROM wages
+    WHERE soc_code = ? AND area_code = ? AND annual_median IS NOT NULL
+    ORDER BY year ASC
+  `).all(socCode, areaCode) as WageData[];
+}
+
+/**
+ * National wage trend across all years.
+ */
+export function getNationalWagesAcrossYears(socCode: string): WageData[] {
+  return getDb().prepare(`
+    SELECT w.* FROM wages w
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE w.soc_code = ? AND a.area_type = 'N' AND w.annual_median IS NOT NULL
+    ORDER BY w.year ASC
+  `).all(socCode) as WageData[];
+}
+
 // --- Counts for sitemap ---
 
 export function countAllWagePages(): number {
@@ -215,6 +239,56 @@ export function getRelatedOccupations(majorGroup: string, excludeSoc: string, li
     WHERE major_group = ? AND soc_code != ?
     ORDER BY title LIMIT ?
   `).all(majorGroup, excludeSoc, limit) as Occupation[];
+}
+
+/**
+ * Related careers ranked by national-wage proximity within the same major group.
+ * Returns occupations whose national median is closest to the source occupation's
+ * national median (above + below) — so a $130k Software Developer surfaces other
+ * $100k–$160k roles in Computer & Mathematical, not stat-clerk roles.
+ */
+export interface RelatedCareer {
+  soc_code: string;
+  title: string;
+  slug: string;
+  major_group: string;
+  national_median: number;
+  delta_pct: number;
+}
+
+export function getRelatedByPay(
+  socCode: string,
+  majorGroup: string,
+  limit = 6
+): RelatedCareer[] {
+  const sourceWage = getDb().prepare(`
+    SELECT w.annual_median FROM wages w
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE w.soc_code = ? AND a.area_type = 'N'
+    ORDER BY w.year DESC LIMIT 1
+  `).get(socCode) as { annual_median: number } | undefined;
+
+  if (!sourceWage?.annual_median) return [];
+
+  return getDb().prepare(`
+    SELECT
+      o.soc_code,
+      o.title,
+      o.slug,
+      o.major_group,
+      w.annual_median AS national_median,
+      ROUND(((w.annual_median - ?) * 100.0 / ?), 1) AS delta_pct
+    FROM occupations o
+    JOIN wages w ON w.soc_code = o.soc_code
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE o.major_group = ?
+      AND o.soc_code != ?
+      AND a.area_type = 'N'
+      AND w.year = (SELECT MAX(year) FROM wages w2 JOIN areas a2 ON w2.area_code = a2.area_code WHERE w2.soc_code = o.soc_code AND a2.area_type = 'N')
+      AND w.annual_median IS NOT NULL
+    ORDER BY ABS(w.annual_median - ?) ASC
+    LIMIT ?
+  `).all(sourceWage.annual_median, sourceWage.annual_median, majorGroup, socCode, sourceWage.annual_median, limit) as RelatedCareer[];
 }
 
 export function getTopPayingCities(socCode: string, limit = 10): WageWithArea[] {

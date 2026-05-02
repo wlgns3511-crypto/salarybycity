@@ -31,6 +31,7 @@ import { getAllPosts } from '../lib/blog';
 import { US_STATES } from '../lib/states-data';
 import { getAllGuides } from '../lib/guides';
 import { getAllListTypes } from '../lib/salary-cluster-insights';
+import { GLOSSARY } from '../lib/glossary-data';
 
 const SITE_URL = 'https://salarybycity.com';
 const NOW = new Date().toISOString().split('T')[0];
@@ -116,6 +117,18 @@ for (const s of liveStates) {
     add({ url: `${SITE_URL}/state/${s.slug}/salary-ranges/`, priority: '0.6' });
   }
 }
+
+// ── Glossary (HCU 5-청크 patch, 2026-05-02) ──────────────────────────────────
+// 50 BLS/IRS/FLSA/comp term entries with primary-source citations.
+add({ url: `${SITE_URL}/glossary/`, priority: '0.7' });
+for (const entry of GLOSSARY) {
+  add({ url: `${SITE_URL}/glossary/${entry.slug}/`, priority: '0.6' });
+}
+
+// ── Tools (HCU 5-청크 patch, 2026-05-02) ─────────────────────────────────────
+// Tools index + COL calculator (BEA RPP 2024).
+add({ url: `${SITE_URL}/tools/`, priority: '0.6' });
+add({ url: `${SITE_URL}/tools/col-calculator/`, priority: '0.7' });
 
 // ── Cardinality guard ────────────────────────────────────────────────────────
 // Phase C target ~570. Tripwire at 750.

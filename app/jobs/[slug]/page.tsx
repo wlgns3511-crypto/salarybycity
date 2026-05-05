@@ -35,7 +35,7 @@ import { TableOfContents } from '@/components/upgrades/TableOfContents';
 import { SalaryPercentile } from "@/components/tools/SalaryPercentile";
 import { InsightBlock } from "@/components/upgrades/InsightBlock";
 import { getJobInsights } from "@/lib/insights";
-import { DB_UPDATED } from "@/lib/authorship";
+import { BLS_PUBLISHED, REVIEWER_ORG, SOURCE_AUTHORITIES } from "@/lib/authorship";
 import { getOccupationFacts } from "@/lib/salary-facts";
 import { getOccupationCommentary, getOccupationTitle, getOccupationDescription } from "@/lib/salary-commentary";
 
@@ -126,7 +126,9 @@ export default async function JobDetailPage({ params }: Props) {
             "license": "https://creativecommons.org/publicdomain/zero/1.0/",
             "creator": { "@type": "Organization", "name": "DataPeek Facts", "url": "https://datapeekfacts.com" },
             "author": { "@type": "Organization", "name": "DataPeek" },
-            "dateModified": DB_UPDATED,
+            "reviewedBy": [REVIEWER_ORG, ...SOURCE_AUTHORITIES],
+            "isBasedOn": SOURCE_AUTHORITIES.map((s) => ({ "@type": "Dataset", name: s.name, url: s.url })),
+            "dateModified": BLS_PUBLISHED,
             "temporalCoverage": `${year}/${year}`,
             "distribution": { "@type": "DataDownload", "encodingFormat": "text/html", "contentUrl": `https://salarybycity.com/jobs/${slug}/` }
           })

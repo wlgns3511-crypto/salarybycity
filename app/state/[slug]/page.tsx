@@ -4,6 +4,7 @@ import { US_STATES, getStateBySlug } from "@/lib/states-data";
 import {
   getAllStateCodes,
   getAreasByState,
+  getHighestPayingJobsNational,
   getStateTopOccupationsWithNational,
   getStateWageSummary,
   getNationalWageSummary,
@@ -12,8 +13,11 @@ import { formatSalary, getDataYear } from "@/lib/format";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { FAQ } from "@/components/FAQ";
 import { AdSlot } from "@/components/AdSlot";
+import { AuthorBox } from "@/components/AuthorBox";
 import { breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { BLS_PUBLISHED, REVIEWER_ORG, SOURCE_AUTHORITIES } from "@/lib/authorship";
 import { StateRich } from '@/components/state/StateRich';
+import { EmptyStatePage } from "@/components/state/EmptyStatePage";
 import { getStateFacts } from "@/lib/salary-facts";
 import { getStateNarrative } from "@/lib/salary-cluster-insights";
 import { pickVariant } from "@/lib/content-helpers";
@@ -26,11 +30,24 @@ export const dynamicParams = false;
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  // Only emit the ~30 states that actually have BLS metro data in this dataset.
-  // The other 21 (small/rural states without an OEWS metro) would render an empty
-  // state page and trigger notFound(); excluding them keeps the sitemap honest.
-  const codesWithData = new Set(getAllStateCodes());
-  return US_STATES.filter((s) => codesWithData.has(s.code)).map((s) => ({ slug: s.slug }));
+  // All 51 US states + DC. States without BLS metro wage data (~21) render
+  // an EmptyStatePage with national context + nearby-state pointers instead
+  // of a 404 — the OEWS extract simply doesn't include their metro rows.
+  return US_STATES.map((s) => ({ slug: s.slug }));
+}
+
+function nearbyWithDataStates(target: string, codesWithData: Set<string>, count = 5) {
+  const liveStates = US_STATES.filter((s) => codesWithData.has(s.code));
+  const targetIdx = US_STATES.findIndex((s) => s.slug === target);
+  if (targetIdx === -1) return liveStates.slice(0, count);
+  // Sort live states by alphabetical distance from the target state in US_STATES order.
+  return [...liveStates]
+    .sort((a, b) => {
+      const aIdx = US_STATES.findIndex((s) => s.code === a.code);
+      const bIdx = US_STATES.findIndex((s) => s.code === b.code);
+      return Math.abs(aIdx - targetIdx) - Math.abs(bIdx - targetIdx);
+    })
+    .slice(0, count);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -124,7 +141,19 @@ export default async function StateDetailPage({ params }: Props) {
   const topJobs = getStateTopOccupationsWithNational(state.code, 20);
   const metros = getAreasByState(state.code);
 
-  if (!summary || summary.occ_count === 0) notFound();
+  if (!summary || summary.occ_count === 0) {
+    const codesWithData = new Set(getAllStateCodes());
+    const nearby = nearbyWithDataStates(slug, codesWithData, 5);
+    const topNational = getHighestPayingJobsNational(10);
+    return (
+      <EmptyStatePage
+        state={state}
+        nationalSummary={nationalSummary}
+        topNationalJobs={topNational}
+        nearbyStates={nearby}
+      />
+    );
+  }
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
@@ -325,14 +354,37 @@ export default async function StateDetailPage({ params }: Props) {
       {/* JSON-LD */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema(breadcrumbs)) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            name: `${state.name} Salary and Wage Data (${year})`,
+            description: `BLS OEWS state-aggregated wage data for ${state.name}, including median, percentile bands, and top-paying occupations.`,
+            url: `https://salarybycity.com/state/${slug}/`,
+            license: "https://creativecommons.org/publicdomain/zero/1.0/",
+            creator: { "@type": "Organization", name: "DataPeek Facts", url: "https://datapeekfacts.com" },
+            reviewedBy: [REVIEWER_ORG, ...SOURCE_AUTHORITIES],
+            isBasedOn: SOURCE_AUTHORITIES.map((s) => ({ "@type": "Dataset", name: s.name, url: s.url })),
+            dateModified: BLS_PUBLISHED,
+            temporalCoverage: `${year}/${year}`,
+            spatialCoverage: { "@type": "AdministrativeArea", name: state.name },
+          }),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema(breadcrumbs)) }}
       />
+      {(faqs?.length ?? 0) > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
+        />
+      )}
 
       <StateRich slug={slug} state={state} />
+
+      <AuthorBox />
 
     </div>
   );

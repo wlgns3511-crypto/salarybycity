@@ -26,6 +26,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
 import { getAllOccupations, getAllStateCodes } from '../lib/db';
 import { getAllPosts } from '../lib/blog';
 import { US_STATES } from '../lib/states-data';
@@ -36,7 +37,31 @@ import { GLOSSARY } from '../lib/glossary-data';
 const SITE_URL = 'https://salarybycity.com';
 const NOW = new Date().toISOString().split('T')[0];
 const SHARD_SIZE = 40000;
-const OUT_DIR = path.resolve(__dirname, '..', 'public');
+const REPO_ROOT = path.resolve(__dirname, '..');
+const OUT_DIR = path.join(REPO_ROOT, 'public');
+
+// Honest entity lastmod via git: when did the file backing this entity last
+// change? Falls back to NOW if git is unavailable (e.g. CI/Docker without .git).
+// All occupation hubs share one template, so they share one lastmod — that is
+// truthful, not a bug. Per-entity diversity comes from data files (glossary,
+// guides, blog) which DO have their own commits.
+function gitLastModified(relPath: string): string {
+  try {
+    const out = execSync(`git log -1 --format=%cs -- "${relPath}"`, {
+      cwd: REPO_ROOT,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).toString().trim();
+    return out || NOW;
+  } catch {
+    return NOW;
+  }
+}
+
+const OCC_HUB_LASTMOD = gitLastModified('app/jobs/[slug]/page.tsx');
+const STATE_HUB_LASTMOD = gitLastModified('app/state/[slug]/page.tsx');
+const GLOSSARY_LASTMOD = gitLastModified('lib/glossary-data.ts');
+const TOOLS_LASTMOD = gitLastModified('app/tools/page.tsx');
+const LIST_LASTMOD = gitLastModified('lib/salary-cluster-insights.ts');
 
 interface Entry { url: string; lastmod?: string; priority?: string; changefreq?: string; }
 function urlTag(e: Entry): string {
@@ -94,7 +119,7 @@ for (const p of getAllPosts()) {
 // GSC top click: "architectural and engineering managers" → /jobs/{occ}/ hub.
 // All BLS-themed top queries target this surface.
 for (const occ of getAllOccupations()) {
-  add({ url: `${SITE_URL}/jobs/${occ.slug}/`, priority: '0.8' });
+  add({ url: `${SITE_URL}/jobs/${occ.slug}/`, lastmod: OCC_HUB_LASTMOD, priority: '0.8' });
 }
 
 // ── Curated list hubs (HCU 5-chunk patch, 2026-04-28) ────────────────────────
@@ -102,33 +127,37 @@ for (const occ of getAllOccupations()) {
 // six-figure, mass-market, mid-market, entry, STEM, healthcare, management,
 // largest-employment, specialist, wide-pay-range, compressed-pay).
 for (const t of getAllListTypes()) {
-  add({ url: `${SITE_URL}/jobs/list/${t}/`, priority: '0.7' });
+  add({ url: `${SITE_URL}/jobs/list/${t}/`, lastmod: LIST_LASTMOD, priority: '0.7' });
 }
 
-// ── State pages (~30 with BLS metro data) + /salary-ranges/ subpage ──────────
-// US_STATES has all 51, but BLS OEWS only publishes metro-level data for ~30
-// states; the others (VT, WY, MT, ND, etc.) would soft-404 with no metro rows.
+// ── State pages (all 51) + /salary-ranges/ subpage ───────────────────────────
+// All 51 US_STATES are SSG'd. ~30 have BLS metro data and render the full
+// StateRich page; the other ~21 render EmptyStatePage with national context
+// + nearby-state pointers (HCU honesty: we don't 404 on missing data, and we
+// don't fabricate metro-level wages we don't have).
+// The salary-ranges subpage is only emitted for states with metro data.
 const statesWithData = new Set(getAllStateCodes());
-const liveStates = US_STATES.filter((s) => statesWithData.has(s.code));
-const hasSalaryRanges = fs.existsSync(path.resolve(__dirname, '..', 'app', 'state', '[slug]', 'salary-ranges'));
-for (const s of liveStates) {
-  add({ url: `${SITE_URL}/state/${s.slug}/`, priority: '0.7' });
-  if (hasSalaryRanges) {
-    add({ url: `${SITE_URL}/state/${s.slug}/salary-ranges/`, priority: '0.6' });
+const hasSalaryRanges = fs.existsSync(
+  path.join(REPO_ROOT, 'app', 'state', '[slug]', 'salary-ranges'),
+);
+for (const s of US_STATES) {
+  add({ url: `${SITE_URL}/state/${s.slug}/`, lastmod: STATE_HUB_LASTMOD, priority: '0.7' });
+  if (hasSalaryRanges && statesWithData.has(s.code)) {
+    add({ url: `${SITE_URL}/state/${s.slug}/salary-ranges/`, lastmod: STATE_HUB_LASTMOD, priority: '0.6' });
   }
 }
 
 // ── Glossary (HCU 5-청크 patch, 2026-05-02) ──────────────────────────────────
 // 50 BLS/IRS/FLSA/comp term entries with primary-source citations.
-add({ url: `${SITE_URL}/glossary/`, priority: '0.7' });
+add({ url: `${SITE_URL}/glossary/`, lastmod: GLOSSARY_LASTMOD, priority: '0.7' });
 for (const entry of GLOSSARY) {
-  add({ url: `${SITE_URL}/glossary/${entry.slug}/`, priority: '0.6' });
+  add({ url: `${SITE_URL}/glossary/${entry.slug}/`, lastmod: GLOSSARY_LASTMOD, priority: '0.6' });
 }
 
 // ── Tools (HCU 5-청크 patch, 2026-05-02) ─────────────────────────────────────
 // Tools index + COL calculator (BEA RPP 2024).
-add({ url: `${SITE_URL}/tools/`, priority: '0.6' });
-add({ url: `${SITE_URL}/tools/col-calculator/`, priority: '0.7' });
+add({ url: `${SITE_URL}/tools/`, lastmod: TOOLS_LASTMOD, priority: '0.6' });
+add({ url: `${SITE_URL}/tools/col-calculator/`, lastmod: TOOLS_LASTMOD, priority: '0.7' });
 
 // ── Cardinality guard ────────────────────────────────────────────────────────
 // Phase C target ~570. Tripwire at 750.

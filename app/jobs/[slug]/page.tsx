@@ -34,6 +34,7 @@ import { RelatedEntities } from "@/components/upgrades/RelatedEntities";
 import { TableOfContents } from '@/components/upgrades/TableOfContents';
 import { SalaryPercentile } from "@/components/tools/SalaryPercentile";
 import { InsightBlock } from "@/components/upgrades/InsightBlock";
+import { PurchasingPowerComparison } from "@/components/PurchasingPowerComparison";
 import { getJobInsights } from "@/lib/insights";
 import { BLS_PUBLISHED, REVIEWER_ORG, SOURCE_AUTHORITIES } from "@/lib/authorship";
 import { getOccupationFacts } from "@/lib/salary-facts";
@@ -247,6 +248,11 @@ export default async function JobDetailPage({ params }: Props) {
         </section>
       )}
 
+      <PurchasingPowerComparison
+        contextLabel={`${occ.title}`}
+        cities={topCities}
+        baselineMedian={nationalWage?.annual_median ?? null}
+      />
 
       <DidYouKnow fact={`The BLS tracks wage data for over 800 occupations across 400+ metro areas, making it the most comprehensive source for U.S. salary benchmarks.`} />
 

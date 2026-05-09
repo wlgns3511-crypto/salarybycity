@@ -56,6 +56,23 @@ export function getEffectiveRpp(areaCode: string): { value: number; level: 'msa'
 }
 
 /**
+ * Get the state-level RPP for a 2-letter state code (e.g. "CA"). Returns null
+ * if no MSA entry in that state is present in the dataset (which means we
+ * never received the state's stateRpp value either, since stateRpp is stored
+ * per-MSA row).
+ */
+export function getStateRpp(stateCode: string): number | null {
+  const target = stateCode.toUpperCase();
+  for (const key of Object.keys(RPP)) {
+    if (key === '_meta') continue;
+    const entry = RPP[key];
+    if ('source' in entry) continue;
+    if (entry.state === target && entry.stateRpp != null) return entry.stateRpp;
+  }
+  return null;
+}
+
+/**
  * Convert a nominal salary (in source area's nominal dollars) to real (US-baseline)
  * dollars by deflating with that area's RPP.
  *

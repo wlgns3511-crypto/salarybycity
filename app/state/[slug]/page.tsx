@@ -21,6 +21,7 @@ import { EmptyStatePage } from "@/components/state/EmptyStatePage";
 import { getStateFacts } from "@/lib/salary-facts";
 import { getStateNarrative } from "@/lib/salary-cluster-insights";
 import { pickVariant } from "@/lib/content-helpers";
+import { getStateRpp, getRppMeta } from "@/lib/rpp";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -174,6 +175,19 @@ export default async function StateDetailPage({ params }: Props) {
   const diff = natAvg ? summary.avg_median_salary - natAvg : 0;
   const diffPct = natAvg ? ((diff / natAvg) * 100).toFixed(1) : "0";
 
+  // Purchasing-power view: deflate state nominal avg-median by state RPP to
+  // get real (US-baseline) dollars. Falls back to "not available" if BEA RPP
+  // dataset doesn't cover this state.
+  const stateRpp = getStateRpp(state.code);
+  const rppMeta = getRppMeta();
+  const realStateMedian = stateRpp
+    ? Math.round((summary.avg_median_salary * 100) / stateRpp)
+    : null;
+  const realDeltaVsNatPct =
+    realStateMedian != null && natAvg > 0
+      ? Math.round(((realStateMedian - natAvg) / natAvg) * 100)
+      : null;
+
   // Layer 2 cluster narrative — slug-hashed across 51 state pages.
   const stateFacts = getStateFacts(state.code, topJobs, summary);
   const narrative = getStateNarrative(slug, state.name, stateFacts);
@@ -219,6 +233,60 @@ export default async function StateDetailPage({ params }: Props) {
         <p className="text-slate-700 leading-relaxed mb-3"><strong className="text-slate-900">Reading the spread.</strong> {narrative.context}</p>
         <p className="text-slate-700 leading-relaxed"><strong className="text-slate-900">For comparison.</strong> {narrative.implication}</p>
       </section>
+
+      {/* Purchasing power band — RPP-adjusted state real median */}
+      {stateRpp != null && realStateMedian != null && (
+        <section className="mb-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            Purchasing power
+          </p>
+          <h2 className="text-2xl font-bold text-slate-950">
+            {state.name} salaries in real (cost-of-living-adjusted) terms
+          </h2>
+          <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            <div className="rounded-lg bg-white p-4 border border-slate-200">
+              <div className="text-xs uppercase tracking-wide text-slate-500">Nominal avg median</div>
+              <div className="mt-1 text-xl font-bold text-slate-900 tabular-nums">{formatSalary(summary.avg_median_salary)}</div>
+              <div className="mt-1 text-xs text-slate-500">As reported by BLS OEWS</div>
+            </div>
+            <div className="rounded-lg bg-white p-4 border border-slate-200">
+              <div className="text-xs uppercase tracking-wide text-slate-500">{state.name} RPP ({rppMeta.year})</div>
+              <div className="mt-1 text-xl font-bold text-slate-900 tabular-nums">
+                {stateRpp.toFixed(1)}
+                <span className="ml-1 text-sm font-normal text-slate-500">vs US=100</span>
+              </div>
+              <div className="mt-1 text-xs text-slate-500">
+                {stateRpp > 100
+                  ? `${(stateRpp - 100).toFixed(1)}% pricier than U.S. average`
+                  : `${(100 - stateRpp).toFixed(1)}% cheaper than U.S. average`}
+              </div>
+            </div>
+            <div className="rounded-lg bg-white p-4 border border-slate-200">
+              <div className="text-xs uppercase tracking-wide text-slate-500">Real (US=100)</div>
+              <div className="mt-1 text-xl font-bold text-slate-900 tabular-nums">{formatSalary(realStateMedian)}</div>
+              {realDeltaVsNatPct != null && (
+                <div className={`mt-1 text-xs font-medium ${realDeltaVsNatPct >= 0 ? "text-emerald-700" : "text-rose-700"}`}>
+                  {realDeltaVsNatPct >= 0 ? "+" : ""}{realDeltaVsNatPct}% vs national avg
+                </div>
+              )}
+            </div>
+          </div>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+            The &ldquo;Real&rdquo; column deflates the nominal {state.name} avg median by the
+            state&rsquo;s BEA Regional Price Parity ({rppMeta.year} release).
+            {realDeltaVsNatPct != null && realDeltaVsNatPct >= 0 ? (
+              <> A positive delta versus national means {state.name}&rsquo;s headline pay stretches further than the U.S.-average dollar.</>
+            ) : (
+              <> A negative delta versus national means {state.name}&rsquo;s headline pay buys less locally than the U.S.-average dollar.</>
+            )}{" "}
+            For a side-by-side comparison between any two metros, use the{" "}
+            <a href="/tools/col-calculator/" className="underline hover:text-slate-700">
+              cost-of-living calculator
+            </a>
+            .
+          </p>
+        </section>
+      )}
 
       {/* Top occupations with national comparison */}
       {topJobs.length > 0 && (

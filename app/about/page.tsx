@@ -31,6 +31,28 @@ export default function AboutPage() {
         gate content, or sell user data, and our analytics are limited to aggregate page metrics.
       </p>
 
+      <h2 className="text-xl font-semibold mt-8 mb-3">Who Operates SalaryByCity</h2>
+      <p>
+        SalaryByCity is operated by an independent publisher based in South Korea, working with
+        U.S. public-domain wage releases. We disclose this for two reasons. First, you should know
+        that the editorial decisions on this site are made by a non-U.S.-resident operator
+        consuming the same primary sources you can download yourself — we are a presentation and
+        navigation layer over BLS and BEA tables, not a U.S.-based research firm with on-the-ground
+        labor analysts. Second, this means we have no conflicts of interest with U.S. employers,
+        recruiters, payroll vendors, salary-survey companies, or staffing firms; we do not accept
+        sponsored content, paid placements, or commissions on job listings.
+      </p>
+      <p>
+        Practically, our editorial scope is bounded: we map BLS SOC codes, ingest the OEWS extracts
+        as released, validate them against the official tables, present them with cost-of-living
+        and tax-context tools, and write commentary that stays close to what the source data
+        actually shows. Anything that requires lived U.S. labor-market expertise — negotiating in
+        a specific industry, interpreting a regional hiring slowdown, advising on a relocation
+        package — is explicitly outside our scope, and the relevant pages link to the original
+        BLS source so you can take it to a U.S.-based career counselor, recruiter, or financial
+        planner who can advise on your situation.
+      </p>
+
       <h2 className="text-xl font-semibold mt-8 mb-3">How We Verify BLS Data</h2>
       <p>
         Our wage tables are built from the BLS OEWS program, which surveys approximately 1.1

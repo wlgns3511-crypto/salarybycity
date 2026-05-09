@@ -187,6 +187,26 @@ export default function MethodologyPage() {
         </li>
       </ul>
 
+      <h2>Who runs this site</h2>
+      <p>
+        SalaryByCity is operated by an independent publisher based in South
+        Korea. We are not a U.S.-resident research firm and we do not employ
+        U.S.-based labor economists. What we do is build a presentation and
+        navigation layer over the same public-domain BLS, BEA, and Census
+        releases that anyone can download &mdash; with consistent
+        cross-referencing, cost-of-living adjustment via BEA RPP, take-home
+        pay calculations using IRS and state tax tables, and links back to
+        each primary source on every figure. We do not accept paid
+        placements, sponsored salary surveys, or commissions on job
+        listings; we have no contractual relationships with U.S. employers,
+        recruiters, payroll vendors, or staffing firms. Editorial work is
+        limited to mapping, validation, and presentation; interpretation
+        that requires on-the-ground U.S. labor-market expertise is
+        explicitly outside our scope and we link to the original BLS source
+        so you can take any figure to a qualified U.S.-resident
+        professional.
+      </p>
+
       <h2>Corrections and feedback</h2>
       <p>
         If a published BLS figure disagrees with what you see here, please

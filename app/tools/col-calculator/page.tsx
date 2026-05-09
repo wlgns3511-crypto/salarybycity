@@ -76,59 +76,101 @@ export default async function COLCalculatorPage({ searchParams }: SearchParams) 
         heading="Try a comparison"
       />
 
-      <section className="prose prose-slate max-w-none mt-8">
-        <h2>How the math works</h2>
-        <p>
-          BEA publishes a regional price index for every U.S. state, MSA, and metro/non-metro split,
-          called <em>Regional Price Parity</em> (RPP). The U.S. average is set to 100. A metro with
-          RPP of 120 means goods and services there cost 20% more than the national average; an RPP
-          of 90 means 10% less.
-        </p>
-        <p>
-          To convert a salary across metros we multiply by the ratio of the two RPPs:
-        </p>
-        <pre>
-          target salary = source salary × (target RPP / source RPP)
-        </pre>
-        <p>
-          When MSA-level RPP is available (currently 50 metros in our data), we use it. For metros
-          we do not cover at the MSA level, we fall back to the state RPP. The national average
-          row is fixed at RPP = 100 by definition.
-        </p>
+      <section className="mt-8 space-y-5" data-content="psu-col-calculator">
+        <div className="max-w-3xl">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            How to read the result
+          </p>
+          <h2 className="text-2xl font-bold text-slate-950">
+            A purchasing-power match, not a relocation budget
+          </h2>
+          <p className="mt-3 leading-relaxed text-slate-600">
+            The calculator answers one narrow question: what salary in the target metro would buy
+            a similar basket of goods and services as your current salary. Use the result as a
+            purchasing-power benchmark, then check taxes, rent, insurance, commute costs, and job
+            market pay separately.
+          </p>
+        </div>
 
-        <h2>What RPP captures (and what it doesn&rsquo;t)</h2>
-        <p>
-          RPP is a single index covering all consumer expenditures, weighted by what households
-          actually spend on. It captures rents, utilities, food, transit, services, and goods.
-          It does <strong>not</strong> separate housing from groceries — the housing component
-          alone in coastal metros can be 2.5–3× the housing component of low-cost metros, even
-          though the overall RPP is closer (because non-housing items are more uniform). If your
-          household budget is very housing-heavy or very food-heavy, the RPP can either over- or
-          under-state your true cost difference.
-        </p>
+        <div className="grid gap-4 lg:grid-cols-3">
+          <article className="rounded-xl border border-slate-200 bg-white p-5">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Formula
+            </h3>
+            <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800">
+              target salary = source salary x (target RPP / source RPP)
+            </p>
+            <p className="mt-3 text-sm leading-6 text-slate-600">
+              BEA Regional Price Parities set the U.S. average to 100. A metro at 120 is about
+              20% above the national price level, while a metro at 90 is about 10% below it.
+            </p>
+          </article>
 
-        <h2>Sources</h2>
-        <ul>
-          <li>
+          <article className="rounded-xl border border-slate-200 bg-white p-5">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              What RPP captures
+            </h3>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+              <li>Housing and rent within the consumer spending basket.</li>
+              <li>Utilities, food, transit, services, and local goods prices.</li>
+              <li>A broad metro or state-level price level, not one household&rsquo;s exact budget.</li>
+            </ul>
+          </article>
+
+          <article className="rounded-xl border border-slate-200 bg-white p-5">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Check separately
+            </h3>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+              <li>State and local income taxes, property taxes, and payroll deductions.</li>
+              <li>Your actual rent, mortgage, childcare, healthcare, and insurance costs.</li>
+              <li>Whether employers in the target market pay above or below the adjusted number.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div className="rounded-xl border border-blue-100 bg-blue-50/60 p-5">
+          <h3 className="text-lg font-semibold text-slate-950">How to use the number</h3>
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <div className="rounded-lg bg-white p-4 shadow-sm shadow-blue-100/40">
+              <h4 className="font-semibold text-slate-900">For job offers</h4>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Compare the offer against the adjusted salary and the local median pay for your
+                occupation. A lower adjusted offer may still work if benefits, remote flexibility,
+                or career upside are materially better.
+              </p>
+            </div>
+            <div className="rounded-lg bg-white p-4 shadow-sm shadow-blue-100/40">
+              <h4 className="font-semibold text-slate-900">For relocation planning</h4>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Run the same salary through several target metros. If the results are close,
+                compare housing and tax assumptions directly before treating one city as cheaper.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Sources</h3>
+          <div className="mt-3 flex flex-wrap gap-3 text-sm">
             <a
               href="https://www.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area"
               rel="nofollow noopener"
               target="_blank"
+              className="font-medium text-blue-700 hover:underline"
             >
-              BEA Regional Price Parities by State and Metropolitan Statistical Area, 2008–2024
-            </a>{' '}
-            (released February 2025)
-          </li>
-          <li>
+              BEA Regional Price Parities by State and Metropolitan Statistical Area, 2008-2024
+            </a>
             <a
               href="https://www.bls.gov/oes/tables.htm"
               rel="nofollow noopener"
               target="_blank"
+              className="font-medium text-blue-700 hover:underline"
             >
-              BLS Occupational Employment and Wage Statistics — area definitions
+              BLS OEWS area definitions
             </a>
-          </li>
-        </ul>
+          </div>
+        </div>
       </section>
     </div>
   );

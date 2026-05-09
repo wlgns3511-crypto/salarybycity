@@ -1,22 +1,20 @@
 /**
- * Network-wide publisher and per-site editorial team. No individual bylines;
- * data-aggregator sites publish as an Organization.
+ * Network-wide publisher and per-site editorial team metadata for Schema.org.
  *
  * Vintage 4-layer split (Phase 6 v6.2 — caloriewize-style "single DB_UPDATED
  * sitewide" anti-pattern fix):
  *
- *   1. DB_UPDATED            — editorial review date (when our team last
- *                              verified pages against the upstream BLS
- *                              release). Drives AuthorBox "Last verified".
- *   2. BLS_PUBLISHED / YEAR  — BLS OEWS publication date and reference
+ *   1. DB_UPDATED            - dataset refresh/review date for the current
+ *                              SalaryByCity data snapshot.
+ *   2. BLS_PUBLISHED / YEAR  - BLS OEWS publication date and reference
  *                              period. Drives Dataset.dateModified in JSON-LD.
- *   3. METHODOLOGY_REVIEWED  — when /methodology/ was last reviewed (separate
- *                              from data refresh — methodology changes rarely).
- *   4. LEGAL_VINTAGES        — privacy/terms/disclaimer per-page last-updated.
+ *   3. METHODOLOGY_REVIEWED  - when /methodology/ was last reviewed (separate
+ *                              from data refresh; methodology changes rarely).
+ *   4. LEGAL_VINTAGES        - privacy/terms/disclaimer per-page last-updated.
  *                              Per-document, not sitewide.
  *
  * BLS publishes annual OEWS estimates in April for the prior May reference
- * period (e.g. May 2024 wages → April 2025 release).
+ * period (e.g. May 2024 wages to April 2025 release).
  */
 
 export const DB_UPDATED = '2026-04-19';
@@ -42,8 +40,7 @@ export const EDITORIAL_TEAM = {
   parentOrganization: PUBLISHER,
 };
 
-// Reviewer schema for Dataset/Article entities. Organization (not Person) — we
-// don't fabricate fake bylines or named individual reviewers.
+// Reviewer schema for Dataset/Article entities.
 export const REVIEWER_ORG = {
   '@type': 'Organization',
   name: EDITORIAL_TEAM.name,
@@ -52,7 +49,7 @@ export const REVIEWER_ORG = {
 };
 
 /**
- * SOURCE_AUTHORITIES — primary upstream data sources cited by SalaryByCity.
+ * SOURCE_AUTHORITIES - primary upstream data sources cited by SalaryByCity.
  * salarybycity is YMYL-financial (wage data drives compensation, negotiation,
  * relocation decisions) → v6.2 E4.1 mandates 3+ Organization in reviewedBy.
  *

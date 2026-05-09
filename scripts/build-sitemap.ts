@@ -47,6 +47,12 @@ const OUT_DIR = path.join(REPO_ROOT, 'public');
 // guides, blog) which DO have their own commits.
 function gitLastModified(relPath: string): string {
   try {
+    const dirty = execSync(`git status --porcelain -- "${relPath}"`, {
+      cwd: REPO_ROOT,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).toString().trim();
+    if (dirty) return NOW;
+
     const out = execSync(`git log -1 --format=%cs -- "${relPath}"`, {
       cwd: REPO_ROOT,
       stdio: ['ignore', 'pipe', 'ignore'],
@@ -57,10 +63,28 @@ function gitLastModified(relPath: string): string {
   }
 }
 
-const OCC_HUB_LASTMOD = gitLastModified('app/jobs/[slug]/page.tsx');
-const STATE_HUB_LASTMOD = gitLastModified('app/state/[slug]/page.tsx');
+function latestGitLastModified(relPaths: string[]): string {
+  return relPaths.map(gitLastModified).sort().at(-1) ?? NOW;
+}
+
+const OCC_HUB_LASTMOD = latestGitLastModified([
+  'app/jobs/[slug]/page.tsx',
+  'components/AuthorBox.tsx',
+  'components/DataSourceBadge.tsx',
+]);
+const STATE_HUB_LASTMOD = latestGitLastModified([
+  'app/state/[slug]/page.tsx',
+  'app/state/[slug]/salary-ranges/page.tsx',
+  'components/AuthorBox.tsx',
+  'components/FreshnessTag.tsx',
+  'components/DataSourceBadge.tsx',
+]);
 const GLOSSARY_LASTMOD = gitLastModified('lib/glossary-data.ts');
 const TOOLS_LASTMOD = gitLastModified('app/tools/page.tsx');
+const COL_CALCULATOR_LASTMOD = latestGitLastModified([
+  'app/tools/col-calculator/page.tsx',
+  'components/COLAdjustWidget.tsx',
+]);
 const LIST_LASTMOD = gitLastModified('lib/salary-cluster-insights.ts');
 
 interface Entry { url: string; lastmod?: string; priority?: string; changefreq?: string; }
@@ -157,7 +181,7 @@ for (const entry of GLOSSARY) {
 // ── Tools (HCU 5-청크 patch, 2026-05-02) ─────────────────────────────────────
 // Tools index + COL calculator (BEA RPP 2024).
 add({ url: `${SITE_URL}/tools/`, lastmod: TOOLS_LASTMOD, priority: '0.6' });
-add({ url: `${SITE_URL}/tools/col-calculator/`, lastmod: TOOLS_LASTMOD, priority: '0.7' });
+add({ url: `${SITE_URL}/tools/col-calculator/`, lastmod: COL_CALCULATOR_LASTMOD, priority: '0.7' });
 
 // ── Cardinality guard ────────────────────────────────────────────────────────
 // Phase C target ~570. Tripwire at 750.

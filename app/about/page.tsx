@@ -50,15 +50,13 @@ export default function AboutPage() {
         what appears in our Dataset JSON-LD as <code>dateModified</code>.
       </p>
 
-      <h2 className="text-xl font-semibold mt-8 mb-3">Editorial Review Process</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-3">Data Review Process</h2>
       <p>
-        SalaryByCity is published by an editorial team rather than under individual bylines —
-        consistent with how government data aggregators typically operate. Each release of OEWS
-        triggers a verification pass against a sample of high-traffic pages: we compare a random
-        slice of occupation hubs and state pages against the official BLS tables to confirm the
-        median, percentile bands, and employment counts match. The most recent verification was
-        on {DB_UPDATED}, and that date appears as the &ldquo;Last verified&rdquo; badge on
-        occupation and state pages.
+        Each release of OEWS triggers a data review pass against a sample of high-traffic pages:
+        we compare a random slice of occupation hubs and state pages against the official BLS
+        tables to confirm the median, percentile bands, and employment counts match. The current
+        SalaryByCity dataset was updated on {DB_UPDATED}, and occupation and state pages link back
+        to the underlying source notes.
       </p>
       <p>
         Corrections are handled openly: any reader can flag an inaccurate number through our{" "}

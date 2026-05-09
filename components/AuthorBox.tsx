@@ -1,4 +1,4 @@
-import { DB_UPDATED, EDITORIAL_TEAM, PUBLISHER, SOURCE_AUTHORITIES } from "@/lib/authorship";
+import { DB_UPDATED, PUBLISHER, SOURCE_AUTHORITIES } from "@/lib/authorship";
 
 // Compact display labels for the AuthorBox source strip. The full Schema.org
 // names live in SOURCE_AUTHORITIES (used by JSON-LD reviewedBy); these are the
@@ -26,7 +26,7 @@ export function AuthorBox() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="font-semibold text-slate-900 text-sm">
-            Data verified by {EDITORIAL_TEAM.name}
+            Salary data source notes
           </div>
           <div className="text-xs text-slate-500 mt-0.5">
             Part of the <a href={PUBLISHER.url} className="text-slate-700 hover:underline" rel="noopener">{PUBLISHER.name}</a>
@@ -34,8 +34,8 @@ export function AuthorBox() {
         </div>
       </div>
       <p className="text-xs text-slate-600 leading-relaxed mb-3">
-        Salary figures are sourced from BLS OEWS public datasets and verified by our editorial team
-        against the original BLS releases. Methodology — including median and mean derivation,
+        Salary figures are sourced from BLS OEWS public datasets and checked against the original
+        BLS releases. Methodology — including median and mean derivation,
         percentile bands, and the typical 12–18 month BLS publication lag — is documented in our{" "}
         <a href="/methodology/" className="underline hover:text-slate-900">methodology page</a>.
         Wage figures are statistical aggregates and should not substitute for personalized financial
@@ -44,7 +44,7 @@ export function AuthorBox() {
       </p>
       <div className="mb-3 pt-3 border-t border-slate-200">
         <div className="text-[11px] uppercase tracking-wide font-semibold text-slate-500 mb-1.5">
-          Verified against upstream sources
+          Primary upstream sources
         </div>
         <div className="flex flex-wrap gap-1.5">
           {SOURCE_AUTHORITIES.map((src) => {
@@ -67,7 +67,7 @@ export function AuthorBox() {
       <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
         {reviewedAt && (
           <>
-            <span>Last verified: <time dateTime={reviewedAt}>{reviewedAt}</time></span>
+            <span>Dataset updated: <time dateTime={reviewedAt}>{reviewedAt}</time></span>
             <span className="text-slate-300">·</span>
           </>
         )}

@@ -19,6 +19,27 @@ const TOOLS = [
   },
 ];
 
+const RELATED_SURFACES = [
+  {
+    href: '/jobs/',
+    title: 'Find the base salary first',
+    description:
+      'Look up the occupation page before using the calculator so the starting salary is grounded in BLS wage data.',
+  },
+  {
+    href: '/state/',
+    title: 'Check state context',
+    description:
+      'Use state pages when you need broad market context before narrowing to a metro comparison.',
+  },
+  {
+    href: '/methodology/',
+    title: 'Read the data method',
+    description:
+      'Review how SalaryByCity handles BLS OEWS wages, BEA RPP cost indexes, and publication lags.',
+  },
+];
+
 export default function ToolsIndexPage() {
   return (
     <div>
@@ -44,6 +65,29 @@ export default function ToolsIndexPage() {
           </Link>
         ))}
       </div>
+
+      <section className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
+        <h2 className="text-xl font-bold text-slate-950 mb-3">
+          Use the calculator with salary context
+        </h2>
+        <p className="max-w-3xl text-sm leading-6 text-slate-600">
+          The cost-of-living tool is most useful after you have a real salary number to test.
+          Pair it with occupation and state pages so you can compare both market pay and local
+          purchasing power.
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          {RELATED_SURFACES.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-lg border border-slate-200 bg-white p-4 transition hover:border-blue-300 hover:shadow-sm"
+            >
+              <h3 className="text-sm font-semibold text-slate-900">{item.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

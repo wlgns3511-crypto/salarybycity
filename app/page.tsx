@@ -14,6 +14,29 @@ export default function Home() {
   const stateCodes = getAllStateCodes();
   const year = getDataYear();
   const topJobs = getHighestPayingJobsNational(12);
+  const useCases = [
+    {
+      title: 'Compare one occupation',
+      href: '/jobs/',
+      description:
+        'Start with a job title when you need median pay, percentile ranges, and the strongest metro markets for that occupation.',
+      action: 'Browse occupations',
+    },
+    {
+      title: 'Read a state labor market',
+      href: '/state/',
+      description:
+        'Use state pages when you need broad wage context before narrowing into individual occupations or salary ranges.',
+      action: 'Browse states',
+    },
+    {
+      title: 'Adjust an offer for location',
+      href: '/tools/col-calculator/',
+      description:
+        'Use the cost-of-living calculator after you have a salary number and need a purchasing-power comparison across metros.',
+      action: 'Open COL calculator',
+    },
+  ];
 
   return (
     <div>
@@ -25,6 +48,35 @@ export default function Home() {
           Explore salary and wage data for 800+ occupations across 400+ US
           metropolitan areas. Data sourced from the Bureau of Labor Statistics.
         </p>
+      </section>
+
+      <section className="mb-10 rounded-xl border border-slate-200 bg-slate-50 p-5">
+        <div className="mb-4 max-w-3xl">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            How to use SalaryByCity
+          </p>
+          <h2 className="text-2xl font-bold text-slate-950">
+            Pick the salary question before picking the page
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            SalaryByCity is built around BLS occupation data first. Use occupation pages for job
+            comparisons, state pages for market context, and the cost-of-living tool only when you
+            need to translate a salary between locations.
+          </p>
+        </div>
+        <div className="grid gap-3 md:grid-cols-3">
+          {useCases.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="rounded-lg border border-slate-200 bg-white p-4 transition hover:border-blue-300 hover:shadow-sm"
+            >
+              <h3 className="font-semibold text-slate-900">{item.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+              <p className="mt-3 text-sm font-medium text-blue-700">{item.action}</p>
+            </a>
+          ))}
+        </div>
       </section>
 
       <PopularEntities

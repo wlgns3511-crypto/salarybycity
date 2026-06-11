@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { UpgradeAnalytics } from "@/components/upgrades/UpgradeAnalytics";
+import RelatedSites from "@/components/RelatedSites";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -10,7 +11,12 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://salarybycity.com";
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_NAME} - US Salary & Wage Data by Occupation and City`,
+    // Bing CTR harvest (2026-06-11): home carries ~89% of the site's Bing
+    // impressions (1,437/6mo @ pos 6.6, 2.1% CTR) and the query class is
+    // comparison-intent ("salary comparison by city", "BLS salary data").
+    // Answer-first compare verb + the real source (BLS OEWS) replaces the
+    // brand-first generic. 58c.
+    default: `Compare Salaries by City & Occupation (BLS) | ${SITE_NAME}`,
     template: `%s | ${SITE_NAME}`,
   },
   description:
@@ -93,8 +99,6 @@ export default function RootLayout({
               <a href="/state/" className="hover:text-blue-600">States</a>
               <a href="/tools/col-calculator/" className="hover:text-blue-600">COL calculator</a>
               <a href="/glossary/" className="hover:text-blue-600">Glossary</a>
-              <a href="/guide/" className="hover:text-blue-600">Guides</a>
-              <a href="/blog/" className="hover:text-blue-600">Articles</a>
             </nav>
           </div>
         </header>
@@ -108,6 +112,8 @@ export default function RootLayout({
             <p className="mt-2">
               <a href="/about/" className="hover:text-blue-600">About</a>
               {" | "}
+              <a href="/methodology/" className="hover:text-blue-600">Methodology</a>
+              {" | "}
               <a href="/privacy/" className="hover:text-blue-600">Privacy</a>
               {" | "}
               <a href="/terms/" className="hover:text-blue-600">Terms</a>
@@ -120,15 +126,7 @@ export default function RootLayout({
               {" | "}
               <a href="/contact/" className="hover:text-blue-600">Contact</a>
             </p>
-            <div className="mt-4 pt-4 border-t border-slate-100">
-              <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">Keep Exploring</p>
-              <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
-                <a href="https://costbycity.com" className="hover:text-blue-600" rel="nofollow noopener">Cost of Living</a>
-                <a href="https://guidebycity.com" className="hover:text-blue-600" rel="nofollow noopener">City Guides</a>
-                <a href="https://degreewize.com" className="hover:text-blue-600" rel="nofollow noopener">Colleges</a>
-                <a href="https://zippeek.com" className="hover:text-blue-600" rel="nofollow noopener">ZIP Codes</a>
-              </div>
-            </div>
+            <RelatedSites currentSite="SalaryByCity" accentClass="hover:text-blue-600" label="Keep Exploring" />
             <p className="mt-3 text-xs italic text-slate-400">Helping job seekers and employers benchmark salaries across the country.</p>
             <p className="mt-1">
               &copy; {new Date().getFullYear()} {SITE_NAME} &mdash; Free public data tool.

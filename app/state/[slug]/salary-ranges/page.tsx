@@ -9,7 +9,10 @@ import {
   getNationalWageSummary,
 } from '@/lib/db';
 import { formatSalary, getDataYear } from '@/lib/format';
-import { faqSchema } from '@/lib/schema';
+import { faqSchema, datasetSchema } from '@/lib/schema';
+import { decodePercentileSpread, spreadBandLabel } from '@/lib/cost-adjusted-wage-tier';
+import { getWageSpreadInterpretation } from '@/lib/wage-spread-interpretation';
+import { BLS_PUBLISHED } from '@/lib/authorship';
 import { AuthorBox } from '@/components/AuthorBox';
 import { DataSourceBadge } from '@/components/DataSourceBadge';
 import { CrossSiteLinks } from '@/components/CrossSiteLinks';
@@ -17,6 +20,7 @@ import { FeedbackButton } from '@/components/FeedbackButton';
 import { FreshnessTag } from '@/components/FreshnessTag';
 import { EditorNote } from '@/components/EditorNote';
 import { AdSlot } from '@/components/AdSlot';
+import { SalaryPercentileBand } from '@/components/SalaryPercentileBand';
 import { pickVariant } from '@/lib/content-helpers';
 
 export const dynamicParams = false;
@@ -161,9 +165,47 @@ export default async function SalaryRangesPage({ params }: Props) {
   };
   const faqJsonLd = faqSchema(faqs);
 
+  const datasetJsonLd = {
+    ...datasetSchema(
+      `${state.name} Salary Percentile Distribution (${year})`,
+      `Top-20 occupations in ${state.name} broken out by p10/p25/p50/p75/p90 wages from BLS OEWS, paired with within-occupation spread bands (Compressed/Moderate/Wide/Extreme) computed from the p90/p10 ratio.`,
+      `/state/${slug}/salary-ranges/`,
+      [
+        'annual_p10',
+        'annual_p25',
+        'annual_median',
+        'annual_p75',
+        'annual_p90',
+        'percentile_spread_ratio',
+        'percentile_spread_band',
+      ],
+    ),
+    spatialCoverage: { '@type': 'Place', name: state.name },
+    dateModified: BLS_PUBLISHED,
+  };
+
+  // PSU 1차 Interpretation Strip — spread-anchored (this page is the ladder page,
+  // so the real-wage tier is intentionally null; the strip falls back to the
+  // band-only branch and explains the ladder shape).
+  const rangesStripSpread = top.annual_p10 && top.annual_p90
+    ? decodePercentileSpread({
+        annual_p10: top.annual_p10,
+        annual_p25: top.annual_p25,
+        annual_median: top.annual_median,
+        annual_p75: top.annual_p75,
+        annual_p90: top.annual_p90,
+      } as never)
+    : null;
+  const rangesInterpretation = getWageSpreadInterpretation(null, rangesStripSpread, {
+    occupationTitle: top.occ_title,
+    areaName: state.name,
+    areaKind: 'state',
+  });
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bcJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetJsonLd) }} />
       {faqJsonLd && (
         <script
           type="application/ld+json"
@@ -209,6 +251,37 @@ export default async function SalaryRangesPage({ params }: Props) {
         ], 13)}
       />
 
+      {/* PSU 1차 Interpretation Strip — verdict + 4-paragraph branching prose */}
+      <section
+        data-upgrade="wage-spread-interpretation"
+        className={`mb-8 rounded-xl border ${rangesInterpretation.tierTone.ring} ${rangesInterpretation.tierTone.bg} p-5`}
+      >
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            Interpretation Strip
+          </span>
+          {rangesInterpretation.spreadLabel && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-white border border-slate-200 text-slate-700">
+              {rangesInterpretation.spreadLabel}
+            </span>
+          )}
+        </div>
+        <p className={`text-base font-semibold ${rangesInterpretation.tierTone.text} mb-4`}>
+          {rangesInterpretation.verdict}
+        </p>
+        <div className="space-y-3 text-sm text-slate-700 leading-relaxed">
+          <p>{rangesInterpretation.paragraphs.bandMeaning}</p>
+          <p>{rangesInterpretation.paragraphs.occupationMeaning}</p>
+          <p>{rangesInterpretation.paragraphs.areaComparison}</p>
+          <p>{rangesInterpretation.paragraphs.readerAction}</p>
+        </div>
+        <p className="mt-3 text-xs text-slate-500">
+          Composed from BLS OEWS p10/p50/p90 and BEA Regional Price Parities. See{' '}
+          how this strip is computed
+          .
+        </p>
+      </section>
+
       {/* Spotlight: top 3 occupations' ranges */}
       <section className="mb-8">
         <h2 className="text-lg font-bold text-slate-900 mb-3">Three Highest-Paying Occupations — Full Distribution</h2>
@@ -249,6 +322,45 @@ export default async function SalaryRangesPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      {/* Distribution-shape view — pick the highest-paid occupation whose BLS
+          OEWS percentiles aren't collapsed by the $239,200 top-code. Many
+          executive/medical roles have p25=p50=p75=p90=239200 in BLS state
+          tables, which would render as a degenerate band; instead we honestly
+          surface the first occupation with a real p10<p90 spread. */}
+      {(() => {
+        const bandJob = jobs.find(
+          (j) =>
+            j.annual_p10 != null &&
+            j.annual_p25 != null &&
+            j.annual_median != null &&
+            j.annual_p75 != null &&
+            j.annual_p90 != null &&
+            j.annual_p90 > j.annual_p10,
+        );
+        if (!bandJob) return null;
+        return (
+          <section className="mb-8">
+            <h2 className="text-lg font-bold text-slate-900 mb-2">Pay Distribution Shape — {bandJob.occ_title}</h2>
+            <SalaryPercentileBand
+              p10={bandJob.annual_p10!}
+              p25={bandJob.annual_p25!}
+              median={bandJob.annual_median!}
+              p75={bandJob.annual_p75!}
+              p90={bandJob.annual_p90!}
+              mean={bandJob.annual_mean ?? null}
+              nationalMedian={bandJob.national_median ?? null}
+              occupationTitle={bandJob.occ_title}
+              areaLabel={state.name}
+            />
+            {bandJob !== jobs[0] && (
+              <p className="text-xs text-slate-500 mt-1">
+                Showing {bandJob.occ_title} (the highest-paid occupation with an uncollapsed BLS percentile band). {jobs[0].occ_title} — {state.name}'s top-paying role — has BLS percentiles top-coded at $239,200, so its distribution can't be drawn honestly.
+              </p>
+            )}
+          </section>
+        );
+      })()}
 
       <AdSlot id="4455667788" />
 
@@ -308,21 +420,26 @@ export default async function SalaryRangesPage({ params }: Props) {
       </section>
 
       {/* Spread analysis */}
-      <section className="mb-10">
+      <section className="mb-10" data-upgrade="state-percentile-spread">
         <h2 className="text-xl font-bold mb-4">Within-Job Pay Inequality (p90 ÷ p10)</h2>
-        <p className="text-sm text-slate-600 mb-4">
+        <p className="text-sm text-slate-600 mb-3">
           The p90/p10 ratio measures how much the <em>same job title</em> pays differently across
-          experience, employer, and specialization. Ratios above ~3× signal high reward for
-          specialization.
+          experience, employer, and specialization. We classify each ratio into four bands —
+          Compressed (&lt;3.0×), Moderate (3.0–4.0×), Wide (4.0–6.0×), and Extreme (≥6.0×) — to
+          highlight which occupations reward specialization most heavily within {state.name}.
+        </p>
+        <p className="text-xs text-slate-500 mb-4">
+          See CostAdjustedWageTier &amp; spread explainer for the full methodology.
         </p>
         <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
-          <table className="w-full text-sm min-w-[520px]">
+          <table className="w-full text-sm min-w-[640px]">
             <thead className="bg-slate-50 text-slate-600">
               <tr>
                 <th className="px-3 py-2 text-left">Occupation</th>
                 <th className="px-3 py-2 text-right">p10</th>
                 <th className="px-3 py-2 text-right">p90</th>
                 <th className="px-3 py-2 text-right">p90 / p10</th>
+                <th className="px-3 py-2 text-left">Band</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -331,6 +448,10 @@ export default async function SalaryRangesPage({ params }: Props) {
                 .sort((a, b) => (b.annual_p90! / b.annual_p10!) - (a.annual_p90! / a.annual_p10!))
                 .slice(0, 12)
                 .map((j) => {
+                  const spread = decodePercentileSpread({
+                    annual_p10: j.annual_p10,
+                    annual_p90: j.annual_p90,
+                  } as never);
                   const ratio = (j.annual_p90! / j.annual_p10!).toFixed(2);
                   return (
                     <tr key={j.soc_code} className="hover:bg-slate-50">
@@ -338,12 +459,18 @@ export default async function SalaryRangesPage({ params }: Props) {
                       <td className="px-3 py-2 text-right text-slate-500">{formatSalary(j.annual_p10)}</td>
                       <td className="px-3 py-2 text-right text-slate-700">{formatSalary(j.annual_p90)}</td>
                       <td className="px-3 py-2 text-right font-semibold text-slate-900">{ratio}×</td>
+                      <td className="px-3 py-2 text-slate-700">{spreadBandLabel(spread.band)}</td>
                     </tr>
                   );
                 })}
             </tbody>
           </table>
         </div>
+        <p className="text-xs text-slate-500 mt-2">
+          Band cutoffs are SalaryByCity's heuristic, not a BLS official rating. Within-occupation
+          variation reflects experience, employer size, and sub-specialty — it does not control for
+          those factors individually.
+        </p>
       </section>
 
       <AdSlot id="4455667789" />

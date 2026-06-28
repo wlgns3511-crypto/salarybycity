@@ -1,228 +1,47 @@
-/**
- * Long-form evergreen guides — US salary data, comp benchmarks, and negotiation.
- * Hub pages that link deep into the jobs × locations × compare matrix.
- * Each guide targets a high-intent compensation question with real numbers.
- */
-
+// lib/guides.ts — stub after /guide/* HCU kill (2026-05-27).
+// Real guide content + routes removed; this stub keeps external imports
+// (sitemap loops, orphan components, etc.) type-safe by returning an empty
+// array. All Guide fields are optional so any orphaned consumer that reads
+// guide.readingTime / .lastModified / .content compiles. At runtime the
+// array is empty so those accesses never execute.
 export interface Guide {
   slug: string;
   title: string;
   description: string;
-  intro: string; // HTML
-  sections: Array<{ heading: string; html: string }>;
-  faqs: Array<{ question: string; answer: string }>;
-  category: string;
-  updatedAt: string;
+  intro?: string;
+  sections?: Array<{ heading: string; html: string }>;
+  faqs?: Array<{ question: string; answer: string }>;
+  category?: string;
+  updatedAt?: string;
+  // Optional fields observed in portfolio orphan-component consumers:
+  date?: string;
+  publishedAt?: string;
+  lastModified?: string;
+  content?: string;
+  readingTime?: number;
+  tags?: string[];
+  level?: string;
+  excerpt?: string;
+  image?: string;
+  author?: string;
+  metaDesc?: string;
+  oneLine?: string;
+  screener?: string;
+  name?: string;
+  categoryLabel?: string;
+  titleLabel?: string;
 }
 
-const u = '2026-04-10';
-
-export const guides: Guide[] = [
-  {
-    slug: 'gross-vs-net-salary-by-state',
-    title: 'Gross vs Net Salary: Why $100K in NYC Isn\'t $100K in Texas',
-    description: 'Federal, state, and local tax differences mean the same gross salary produces dramatically different take-home pay across states. A practical breakdown with real numbers for $50K, $100K, and $200K earners.',
-    category: 'Tax & Take-Home',
-    updatedAt: u,
-    intro: `<p>"$100,000" sounds the same on every offer letter, but the money that actually lands in your bank account can differ by $15,000 a year between two cities. The difference comes from federal income tax (consistent across states), state income tax (zero in nine states, 13.3 percent at the top in California), local taxes (NYC adds 3.876 percent, Philadelphia 3.79 percent), and a handful of state-specific payroll taxes (CA SDI, NJ FLI, NY FLI). This guide breaks down the real take-home pay for the same gross salary in 10 representative states, and shows you how to do the math for any salary and any state.</p>`,
-    sections: [
-      {
-        heading: 'The five layers of paycheck deductions',
-        html: `<p>Every US paycheck has between 4 and 7 separate deductions before you see your net pay:</p><ol><li><strong>Federal income tax:</strong> 10–37 percent progressive, applied to taxable income (gross minus pre-tax deductions and the standard deduction).</li><li><strong>Social Security:</strong> 6.2 percent of wages up to the wage base ($176,100 in 2026). Stops above that ceiling.</li><li><strong>Medicare:</strong> 1.45 percent of all wages, plus an additional 0.9 percent on wages above $200,000 (single) or $250,000 (married).</li><li><strong>State income tax:</strong> 0 percent in nine no-tax states, up to 13.3 percent at the top in California.</li><li><strong>Local income tax:</strong> NYC, Philadelphia, Cleveland, parts of Maryland, and a handful of others. Typically 1–4 percent.</li><li><strong>State disability and family leave (SDI/FLI/PFML):</strong> California 1.1 percent, New Jersey ~0.5 percent, New York ~0.5 percent, Washington 0.9 percent.</li></ol><p>The federal layers (1–3) are the same everywhere. The state and local layers (4–6) are what create the dramatic differences in take-home pay across states.</p>`,
-      },
-      {
-        heading: '$100,000 take-home in 10 states',
-        html: `<p>Single filer, no dependents, standard deduction, no 401(k) contributions. Approximate annual take-home (federal + state + FICA + local where applicable):</p><ul><li><strong>Texas:</strong> $78,089 — no state income tax</li><li><strong>Florida:</strong> $78,089 — no state income tax</li><li><strong>Tennessee:</strong> $78,089 — no state income tax (no wage tax)</li><li><strong>Washington:</strong> $77,189 — no state income tax, but 0.9% PFML</li><li><strong>Pennsylvania:</strong> $74,989 — flat 3.07% state tax</li><li><strong>Illinois:</strong> $73,489 — flat 4.95% state tax</li><li><strong>Massachusetts:</strong> $73,089 — flat 5% state tax</li><li><strong>California:</strong> $71,489 — progressive up to 13.3%, plus 1.1% SDI</li><li><strong>New York (state only):</strong> $72,489 — progressive state tax</li><li><strong>New York City:</strong> $68,609 — adds 3.876% NYC local tax on top of NY state</li></ul><p>The gap between Texas and NYC for the same $100,000 gross is roughly <strong>$9,500 per year</strong>, or about $790 per month. Over a 30-year career at the same salary, that's $285,000 — enough to dramatically change retirement outcomes.</p><p>Use our <a href="/state/">location pages</a> to see median wages in each metro, and our <a href="/jobs/">compare tool</a> to see two locations side by side.</p>`,
-      },
-      {
-        heading: 'Why the gap widens at higher incomes',
-        html: `<p>The take-home difference is not linear. At lower incomes (below $50K), the no-tax states only save you 3–5 percent in absolute take-home because you are in a low federal bracket and below state progressive thresholds. At $200K+, the gap balloons because California's top brackets kick in, NYC's surtax adds, and federal Medicare additional 0.9 percent applies.</p><p>For $200,000 gross, single filer, the same comparison:</p><ul><li><strong>Texas:</strong> $147,089 take-home</li><li><strong>California:</strong> $130,290 take-home</li><li><strong>NYC:</strong> $126,989 take-home</li></ul><p>Gap: $20,100/year between Texas and NYC for $200K. The progressive structure of state income tax means high earners feel the difference far more than middle earners.</p>`,
-      },
-      {
-        heading: 'The states with no income tax — and the catch',
-        html: `<p>Nine states impose no broad-based income tax on wages: <strong>Alaska, Florida, Nevada, New Hampshire (interest/dividends until 2026), South Dakota, Tennessee, Texas, Washington, Wyoming</strong>. New Hampshire phased out its interest/dividends tax through 2026, joining the no-tax list.</p><p>The catch: states need revenue from somewhere. No-income-tax states typically have:</p><ul><li><strong>Higher property taxes:</strong> Texas (1.7% effective), New Hampshire (2.0%), Wyoming (0.6% — exception)</li><li><strong>Higher sales taxes:</strong> Tennessee 9.5% combined (highest in nation), Washington 9.4%</li><li><strong>Higher gas taxes or other excise taxes</strong></li></ul><p>For high earners, the no-income-tax shift still favors moving (because income tax savings exceed property tax increases). For lower earners with high housing costs, the math is much closer.</p>`,
-      },
-      {
-        heading: 'The 401(k) and HSA shield',
-        html: `<p>Pre-tax deductions reduce your taxable income for both federal and state purposes (in most states). The 2026 limits:</p><ul><li><strong>401(k):</strong> $23,500 ($31,000 if 50+)</li><li><strong>HSA:</strong> $4,300 self / $8,550 family</li><li><strong>FSA:</strong> $3,300</li></ul><p>For a $100K California earner contributing the full 401(k), taxable income drops to $76,500 — moving them out of the 24 percent federal bracket and saving roughly $5,640 federally plus $2,300 in California tax. Effective combined marginal rate at this income: about 33.7 percent. Every dollar contributed to the 401(k) returns 33.7 cents in immediate tax savings, on top of whatever the investment grows to.</p><p>This is why the "where you live" question matters less for high-savings households — they shield large amounts of income from state tax regardless of where they live. The take-home gap narrows significantly for high savers.</p>`,
-      },
-      {
-        heading: 'How to use this for a job offer comparison',
-        html: `<p>Three steps to compare two offers in different states:</p><ol><li><strong>Calculate gross-to-net</strong> for each offer using a calculator that includes state and local taxes. Use our linked tools or any reputable take-home calculator.</li><li><strong>Add cost-of-living adjustment.</strong> A $90,000 offer in Austin has different purchasing power than $100,000 in San Francisco. Use the BLS Regional Price Parity or our <a href="https://costbycity.com">cost of living data</a> to normalize.</li><li><strong>Subtract employer benefit gaps.</strong> A 6 percent 401(k) match versus a 3 percent match at the same salary is a $3,000+ annual difference at $100K. Health insurance premiums and HSA contributions also vary widely.</li></ol><p>The headline gross salary is the worst metric for comparing offers across states. Always normalize for tax, cost of living, and benefits before deciding.</p>`,
-      },
-    ],
-    faqs: [
-      { question: 'Why is take-home pay so different between states?', answer: 'State income tax rates range from 0 percent (Texas, Florida, Nevada, and 6 others) to 13.3 percent (California top bracket). Local income taxes (NYC, Philadelphia, Cleveland) add 1–4 percent more in some cities. The same gross salary can produce a $9,000+ annual difference in take-home pay depending on where you work.' },
-      { question: 'How much take-home pay do I get on $100,000?', answer: 'Approximately $78,000 in no-income-tax states (Texas, Florida, Tennessee), $73,000–$74,000 in flat-tax states (Pennsylvania, Illinois, Massachusetts), $71,500 in California, and $68,600 in New York City — assuming single filer with standard deduction and no 401(k) contributions.' },
-      { question: 'Do no-income-tax states actually save you money?', answer: 'For high earners, yes — usually thousands per year even after offsetting higher property and sales taxes. For lower-middle earners, the savings are smaller because state income tax is already low at low incomes. Texas and New Hampshire have the highest property taxes; Tennessee and Washington have the highest sales taxes.' },
-      { question: 'How does FICA differ from state income tax?', answer: 'FICA (Social Security 6.2% + Medicare 1.45%) is federal and identical in every state. State income tax is what varies. FICA also has a wage base cap on Social Security ($176,100 in 2026), so high earners stop paying that portion mid-year.' },
-      { question: 'Does NYC really have a separate city income tax?', answer: 'Yes. New York City levies a progressive personal income tax of 3.078% to 3.876% on top of New York State income tax. Philadelphia, Cleveland, and parts of Maryland also have local income taxes. Most US cities do not.' },
-      { question: 'How do 401(k) contributions affect my take-home pay?', answer: 'Pre-tax 401(k) contributions reduce both federal and state taxable income (in most states). At a 30 percent marginal rate, every $1,000 contributed reduces your tax by about $300, so the actual reduction in take-home is only $700 per $1,000 contributed.' },
-      { question: 'Should I move for a higher salary or lower taxes?', answer: 'Run the full math: take-home + cost of living + benefits + career trajectory. A $90,000 offer in Austin can easily beat $110,000 in San Francisco after taxes and rent. A $130,000 offer in NYC may still beat $120,000 in Tampa for high earners with strong career upside in the bigger market.' },
-    ],
-  },
-  {
-    slug: 'median-vs-mean-salary',
-    title: 'Median vs Mean Salary: Why "Average" in San Francisco Is a Lie',
-    description: 'Why median salary is the only honest measure for typical pay, how mean salary gets distorted by top earners, and which metric to use for negotiation, comparison, and policy.',
-    category: 'Statistics',
-    updatedAt: u,
-    intro: `<p>Most salary headlines quote the wrong number. "Average software engineer salary in San Francisco: $185,000" means the mean — and the mean is dramatically inflated by a small number of senior engineers at FAANG companies earning $500K+. The median (the actual middle of the distribution) is closer to $145,000. The gap between mean and median in tech-heavy markets can exceed 30 percent. This guide explains why this happens, when to use which metric, and how to read salary data without getting fooled.</p>`,
-    sections: [
-      {
-        heading: 'Mean vs median: the basic difference',
-        html: `<p><strong>Mean</strong> (arithmetic average) is the sum of all values divided by the count. If 9 people earn $80,000 and 1 person earns $1,000,000, the mean is $172,000.</p><p><strong>Median</strong> is the middle value when you sort the list. In the same example, the median is $80,000 — half the people earn less, half earn more.</p><p>The example shows the problem: the mean ($172,000) is misleading. Nine out of ten people in the group earn $80,000. The single $1M earner pulls the mean far above what is actually typical. The median ($80,000) accurately describes what a "typical" person earns.</p><p>This is why every reputable wage data source (BLS, Census, Glassdoor for mid-distribution) reports median first. Reports that lead with mean are usually trying to create a marketing impression of higher pay than reality.</p>`,
-      },
-      {
-        heading: 'The right-skew of salary distributions',
-        html: `<p>Wages are not normally distributed (bell-shaped). They are right-skewed, with a long tail of high earners. A few extreme values pull the mean upward without moving the median. This is true for almost every occupation and location, but the gap is largest in:</p><ul><li><strong>High-variance professions:</strong> finance, tech, sales, executives, lawyers in big firms</li><li><strong>Markets with concentrated wealth:</strong> SF Bay Area, Manhattan, Seattle, Boston</li><li><strong>Aggregated data:</strong> "all occupations" combines janitors and hedge fund managers</li></ul><p>Examples of mean-vs-median gaps in 2024 BLS data:</p><ul><li><strong>Software developers, San Francisco MSA:</strong> mean ~$182,000, median ~$148,000 (gap: 23%)</li><li><strong>Lawyers, NYC MSA:</strong> mean ~$210,000, median ~$165,000 (gap: 27%)</li><li><strong>All occupations, US national:</strong> mean ~$66,000, median ~$48,000 (gap: 38%)</li><li><strong>Cashiers (low variance):</strong> mean ~$28,500, median ~$28,000 (gap: 2%)</li></ul><p>The smaller the gap, the more uniform the profession. A 30+ percent gap means the field has a long tail — and you need to know whether you are likely to be in that tail or not.</p>`,
-      },
-      {
-        heading: 'Why mean is sometimes the right metric',
-        html: `<p>Mean is useful when you care about <strong>total dollars</strong> rather than <strong>typical experience</strong>. Three valid uses:</p><ol><li><strong>Government revenue forecasting:</strong> total income tax collected depends on the sum of all wages, which is best estimated by mean × count.</li><li><strong>Total cost of a workforce:</strong> if you're staffing 50 positions in a city, your total payroll budget is closer to mean × 50 than median × 50.</li><li><strong>Investor analysis:</strong> total addressable market for products targeting "people earning $X+" is best estimated using mean and quantiles, not median alone.</li></ol><p>For individuals comparing their own pay, planning a career move, or negotiating a salary, mean is almost always the wrong metric. The question "what does a software engineer in this city actually earn" is answered by the median, with quantiles (10th, 25th, 75th, 90th percentile) providing the full distribution.</p>`,
-      },
-      {
-        heading: 'Reading percentiles: the full distribution',
-        html: `<p>The most informative wage report shows multiple percentiles, not just one summary number. BLS publishes:</p><ul><li><strong>10th percentile:</strong> entry-level or lowest-paid</li><li><strong>25th percentile:</strong> early career</li><li><strong>50th percentile (median):</strong> middle</li><li><strong>75th percentile:</strong> experienced</li><li><strong>90th percentile:</strong> top earners (just below the long tail)</li></ul><p>For software developers in San Francisco MSA (BLS OEWS data), recent percentiles look approximately like:</p><ul><li>10th percentile: $98,000</li><li>25th percentile: $122,000</li><li>50th (median): $148,000</li><li>75th percentile: $182,000</li><li>90th percentile: $215,000</li></ul><p>Notice: the gap from 50th to 90th is much larger than from 10th to 50th. That's the right-skew. To know where you sit, find your own salary in this distribution and identify your percentile. If you are at the 60th percentile, you can credibly target the 75th in your next negotiation.</p>`,
-      },
-      {
-        heading: 'The negotiation rule',
-        html: `<p>When you are negotiating a salary, three rules:</p><ol><li><strong>Always ask for median + a percentile range</strong>, not the average. "What's the salary range for this role" is the right question, not "what's the average." You want to know the 50th, 75th, and 90th percentiles for the role and location.</li><li><strong>Anchor at the 75th percentile</strong> for experienced candidates. This is what experienced people in that role actually earn — and asking for it is not aggressive, it's normal.</li><li><strong>Never quote a national average for a local role.</strong> National averages disguise huge regional differences. A "national average software engineer salary" is meaningless for negotiating in any specific city.</li></ol><p>Use our <a href="/jobs/">occupation pages</a> for current BLS percentile data by metro, and our <a href="/jobs/">compare tool</a> to see how two locations differ for the same role.</p>`,
-      },
-    ],
-    faqs: [
-      { question: 'What is the difference between mean and median salary?', answer: 'Mean is the arithmetic average — sum divided by count. Median is the middle value when salaries are sorted. Median is more accurate for typical pay because it is not distorted by a small number of high earners. Mean is inflated when the distribution has a long tail (most professions and most cities).' },
-      { question: 'Which is higher, mean or median salary?', answer: 'Mean is almost always higher than median because wage distributions are right-skewed. The gap is small (under 5%) for low-variance occupations like cashiers, and very large (25-40%) for high-variance occupations like software development, finance, and law in major metros.' },
-      { question: 'Why does BLS report both mean and median?', answer: 'Different uses. Mean is needed for total wage calculations (government revenue, total payroll). Median is more accurate for individual or typical pay. BLS publishes both so analysts and individuals can choose the right metric for their question.' },
-      { question: 'What does the 75th percentile salary mean?', answer: 'The salary at which 75 percent of people in that role and location earn less, and 25 percent earn more. It represents experienced or senior employees in the field. If you are mid-career or above, the 75th percentile is a reasonable negotiation target.' },
-      { question: 'Should I compare my salary to the mean or median?', answer: 'Always median. You want to know where you stand relative to a typical person in your role, not relative to a number inflated by a handful of executives. If you must compare to a single number, use median.' },
-      { question: 'Why is the average software engineer salary in SF so high?', answer: 'Because a small number of senior engineers at top tech companies earn $400K-$700K+, pulling the mean upward. The median is closer to $145K-$155K, which represents a typical mid-level engineer. The mean reflects total comp, not typical pay.' },
-    ],
-  },
-  {
-    slug: 'cost-adjusted-salary-purchasing-power',
-    title: 'Cost-Adjusted Salary: The Real Purchasing Power Ranking',
-    description: 'Why $85K in Denver beats $120K in San Francisco — how to use BLS Regional Price Parity to convert nominal salary into real purchasing power, with city rankings.',
-    category: 'Real Income',
-    updatedAt: u,
-    intro: `<p>$120,000 in San Francisco sounds dramatically better than $85,000 in Denver. After housing, taxes, and everyday costs, it isn't. Cost-of-living differences between US metros are larger than salary differences for the same role, which means the highest-paying cities are often not the highest-real-income cities. The federal government publishes a metric called Regional Price Parity (RPP) specifically to convert nominal salaries into real purchasing power. This guide explains RPP, gives you the formula, and ranks the top metros by real income for typical professional roles.</p>`,
-    sections: [
-      {
-        heading: 'What Regional Price Parity actually measures',
-        html: `<p>Regional Price Parity (RPP) is published by the US Bureau of Economic Analysis. It measures the price level of goods and services in each US metropolitan area relative to the national average (which is set at 100). An RPP of 130 means the metro is 30 percent more expensive than average; 80 means it is 20 percent cheaper.</p><p>RPP combines several components weighted to reflect typical household spending:</p><ul><li><strong>Housing rent:</strong> the largest single component (about 18% of weight)</li><li><strong>Other goods and services:</strong> food, transportation, healthcare, services</li></ul><p>The data is updated annually. Recent RPP values for major US metros:</p><ul><li><strong>San Francisco-Oakland:</strong> 134 (34% above average)</li><li><strong>San Jose-Sunnyvale:</strong> 137</li><li><strong>New York-Newark:</strong> 124</li><li><strong>Los Angeles:</strong> 117</li><li><strong>Boston:</strong> 116</li><li><strong>Seattle-Tacoma:</strong> 114</li><li><strong>Denver-Aurora:</strong> 105</li><li><strong>Austin-Round Rock:</strong> 102</li><li><strong>Atlanta:</strong> 99</li><li><strong>Dallas-Fort Worth:</strong> 99</li><li><strong>Chicago:</strong> 102</li><li><strong>Houston:</strong> 95</li><li><strong>Phoenix:</strong> 102</li><li><strong>Memphis:</strong> 89 (11% below average)</li><li><strong>Brownsville-Harlingen:</strong> 81 (cheapest large MSA)</li></ul>`,
-      },
-      {
-        heading: 'The cost-adjusted salary formula',
-        html: `<p>To convert a nominal salary into "purchasing power equivalent" relative to the national average:</p><p><code>Real Salary = Nominal Salary × 100 / RPP</code></p><p>Examples for a software engineer:</p><ul><li><strong>$160,000 in San Francisco</strong> (RPP 134): real salary = $160,000 × 100 / 134 = <strong>$119,403</strong></li><li><strong>$130,000 in Seattle</strong> (RPP 114): real salary = $130,000 × 100 / 114 = <strong>$114,035</strong></li><li><strong>$115,000 in Austin</strong> (RPP 102): real salary = $115,000 × 100 / 102 = <strong>$112,745</strong></li><li><strong>$110,000 in Atlanta</strong> (RPP 99): real salary = $110,000 × 100 / 99 = <strong>$111,111</strong></li><li><strong>$105,000 in Denver</strong> (RPP 105): real salary = $105,000 × 100 / 105 = <strong>$100,000</strong></li><li><strong>$95,000 in Phoenix</strong> (RPP 102): real salary = $95,000 × 100 / 102 = <strong>$93,137</strong></li></ul><p>San Francisco still leads in real terms in this example, but only by about 5 percent over Seattle and 7 percent over Austin — a much smaller gap than the nominal $50,000 difference suggests. Your actual purchasing power in SF is barely higher despite getting a much larger paycheck.</p>`,
-      },
-      {
-        heading: 'When real income flips',
-        html: `<p>For some role and city pairs, the lower-nominal-salary city actually has higher real income. This is the "flip" case:</p><ul><li><strong>$140,000 SF software engineer</strong> (real $104,478) <strong>vs $110,000 Austin</strong> (real $107,843) — Austin wins by $3,400 in purchasing power despite the $30K nominal gap.</li><li><strong>$125,000 NYC engineer</strong> (real $100,806) <strong>vs $105,000 Atlanta</strong> (real $106,061) — Atlanta wins.</li><li><strong>$100,000 Boston</strong> (real $86,207) <strong>vs $85,000 Denver</strong> (real $80,952) — Boston still wins, but only by $5K in real terms.</li></ul><p>The flip happens because cost of living in expensive metros consumes more than the salary premium. After housing eats 35–50 percent of gross income in SF/NYC, the remainder available for savings, transportation, food, and discretionary spending is often lower than in mid-cost cities.</p>`,
-      },
-      {
-        heading: 'What RPP does NOT capture',
-        html: `<p>RPP is the best official metric available, but it has known blind spots:</p><ul><li><strong>State income tax differences.</strong> RPP only measures price levels, not tax burden. California's 9.3% state tax on $150K is roughly $14,000 not captured in RPP. Texas's 0% state tax is similarly invisible. To get the full picture, multiply real salary by (1 − state effective rate).</li><li><strong>Quality of housing.</strong> An "equivalent" apartment in SF and Memphis costs the same fraction of typical income, but the SF apartment is dramatically smaller. RPP normalizes by spending share, not size or quality.</li><li><strong>Commute time.</strong> Two metros with the same RPP can have very different commute burdens. Time is real, but not in any cost index.</li><li><strong>Career trajectory.</strong> A $130K SF role at a top company may compound to $250K in 5 years; a $110K Atlanta role may stay at $130K. RPP captures the present moment, not the future.</li></ul><p>Use RPP-adjusted salary as the starting point for an offer comparison, then layer on tax, commute, and career considerations.</p>`,
-      },
-      {
-        heading: 'A practical comparison checklist',
-        html: `<p>When comparing two job offers in different metros:</p><ol><li><strong>Calculate nominal gross-to-net</strong> for each offer, applying federal, state, and local taxes. (See our <a href="/guide/gross-vs-net-salary-by-state/">gross vs net guide</a>.)</li><li><strong>Apply RPP to the net salary</strong> using the formula above. Result: real after-tax purchasing power.</li><li><strong>Compute total benefit value:</strong> 401(k) match, healthcare premium, equity compensation, paid time off.</li><li><strong>Estimate career trajectory:</strong> typical raise rate, promotion velocity, ability to switch employers.</li><li><strong>Add quality-of-life adjustments</strong> you genuinely care about: commute, weather, family proximity, schools.</li></ol><p>The right answer is rarely the highest gross salary or the lowest cost of living. It's the combination that maximizes long-term financial and life outcomes for your specific situation.</p>`,
-      },
-    ],
-    faqs: [
-      { question: 'What is Regional Price Parity?', answer: 'Regional Price Parity (RPP) is a Bureau of Economic Analysis metric that measures the price level of goods and services in each US metropolitan area relative to the national average (set at 100). An RPP of 130 means the metro is 30 percent more expensive than average; 80 means 20 percent cheaper.' },
-      { question: 'How do I calculate cost-adjusted salary?', answer: 'Real salary = nominal salary × 100 / RPP. Example: $160,000 in San Francisco (RPP 134) equals about $119,400 in real purchasing power. This converts nominal salaries from different metros into a common scale.' },
-      { question: 'Is San Francisco really worse than Denver in real terms?', answer: 'For typical mid-level salaries, San Francisco and Denver have similar real purchasing power. SF nominal salaries are higher but cost of living is 30 percent above average, so the net real income is comparable. SF still wins for top earners and high-equity tech roles where the salary premium exceeds the cost premium.' },
-      { question: 'Does RPP include state income tax?', answer: 'No. RPP measures only price levels, not tax burden. To get a fully fair comparison between states with different income taxes, multiply your RPP-adjusted real salary by (1 − state effective tax rate). This is especially important when comparing CA (high tax) to TX or FL (no tax).' },
-      { question: 'Where can I find current RPP data?', answer: 'The Bureau of Economic Analysis publishes RPP annually at bea.gov. Search for "Regional Price Parities" to find the latest year. Most data is released with a 1- to 2-year lag.' },
-      { question: 'Is the RPP the same as the cost of living index?', answer: 'They measure similar things but use different methodologies. RPP is from BEA (federal). Other cost of living indexes (Numbeo, C2ER, Bestplaces) use different baskets and update schedules. RPP is the most authoritative for US metros; the others are useful supplements.' },
-    ],
-  },
-  {
-    slug: 'salary-bands-by-experience',
-    title: 'Salary Bands by Experience: The 7-Year Doubling Rule',
-    description: 'How salaries should grow across career stages, the 7-year doubling rule, when to job-hop versus stay, and what typical growth curves look like for major professions.',
-    category: 'Career Growth',
-    updatedAt: u,
-    intro: `<p>Most workers underestimate how much their salary should grow over their career. They accept the standard 3 percent annual cost-of-living adjustment and watch their purchasing power slowly erode while their actual market value grows much faster. The healthy career growth curve is closer to 5–8 percent annually for the first 10 years, with periodic 15–25 percent jumps from job changes or promotions. Over a typical career, this should produce roughly a 2x salary increase every 7 years. This guide explains where this number comes from, what it looks like for major professions, and when to push harder than the default.</p>`,
-    sections: [
-      {
-        heading: 'The 7-year doubling rule',
-        html: `<p>If your salary grows by 10 percent per year compounded, it doubles in approximately 7 years. The math comes from the rule of 72: divide 72 by the annual growth rate to get the doubling time. 72 / 10 = 7.2 years.</p><p>Healthy career growth in the first 10–15 years should be in this range — 8 to 12 percent annually compounded, including both within-company raises and job-change jumps. Below 5 percent, you are losing real purchasing power to inflation and falling behind market rates. Above 15 percent, you are either in an explosive career stage (early career, hot field) or actively job-hopping.</p><p>The 7-year doubling rule does not continue forever. After about 15 years, growth typically slows because:</p><ul><li>You hit the natural ceiling for your role and location</li><li>Promotion to management requires different skills and may not be your path</li><li>Your role's market value compresses as you become more specialized</li></ul><p>Late-career growth is often 2–4 percent annually with periodic jumps for major moves.</p>`,
-      },
-      {
-        heading: 'Typical salary curves by profession',
-        html: `<p>Approximate median salary trajectories for major US professions, single-city averages (varies by metro):</p><p><strong>Software engineer (US national):</strong></p><ul><li>Entry (0-2 years): $90,000</li><li>Mid (3-6 years): $130,000</li><li>Senior (7-10 years): $175,000</li><li>Staff (11-15 years): $220,000</li><li>Principal (15+ years): $280,000+</li></ul><p>This is a near-perfect 7-year doubling for the first 14 years, then flattening. SF Bay Area numbers run roughly 25 percent higher; tier-2 cities run 20–30 percent lower.</p><p><strong>Registered nurse:</strong></p><ul><li>Entry (0-2): $68,000</li><li>Mid (3-7): $82,000</li><li>Senior (8-15): $95,000</li><li>Specialty/charge (15+): $115,000</li></ul><p>RN compensation grows more slowly than tech, with ceiling effects after about 10 years. Specialty certifications (CRNA, Nurse Practitioner) reset the curve upward dramatically — CRNAs commonly earn $200,000+.</p><p><strong>Teacher (public school, US median):</strong></p><ul><li>Entry: $48,000</li><li>5 years: $55,000</li><li>10 years: $63,000</li><li>20 years (top of step): $75,000</li></ul><p>Teaching pay scales are usually fixed by district step-and-lane schedules, producing slow predictable growth with little upside. Total comp curves can flatten earlier than nominal salary curves due to retirement contribution changes.</p><p><strong>Marketing manager:</strong></p><ul><li>Entry coordinator: $52,000</li><li>Specialist (3-5): $68,000</li><li>Manager (6-10): $90,000</li><li>Senior manager (10-15): $115,000</li><li>Director (15+): $145,000+</li></ul>`,
-      },
-      {
-        heading: 'Job change vs stay: the math',
-        html: `<p>The single largest determinant of whether you achieve the 7-year doubling is how often you change jobs. Employees who stay at one company for 2+ years between salary reviews tend to receive 3–5 percent annual raises, well below market growth. Employees who change companies every 2–4 years tend to negotiate 10–20 percent raises with each move, far above the within-company rate.</p><p>The "loyalty tax" is real and well-documented. ADP's Pay Insights report consistently shows job changers earning 5–8 percent higher annual increases than job stayers in the same role and location. Over a 10-year career, that compounds to a 50–80 percent salary gap between two otherwise-identical employees.</p><p>This does not mean changing jobs every year. Two to three years per company is the sweet spot — long enough to build real accomplishments and references, short enough to capture market premiums during job changes. Frequent job hopping (under 18 months) starts to look like a red flag and reduces your bargaining position.</p>`,
-      },
-      {
-        heading: 'When to push for above-market raises',
-        html: `<p>Three situations where you should ask for more than the standard 3–5 percent annual:</p><ol><li><strong>You took on materially more responsibility</strong> — managing more people, owning a larger budget, leading a critical project. The market price for your role has changed, and the company should match it.</li><li><strong>Market rates have moved</strong> — when your industry sees a labor shortage or inflation spikes, the market median for your role rises. You should match it.</li><li><strong>You have a competing offer</strong> — the most powerful negotiating tool. A real offer letter from a credible competitor proves your market value and gives the current employer a clear ask.</li></ol><p>Use our <a href="/jobs/">occupation pages</a> for current BLS percentile data to back up any raise request with hard numbers.</p>`,
-      },
-      {
-        heading: 'When growth slows: the late-career ceiling',
-        html: `<p>Most professions show diminishing returns after 15–20 years. The reasons:</p><ul><li><strong>Specialization narrows your market.</strong> Becoming a deep expert in one tool or method makes you more valuable to fewer companies. Your bargaining position narrows.</li><li><strong>Managerial roles require different skills.</strong> The promotion path to higher pay often runs through people management, which not everyone wants or excels at.</li><li><strong>Age discrimination is real</strong> in some industries (especially tech), making new job offers harder to obtain past age 50.</li></ul><p>Strategies for late-career growth:</p><ul><li><strong>Move into management or principal-level technical roles</strong> with measurable leadership impact</li><li><strong>Consult or freelance</strong> at higher hourly rates than full-time employment</li><li><strong>Switch to a lower-cost-of-living area</strong> to maintain real income with smaller nominal raises</li><li><strong>Build equity ownership</strong> through stock-heavy employers, founder roles, or rental property income</li></ul>`,
-      },
-    ],
-    faqs: [
-      { question: 'How fast should my salary grow each year?', answer: 'Healthy growth is 5–8 percent annually for the first 10–15 years of your career, including both within-company raises and job-change jumps. Below 5 percent means you are losing ground to inflation and market rates. Above 12 percent typically requires job changes or promotions.' },
-      { question: 'What is the 7-year doubling rule?', answer: 'A heuristic that healthy salary growth (about 10 percent per year compounded) doubles your salary in approximately 7 years. Comes from the rule of 72: 72 ÷ growth rate = doubling time. Useful as a benchmark for whether your career trajectory is on track.' },
-      { question: 'Should I change jobs to get a raise?', answer: 'Often yes. ADP data shows job changers earn 5–8 percent more in raises than job stayers, year after year. Two to three years per company is the sweet spot — long enough to build accomplishments, short enough to capture market premiums. Avoid job-hopping under 18 months, which starts to look like a red flag.' },
-      { question: 'How much should I ask for in a raise?', answer: 'Standard cost-of-living: 3–5 percent. After taking on more responsibility: 8–15 percent. After receiving a competing offer: match or exceed the offer. Always anchor your request in market data (BLS percentiles for your role and location).' },
-      { question: 'When does salary growth typically stop?', answer: 'Most professions see growth slow after 15–20 years as specialization narrows your market and managerial roles become the only path to higher pay. Late-career growth is typically 2–4 percent annually with occasional jumps for major moves, retirement-job transitions, or consulting.' },
-      { question: 'How do I know if I am underpaid?', answer: 'Look up median salary for your role in your metro on BLS or our occupation pages. If your salary is more than 15 percent below median and you are at or above the typical experience level for that median, you are likely underpaid. Use the gap as a negotiation anchor.' },
-    ],
-  },
-  {
-    slug: 'salary-negotiation-when-data-wins',
-    title: 'Salary Negotiation: When Market Data Actually Wins (and When It Backfires)',
-    description: 'How to use BLS wage data, percentile benchmarks, and competing offers to negotiate effectively — and the situations where data-anchored negotiation fails.',
-    category: 'Negotiation',
-    updatedAt: u,
-    intro: `<p>"Bring market data" is the first piece of advice in every salary negotiation guide. It's right — but oversimplified. Market data wins when it is precise, recent, and applicable to your specific role. It backfires when it is generic, when it conflicts with the employer's pay band, or when you over-rely on it instead of demonstrating value. This guide explains when and how to use market data, when to back off and lead with value instead, and the specific tactics that consistently produce 10–25 percent salary increases in negotiations.</p>`,
-    sections: [
-      {
-        heading: 'What "market data" actually means',
-        html: `<p>Three sources of credible market data, ranked by trust:</p><ol><li><strong>BLS Occupational Employment and Wage Statistics (OEWS):</strong> federal government data covering every US metropolitan area and occupation. Published annually, accurate, free. Available on bls.gov and aggregated on our <a href="/jobs/">occupation pages</a>.</li><li><strong>Levels.fyi (tech) / Glassdoor (general):</strong> crowd-sourced, recent, includes total comp (equity, bonus). Less accurate at the long tails but better at capturing actual offers people are getting today.</li><li><strong>Recruiting agency reports:</strong> Robert Half, Korn Ferry publish annual salary guides. Useful for ranges but tends to skew high (recruiters benefit from higher numbers).</li></ol><p>The strongest negotiation position uses two sources: BLS for the credible authoritative range and Levels.fyi or Glassdoor for the "what people actually got recently" number. Together they create a defensible argument that is hard to dismiss.</p>`,
-      },
-      {
-        heading: 'When data wins: three situations',
-        html: `<p>Market data is most effective in these scenarios:</p><ol><li><strong>You are clearly underpaid relative to median.</strong> If BLS shows the 50th percentile for your role and metro is $115,000 and you are earning $90,000, market data is overwhelming evidence. The conversation becomes "I'd like to bring my salary in line with the market median, which is $115,000."</li><li><strong>The employer has a published pay band.</strong> Larger companies (especially in tech and at companies operating in CA/CO/NY/WA pay transparency states) publish pay ranges in job postings. You can directly reference "the role's posted range is $120K-$160K and I'd like to be in the upper half given my experience."</li><li><strong>You are negotiating an internal promotion.</strong> HR departments use compensation benchmarking firms (Mercer, Radford, Aon) and respond well to data-anchored requests for promotion-related raises.</li></ol>`,
-      },
-      {
-        heading: 'When data backfires: four situations',
-        html: `<p>Three scenarios where leading with market data hurts you:</p><ol><li><strong>You are above the median already.</strong> If you are at the 75th percentile and asking for the 90th, market data is on the employer's side, not yours. Lead with value contribution and competing offers, not data.</li><li><strong>The employer has a rigid pay band</strong> and you are at the top of it. Asking for above-band requires either a job grade promotion (different conversation) or moving employers. Pushing on data alone usually fails.</li><li><strong>You're negotiating with a small employer or a startup.</strong> Small employers do not have detailed comp benchmarks and are more responsive to mission, team fit, equity, and personal value than to BLS numbers. Lead with what you bring, not statistics.</li><li><strong>Your data is generic or outdated.</strong> "The national average software engineer salary is $130,000" is laughable in any negotiation. Use specific role + specific metro + recent data. Outdated salary data (over 18 months old) is often dismissed.</li></ol>`,
-      },
-      {
-        heading: 'The competing offer multiplier',
-        html: `<p>A real competing offer is the single most powerful negotiation tool. It transforms the conversation from "I'd like more money" to "another company is willing to pay me X. Can you match or beat it?" Three rules for using competing offers:</p><ul><li><strong>Make sure the offer is real.</strong> Never bluff. Bluffing once costs you the relationship if discovered.</li><li><strong>Frame it as "I'd prefer to stay here, but..."</strong> Position the competing offer as information, not as a threat. Employers respond much better to "I'm trying to make this work" than to "match this or I leave."</li><li><strong>Match the comp structure, not just the headline.</strong> If the competing offer includes equity, bring that up. Comparing equity-heavy to cash-heavy offers requires careful math.</li></ul><p>Competing offers consistently produce 10–25 percent salary increases at current employers. The reason: replacing a known performer is far more expensive than retaining one, and HR knows it.</p>`,
-      },
-      {
-        heading: 'The BATNA framework',
-        html: `<p>BATNA stands for "Best Alternative To a Negotiated Agreement." It's your fallback position if the negotiation fails. The strength of your BATNA determines your real leverage.</p><p>Strong BATNA examples:</p><ul><li>You have another offer in hand</li><li>Your current job is stable and you don't need to move</li><li>You have specialized skills that the employer cannot easily replace</li><li>You have 6+ months of expenses saved and can wait</li></ul><p>Weak BATNA examples:</p><ul><li>You need this job to pay rent next month</li><li>You don't have other interviews lined up</li><li>You are visibly excited and emotionally committed to this specific role</li><li>You have already told the recruiter "this is my dream job"</li></ul><p>Strong BATNA = negotiation power. Weak BATNA = limited room. The first step in any negotiation is honestly assessing your BATNA and not pretending to have leverage you don't have. Pretending to have a competing offer when you don't is the fastest way to destroy the relationship if they call your bluff.</p>`,
-      },
-      {
-        heading: 'Specific tactics that consistently work',
-        html: `<ol><li><strong>Never quote the first number.</strong> Let the employer name a range first. "What's the budget for this role?" If pressed, give your absolute floor + 20 percent.</li><li><strong>Anchor high but defensible.</strong> Aim for the 75th percentile of market data, not the 50th. Asking high gives room to negotiate down to your real target.</li><li><strong>Negotiate the full package, not just base.</strong> Sign-on bonus, equity, vacation days, remote flexibility, professional development budget, equipment stipend. These are often easier to add than base salary.</li><li><strong>Get it in writing.</strong> Verbal agreements during negotiation must be confirmed in the offer letter. Never start a job based on a verbal promise that wasn't documented.</li><li><strong>Slow down.</strong> Take 24-48 hours after receiving any offer. "I appreciate the offer and would like to take a day to consider it" is universally accepted and gives you time to negotiate strategically rather than reactively.</li></ol>`,
-      },
-    ],
-    faqs: [
-      { question: 'Should I always use market data when negotiating salary?', answer: 'Use it when you are underpaid relative to median or when the employer has published pay bands. Avoid leading with data when you are already at or above median, or when the employer has a rigid pay structure. Generic national averages backfire — always use specific role + specific metro + recent data.' },
-      { question: 'How much should I ask for in salary negotiation?', answer: 'Aim for the 75th percentile of market data for your role, location, and experience level. This gives room to negotiate down to your real target (typically the 60th-65th percentile). Asking exactly at median leaves no room and often results in below-median outcomes.' },
-      { question: 'Is it OK to bluff about a competing offer?', answer: 'Never. Employers sometimes call bluffs by asking to see the offer letter. A revealed bluff destroys trust permanently and often kills the deal. If you want the leverage of a competing offer, actually get one before negotiating.' },
-      { question: 'How do I know my BATNA is strong?', answer: 'You have multiple sources of income or savings to fall back on, you have alternative job options in active discussion, your current role is stable, and you genuinely could walk away from this specific offer without serious consequences. Honest assessment is critical — pretending to have BATNA you don\'t have is a losing strategy.' },
-      { question: 'What if I receive a lowball initial offer?', answer: 'Respond with a specific counter that anchors high but is defensible by market data. "I appreciate the offer. Based on the market median for this role in [metro] from BLS data, I was expecting closer to $X. Can we explore that range?" Avoid emotional rejection of the offer.' },
-      { question: 'Should I negotiate during a recession or layoff cycle?', answer: 'Yes, but more carefully. In tight labor markets, push harder. In soft markets, your BATNA is weaker so anchor closer to median rather than 75th percentile. Always negotiate something — even if it\'s vacation days or remote flexibility instead of salary, employers expect candidates to push back on initial offers.' },
-    ],
-  },
-];
+export const guides: Guide[] = [];
 
 export function getAllGuides(): Guide[] {
-  return guides;
+  return [];
 }
 
-export function getGuideBySlug(slug: string): Guide | undefined {
-  return guides.find((g) => g.slug === slug);
+export function getGuideBySlug(_slug: string): Guide | undefined {
+  return undefined;
 }
+
+// Some sites use these alias function names — keep all surfaces stub-compatible.
+export const getAllStaticGuides = getAllGuides;
+export const getGuide = getGuideBySlug;

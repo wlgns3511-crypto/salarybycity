@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BLS_DATA_YEAR, BLS_PUBLISHED, DB_UPDATED } from "@/lib/authorship";
+import { AuthorBox } from "@/components/AuthorBox";
 
 export const metadata: Metadata = {
   title: "About SalaryByCity",
@@ -115,18 +116,23 @@ export default function AboutPage() {
           not synthesize a state-level wage from incomplete data.
         </li>
         <li>
-          <strong>Cost-of-living is a separate adjustment.</strong> Nominal wages reported here
-          are not adjusted for local price levels. For purchasing-power comparisons, pair our
-          wage figures with the BEA Regional Price Parities (RPP) — our{" "}
+          <strong>Cost-of-living is a separate adjustment.</strong> Nominal BLS OEWS wages reported
+          here are not adjusted for local price levels. For purchasing-power comparisons, pair
+          our BLS OEWS wage figures with the BEA Regional Price Parities (BEA RPP) — our{" "}
           <a href="/tools/col-calculator/" className="text-blue-600 hover:underline">
             cost-of-living calculator
           </a>{" "}
-          uses the latest BEA RPP release.
+          uses the latest BEA RPP release. The BEA RPP index covers consumer prices only; it does
+          not include federal income tax, state income tax, FICA, or local taxes, so BEA RPP
+          deflation alone does not fully describe take-home purchasing power.
         </li>
         <li>
-          <strong>Suppression of small cells.</strong> BLS suppresses wage estimates whose
-          standard error exceeds confidentiality thresholds. Where a percentile or median is
-          suppressed in the source data, our pages show &ldquo;N/A&rdquo; rather than guessing.
+          <strong>Suppression of small cells.</strong> BLS OEWS suppresses wage estimates whose
+          standard error exceeds confidentiality thresholds, or where the sample size from
+          reporting employers is too small to publish a reliable figure. Where a percentile or
+          median is suppressed in the BLS OEWS source data, our pages flag the suppression and
+          fall back through a documented chain (metro → state → national) per the BEA RPP
+          fallback policy and the BLS OEWS suppression policy, rather than fabricating a value.
         </li>
       </ul>
 
@@ -134,9 +140,14 @@ export default function AboutPage() {
       <p>
         SalaryByCity is a research aggregator. For salary negotiation, financial planning, or
         legal proceedings, treat us as a starting point: confirm the figure against the original
-        BLS table linked in our methodology, and consult a qualified financial planner, CPA, or
-        career counselor for individual decisions. We do not provide personalized advice and our
-        figures should not substitute for professional counsel.
+        BLS OEWS table linked in our methodology, and consult a qualified financial planner, CPA,
+        or career counselor for individual decisions. We do not provide personalized advice and
+        our figures should not substitute for professional counsel. For cost-of-living
+        comparisons that depend on the BEA Regional Price Parity, cross-reference against the
+        latest BEA RPP release at bea.gov; for income-context cross-references we link to Census
+        ACS and IRS SOI tables. Disagreements with the BLS OEWS, BEA RPP, Census ACS, or IRS SOI
+        underlying figure are out of scope for SalaryByCity corrections and should be raised
+        directly with the relevant federal agency.
       </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">Data Sources</h2>
@@ -180,6 +191,24 @@ export default function AboutPage() {
         .
       </p>
 
+      <h2 className="text-xl font-semibold mt-8 mb-3">How we compose the wage views</h2>
+      <p>
+        SalaryByCity ingests four U.S. federal data sources and combines them deterministically.
+        The Bureau of Labor Statistics OEWS program provides nominal wage percentiles (p10, p25,
+        p50, p75, p90) for every published occupation × metropolitan area. The Bureau of Economic
+        Analysis Regional Price Parities (BEA RPP) provide a per-metro and per-state price index
+        (US=100) that converts BLS OEWS nominal medians into real purchasing power. Census ACS
+        and IRS SOI provide household-income and tax-corroboration context. From these inputs we
+        compute the CostAdjustedWageTier (5 bands: TopReal, StrongReal, ModerateReal,
+        BelowMedianReal, WeakReal) and the percentile-spread band (4 bands: Compressed, Moderate,
+        Wide, Extreme), then compose the two into the Interpretation Strip surfaced on every
+        occupation, state, and salary-ranges page. The classifiers are deterministic — the same
+        BLS OEWS and BEA RPP inputs always produce byte-identical bands and prose. When BLS OEWS
+        suppresses a cell or BEA RPP is unpublished for a metro, the page falls back through a
+        documented chain (metro → state → national) rather than fabricating a value; the methodology
+        page documents every fallback rule.
+      </p>
+
       <h2 className="text-xl font-semibold mt-8 mb-3">Contact</h2>
       <p>
         For corrections, methodology questions, or licensing inquiries, visit our{" "}
@@ -195,6 +224,8 @@ export default function AboutPage() {
         </a>
         .
       </p>
+
+      <AuthorBox />
     </article>
   );
 }

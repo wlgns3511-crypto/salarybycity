@@ -8,20 +8,38 @@ import {
   getStateTopOccupationsWithNational,
   getStateWageSummary,
   getNationalWageSummary,
+  getNationalWagesAcrossYears,
+  getOccupationEmploymentDistribution,
 } from "@/lib/db";
 import { formatSalary, getDataYear } from "@/lib/format";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { FAQ } from "@/components/FAQ";
 import { AdSlot } from "@/components/AdSlot";
 import { AuthorBox } from "@/components/AuthorBox";
-import { breadcrumbSchema, faqSchema } from "@/lib/schema";
-import { BLS_PUBLISHED, REVIEWER_ORG, SOURCE_AUTHORITIES } from "@/lib/authorship";
+import { breadcrumbSchema, faqSchema, datasetSchema } from "@/lib/schema";
+import { BLS_PUBLISHED } from "@/lib/authorship";
+import { COST_ADJUSTED_WAGE_TIER_CUTOFFS, decodePercentileSpread, tierLabel, tierToneColor, type CostAdjustedWageTier, type CostAdjustedWageTierResult } from "@/lib/cost-adjusted-wage-tier";
+import { getWageSpreadInterpretation } from "@/lib/wage-spread-interpretation";
+import { classifyWageGrowthVelocity } from "@/lib/wage-growth-velocity";
+import { computeOccupationDensity } from "@/lib/occupation-density-score";
+import { getSalaryInterpretation } from "@/lib/salary-interpretation";
+import { SalaryInterpretation } from "@/components/upgrades/SalaryInterpretation";
 import { StateRich } from '@/components/state/StateRich';
 import { EmptyStatePage } from "@/components/state/EmptyStatePage";
+import { StateHeroImage } from "@/components/StateHeroImage";
+import { getStateImage } from "@/lib/state-images";
 import { getStateFacts } from "@/lib/salary-facts";
 import { getStateNarrative } from "@/lib/salary-cluster-insights";
 import { pickVariant } from "@/lib/content-helpers";
 import { getStateRpp, getRppMeta } from "@/lib/rpp";
+import { decodeStateCrosswalk, buildStateP1Title } from "@/lib/crosswalk-salary";
+import { CrosswalkBridge } from "@/components/upgrades/CrosswalkBridge";
+import { TrustBlock } from "@/components/upgrades/TrustBlock";
+import { TableOfContents } from "@/components/upgrades/TableOfContents";
+import { InsightBlock, type Insight } from "@/components/upgrades/InsightBlock";
+import { RelatedEntities } from "@/components/upgrades/RelatedEntities";
+import { TakeHomeCalculator } from "@/components/TakeHomeCalculator";
+import { SOURCE_AUTHORITIES, DB_UPDATED } from "@/lib/authorship";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -57,23 +75,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!state) return {};
   const year = getDataYear();
 
-  const title = pickVariant(slug, [
-    `${state.name} Salaries — Top Occupations and Wage Data (${year})`,
-    `Salary by Occupation in ${state.name} — BLS ${year} Data`,
-    `${state.name} Pay: Highest-Paying Jobs and Wage Distribution`,
-    `${state.name} Wages — Top Jobs, National Comparison, ${year}`,
-  ], 7);
-  const description = pickVariant(slug, [
-    `Explore salary data for ${state.name}. Highest-paying occupations, state-vs-national comparison, and percentile breakdowns. ${year} BLS OEWS data.`,
-    `${state.name} salary tables: top 20 highest-paying jobs, average median wage, and how state pay stacks up against the national figure. ${year} BLS data.`,
-    `Salaries in ${state.name} (${year}): browse the highest-paying occupations, see state-vs-national pay gaps, and dive into per-occupation percentile breakdowns.`,
-  ], 8);
+  // Phase 7 P1 title.absolute — bypass " | SalaryByCity" (15c) layout suffix.
+  // Pattern: "{StateName}: {ShortVerdict} · $XXXK/y" — verdict varies across
+  // 51 jurisdictions per CostAdjustedWageTier × BEA RPP composite.
+  const crosswalk = decodeStateCrosswalk(state.code);
+  const p1Title = crosswalk
+    ? buildStateP1Title(state.name, crosswalk)
+    : `${state.name} Salaries — BLS ${year} Wage Data`;
+  const description = crosswalk
+    ? `${crosswalk.longLabel}. BLS OEWS ${year} state-aggregate wage data for ${state.name} — ${crosswalk.decoderNotes}`
+    : pickVariant(slug, [
+        `Explore salary data for ${state.name}. Highest-paying occupations, state-vs-national comparison, and percentile breakdowns. ${year} BLS OEWS data.`,
+        `${state.name} salary tables: top 20 highest-paying jobs, average median wage, and how state pay stacks up against the national figure. ${year} BLS data.`,
+        `Salaries in ${state.name} (${year}): browse the highest-paying occupations, see state-vs-national pay gaps, and dive into per-occupation percentile breakdowns.`,
+      ], 8);
 
   return {
-    title,
+    title: { absolute: p1Title },
     description,
     alternates: { canonical: `/state/${slug}/` },
-    openGraph: { url: `/state/${slug}/` },
+    openGraph: { title: p1Title, description, url: `/state/${slug}/` },
   };
 }
 
@@ -142,6 +163,9 @@ export default async function StateDetailPage({ params }: Props) {
   const topJobs = getStateTopOccupationsWithNational(state.code, 20);
   const metros = getAreasByState(state.code);
 
+  // Phase 7 P0 — state-level cross-walk verdict (CostAdjustedWageTier wrap).
+  const stateCrosswalk = decodeStateCrosswalk(state.code);
+
   if (!summary || summary.occ_count === 0) {
     const codesWithData = new Set(getAllStateCodes());
     const nearby = nearbyWithDataStates(slug, codesWithData, 5);
@@ -192,14 +216,148 @@ export default async function StateDetailPage({ params }: Props) {
   const stateFacts = getStateFacts(state.code, topJobs, summary);
   const narrative = getStateNarrative(slug, state.name, stateFacts);
 
+  const headlineJob = topJobs[0] ?? null;
+
+  const trustSources = [...SOURCE_AUTHORITIES].map((s) => ({
+    name: s.name,
+    url: s.url,
+  }));
+
+  const insights: Insight[] = [
+    {
+      text: `The average median salary in ${state.name} is ${formatSalary(summary.avg_median_salary)} (${diff >= 0 ? '+' : ''}${diffPct}% vs the national average of ${formatSalary(natAvg)}).`,
+      sentiment: diff >= 0 ? 'positive' : 'neutral',
+    },
+    {
+      text: stateRpp != null && realStateMedian != null
+        ? `Adjusted for local cost of living (RPP index: ${stateRpp.toFixed(1)}), the real purchasing power of the average median wage stretches to ${formatSalary(realStateMedian)} (${realDeltaVsNatPct != null && realDeltaVsNatPct >= 0 ? '+' : ''}${realDeltaVsNatPct}% vs national avg).`
+        : `Nominal salaries reflect local market rates; cost-of-living index details are partially available.`,
+      sentiment: realDeltaVsNatPct != null && realDeltaVsNatPct >= 0 ? 'positive' : 'negative',
+    },
+    {
+      text: headlineJob 
+        ? `The highest-paying occupation is ${headlineJob.occ_title} with a median annual salary of ${formatSalary(headlineJob.annual_median ?? 0)}.`
+        : `Top-paying jobs in the state are documented in the detailed wage directory tables below.`,
+      sentiment: 'neutral',
+    }
+  ];
+
+  const relatedStates = US_STATES.filter((s) => s.slug !== slug).slice(0, 6);
+  const relatedItems = relatedStates.map((s) => ({
+    name: `Salaries in ${s.name}`,
+    href: `/state/${s.slug}/`,
+  }));
+
+  // State-aggregate CostAdjustedWageTier — reuses the same cutoffs as the
+  // occupation-level classifier so /state/ and /jobs/ pages stay aligned.
+  const stateAggregateRatio =
+    stateRpp != null && realStateMedian != null && natAvg > 0
+      ? realStateMedian / natAvg
+      : null;
+  const stateAggregateTier: CostAdjustedWageTier | null =
+    stateAggregateRatio == null
+      ? null
+      : stateAggregateRatio >= 1.30
+        ? 'TopReal'
+        : stateAggregateRatio >= 1.10
+          ? 'StrongReal'
+          : stateAggregateRatio >= 0.95
+            ? 'ModerateReal'
+            : stateAggregateRatio >= 0.80
+              ? 'BelowMedianReal'
+              : 'WeakReal';
+
+  // Interpretation Strip (PSU 1차) — state-aggregate tier paired with the
+  // top-paying state occupation's p90/p10 spread. The strip headlines the
+  // representative occupation rather than the aggregate so the reader sees
+  // an actionable verdict instead of a generic state ratio.
+  const stateStripCostAdj: CostAdjustedWageTierResult | null =
+    stateAggregateTier && stateAggregateRatio != null
+      ? {
+          tier: stateAggregateTier,
+          nominalWage: summary.avg_median_salary,
+          rppIndex: stateRpp ?? 100,
+          rppLevel: stateRpp != null ? 'state' : 'national',
+          realWage: realStateMedian,
+          nationalRealMedian: natAvg > 0 ? natAvg : null,
+          ratio: stateAggregateRatio,
+          evidence: `state real median ${formatSalary(realStateMedian ?? 0)} / national avg median ${formatSalary(natAvg)}`,
+          caveats: [
+            'State aggregate averages BLS OEWS metro-level wages within the state and then deflates by the BEA state-level Regional Price Parity.',
+          ],
+          confidence: 'med',
+        }
+      : null;
+  const stateStripSpread = headlineJob
+    ? decodePercentileSpread({
+        annual_p10: headlineJob.annual_p10,
+        annual_p25: headlineJob.annual_p25,
+        annual_median: headlineJob.annual_median,
+        annual_p75: headlineJob.annual_p75,
+        annual_p90: headlineJob.annual_p90,
+      } as any)
+    : null;
+  const stateInterpretation = getWageSpreadInterpretation(stateStripCostAdj, stateStripSpread, {
+    occupationTitle: headlineJob ? headlineJob.occ_title : `Top-paying occupations`,
+    areaName: state.name,
+    areaKind: 'state',
+  });
+
+  // Composite Salary Interpretation (PSU 1차) — anchors on the headline job
+  // for YoY velocity (national pair, since state-level OEWS time series in
+  // this extract is metro-aggregated) and on the cross-area employment
+  // distribution for density. State-aggregate cost-adjusted tier reuses the
+  // same readings the existing strip already computed.
+  const headlineVelocity = headlineJob
+    ? classifyWageGrowthVelocity(getNationalWagesAcrossYears(headlineJob.soc_code))
+    : classifyWageGrowthVelocity([]);
+  const headlineEmpDistribution = headlineJob
+    ? getOccupationEmploymentDistribution(headlineJob.soc_code)
+    : [];
+  const headlineDensity = computeOccupationDensity(
+    headlineJob?.employment ?? null,
+    headlineEmpDistribution,
+  );
+  const stateComposite = getSalaryInterpretation(
+    stateStripCostAdj,
+    headlineVelocity,
+    headlineDensity,
+    stateStripSpread,
+    {
+      occupationTitle: headlineJob ? headlineJob.occ_title : 'Top-paying occupations',
+      areaName: state.name,
+      areaKind: 'state',
+    },
+  );
+
   return (
     <div>
       <Breadcrumb items={breadcrumbs.map((b) => ({ label: b.name, href: b.url }))} />
 
       <h1 className="text-3xl font-bold mb-2">Salaries in {state.name}</h1>
-      <p className="text-slate-600 mb-6">
+      <p className="text-slate-600 mb-3">
         {year} wage data for {summary.occ_count.toLocaleString()} occupations across {state.name} ({state.code}), powered by BLS OEWS.
       </p>
+
+      {/* Phase 7 verdict chip — typed CrosswalkResult surfaced in body */}
+      {stateCrosswalk && (
+        <p className="mb-6 text-sm">
+          <span className="inline-block rounded-md bg-slate-100 px-3 py-1 text-slate-800">
+            <span className="font-semibold">Band {stateCrosswalk.verdict} · {stateCrosswalk.shortLabel}</span>
+            <span className="ml-2 text-slate-600">— {stateCrosswalk.decoderNotes}</span>
+          </span>
+        </p>
+      )}
+
+      {/* Above-the-fold Wikipedia photo (graceful null when manifest lacks an entry). */}
+      {(() => {
+        const img = getStateImage(slug);
+        return img ? <StateHeroImage img={img} /> : null;
+      })()}
+
+      <TrustBlock sources={trustSources} updated={DB_UPDATED} label="Verified Data Sourcing" />
+
+      <TableOfContents />
 
       {/* Summary cards */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -225,6 +383,34 @@ export default async function StateDetailPage({ params }: Props) {
           <div className="text-2xl font-bold text-slate-800">{summary.occ_count.toLocaleString()}</div>
         </div>
       </div>
+
+      {/* Interpretation Strip (PSU 1차) — state aggregate × headline-occupation spread */}
+      <section
+        data-upgrade="wage-spread-interpretation"
+        aria-label={`Interpretation strip for ${state.name}`}
+        className={`mb-8 rounded-xl border p-5 md:p-6 ring-1 ${stateInterpretation.tierTone.bg} ${stateInterpretation.tierTone.ring}`}
+      >
+        <p className={`text-xs font-semibold uppercase tracking-wide mb-2 ${stateInterpretation.tierTone.text}`}>
+          Real-wage verdict — BLS OEWS × BEA RPP
+        </p>
+        <p className="text-lg md:text-xl font-bold text-slate-900 leading-snug mb-4">
+          {stateInterpretation.verdict}
+        </p>
+        <div className="space-y-3 text-sm md:text-[15px] text-slate-700 leading-relaxed">
+          <p><strong className="text-slate-900">What the band means.</strong> {stateInterpretation.paragraphs.bandMeaning}</p>
+          <p><strong className="text-slate-900">Inside this occupation.</strong> {stateInterpretation.paragraphs.occupationMeaning}</p>
+          <p><strong className="text-slate-900">Versus other states.</strong> {stateInterpretation.paragraphs.areaComparison}</p>
+          <p><strong className="text-slate-900">Acting on the verdict.</strong> {stateInterpretation.paragraphs.readerAction}</p>
+        </div>
+      </section>
+
+      <InsightBlock
+        entityName={state.name}
+        heading={`Salary & Purchasing Power Insights`}
+        insights={insights}
+      />
+
+      <SalaryInterpretation data={stateComposite} />
 
       {/* Layer 2 cluster narrative — slug-hashed per state */}
       <section className="mb-8 rounded-lg border border-slate-200 bg-white p-5 md:p-6">
@@ -284,6 +470,32 @@ export default async function StateDetailPage({ params }: Props) {
               cost-of-living calculator
             </a>
             .
+          </p>
+        </section>
+      )}
+
+      {stateAggregateTier && stateAggregateRatio != null && (
+        <section
+          data-upgrade="state-cost-adjusted-wage-tier"
+          aria-label={`State-wide cost-adjusted wage tier for ${state.name}`}
+          className={`mb-8 rounded-xl border p-5 ring-1 ${tierToneColor(stateAggregateTier).bg} ${tierToneColor(stateAggregateTier).ring}`}
+        >
+          <p className={`text-xs font-semibold uppercase tracking-wide mb-1 ${tierToneColor(stateAggregateTier).text}`}>
+            State-aggregate CostAdjustedWageTier
+          </p>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">
+            {state.name} — {tierLabel(stateAggregateTier)}
+          </h2>
+          <p className="text-sm text-slate-700 leading-relaxed mb-2">
+            Across {summary.occ_count.toLocaleString()} BLS-tracked occupations, {state.name}&apos;s nominal
+            average median is {formatSalary(summary.avg_median_salary)}. After deflating by the state&apos;s
+            BEA RPP of {stateRpp?.toFixed(1)} (US=100), real purchasing power lands at{' '}
+            {realStateMedian != null ? formatSalary(realStateMedian) : '—'}, a ratio of{' '}
+            {stateAggregateRatio.toFixed(2)} against the national average median of {formatSalary(natAvg)}.
+          </p>
+          <p className="text-xs text-slate-600">
+            5-band cutoffs (our heuristic, not a BLS rating): TopReal ≥1.30, StrongReal 1.10–1.30, ModerateReal 0.95–1.10, BelowMedianReal 0.80–0.95, WeakReal &lt;0.80. Full methodology:{' '}
+            CostAdjustedWageTier explainer.
           </p>
         </section>
       )}
@@ -401,41 +613,70 @@ export default async function StateDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Browse other states */}
-      <section className="mb-8">
-        <h2 className="text-xl font-bold mb-3">Browse Other States</h2>
-        <div className="flex flex-wrap gap-2">
-          {US_STATES.filter((s) => s.slug !== slug).map((s) => (
-            <a
-              key={s.code}
-              href={`/state/${s.slug}/`}
-              className="px-3 py-1 rounded-full text-sm border border-slate-200 hover:bg-blue-50"
-            >
-              {s.name}
-            </a>
-          ))}
-        </div>
-      </section>
+      <TakeHomeCalculator defaultSalary={summary.avg_median_salary} defaultState={state.code} />
+
+      <RelatedEntities
+        entityName={state.name}
+        items={relatedItems}
+        heading="Other States"
+      />
 
       <FAQ items={faqs} />
 
-      {/* JSON-LD */}
+      {/* JSON-LD — Phase 7 P4 multi-creator dataset with variableMeasured PropertyValue */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Dataset",
-            name: `${state.name} Salary and Wage Data (${year})`,
-            description: `BLS OEWS state-aggregated wage data for ${state.name}, including median, percentile bands, and top-paying occupations.`,
-            url: `https://salarybycity.com/state/${slug}/`,
-            license: "https://creativecommons.org/publicdomain/zero/1.0/",
-            creator: { "@type": "Organization", name: "DataPeek Facts", url: "https://datapeekfacts.com" },
-            reviewedBy: [REVIEWER_ORG, ...SOURCE_AUTHORITIES],
-            isBasedOn: SOURCE_AUTHORITIES.map((s) => ({ "@type": "Dataset", name: s.name, url: s.url })),
+            ...datasetSchema(
+              `${state.name} Salary and Wage Data (${year})`,
+              `BLS OEWS state-aggregated wage data for ${state.name}, including median, percentile bands, top-paying occupations, and state-aggregate CostAdjustedWageTier rollup combining nominal OEWS with BEA RPP and Census ACS demographic anchors.`,
+              `/state/${slug}/`,
+              [
+                {
+                  '@type': 'PropertyValue',
+                  name: 'CrosswalkVerdict',
+                  value: stateCrosswalk?.verdict ?? 'C',
+                  description: stateCrosswalk?.longLabel ?? 'Mid real-wage state (verdict unavailable)',
+                },
+                {
+                  '@type': 'PropertyValue',
+                  name: 'StateAggregateMedian',
+                  value: summary.avg_median_salary,
+                  unitText: 'USD/year',
+                },
+                {
+                  '@type': 'PropertyValue',
+                  name: 'StateBEARppIndex',
+                  value: stateRpp ?? 100,
+                  unitText: 'US=100',
+                },
+                {
+                  '@type': 'PropertyValue',
+                  name: 'RealStateMedian',
+                  value: realStateMedian ?? summary.avg_median_salary,
+                  unitText: 'USD/year (RPP-deflated)',
+                },
+                {
+                  '@type': 'PropertyValue',
+                  name: 'HeadlineVelocityBand',
+                  value: stateCrosswalk?.headlineVelocityBand ?? 'unavailable',
+                },
+                {
+                  '@type': 'PropertyValue',
+                  name: 'HeadlineDensityTier',
+                  value: stateCrosswalk?.headlineDensityTier ?? 'unavailable',
+                },
+              ],
+            ),
             dateModified: BLS_PUBLISHED,
-            temporalCoverage: `${year}/${year}`,
-            spatialCoverage: { "@type": "AdministrativeArea", name: state.name },
+            spatialCoverage: { '@type': 'Place', name: state.name },
+            isBasedOn: [
+              'https://www.bls.gov/oes/',
+              'https://www.census.gov/programs-surveys/acs',
+              'https://www.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area',
+              'https://www.irs.gov/statistics/soi-tax-stats-individual-income-tax-statistics',
+            ],
           }),
         }}
       />
@@ -451,6 +692,9 @@ export default async function StateDetailPage({ params }: Props) {
       )}
 
       <StateRich slug={slug} state={state} />
+
+      {/* Phase 7 P5 — internal cross-walk bridge to 5 portfolio siblings */}
+      <CrosswalkBridge stateName={state.name} stateSlug={slug} />
 
       <AuthorBox />
 

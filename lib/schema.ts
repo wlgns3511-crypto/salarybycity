@@ -1,6 +1,6 @@
 import type { WageData } from './db';
 import { formatSalary, getDataYear } from './format';
-import { DB_UPDATED, PUBLISHER, EDITORIAL_TEAM } from './authorship';
+import { DB_UPDATED, PUBLISHER, EDITORIAL_TEAM, SOURCE_AUTHORITIES } from './authorship';
 
 const SITE_NAME = 'SalaryByCity';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://salarybycity.com';
@@ -88,17 +88,33 @@ export function itemListSchema(name: string, url: string, items: { name: string;
   };
 }
 
-export function datasetSchema(name: string, description: string, url: string) {
+export function datasetSchema(
+  name: string,
+  description: string,
+  url: string,
+  variableMeasured?: string[] | object[],
+) {
+  // schema.org/Dataset.creator = entity that CREATED the underlying data.
+  // Phase 7 P4 (Trap #108) — composite dataset must credit ALL upstream
+  // creators in creator[], not just the first. BLS OEWS / Census ACS /
+  // BEA RPP / IRS SOI are 4 distinct .gov publishers; each contributed
+  // a data slice that the composite read depends on. SITE_NAME / PUBLISHER
+  // stays in publisher; EDITORIAL_TEAM in reviewedBy.
   return {
     '@context': 'https://schema.org',
     '@type': 'Dataset',
     name,
     description,
     url: `${SITE_URL}${url}`,
-    creator: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+    creator: SOURCE_AUTHORITIES.map(s => ({ '@type': 'Organization', name: s.name, url: s.url })),
+    publisher: { '@type': 'Organization', name: PUBLISHER.name, url: PUBLISHER.url },
+    sourceOrganization: SOURCE_AUTHORITIES.map(s => ({ '@type': 'Organization', name: s.name, url: s.url })),
+    reviewedBy: { '@type': 'Organization', name: EDITORIAL_TEAM.name, url: EDITORIAL_TEAM.url },
     license: 'https://creativecommons.org/publicdomain/zero/1.0/',
     temporalCoverage: `${getDataYear()}/${getDataYear()}`,
+    ...(variableMeasured && variableMeasured.length > 0 ? { variableMeasured } : {}),
     distribution: { '@type': 'DataDownload', encodingFormat: 'text/html', contentUrl: `${SITE_URL}${url}` },
+    isAccessibleForFree: true,
   };
 }
 

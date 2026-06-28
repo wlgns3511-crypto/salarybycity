@@ -33,12 +33,12 @@ import { NextResponse } from 'next/server';
 // /jobs/list/{type}/ from the leaf-matrix kill switch. Without it, all 12 list
 // pages return 410 because `list/{type}` looks like `{occ}/{loc}` to the matcher.
 const KILLED_ROUTES =
-  /^(?:\/(?:es))?\/jobs\/(?!list(?:\/|$))[^/]+\/[^/]+|^\/(?:locations|compare|category|rankings|states|sitemap|embed)(?:\/|$)|^\/es(?:\/|$)/;
+  /^(?:\/(?:es))?\/jobs\/(?!list(?:\/|$))[^/]+\/[^/]+|^\/(?:blog|locations|compare|category|rankings|states|sitemap|embed)(?:\/|$)|^\/es(?:\/|$)/;
 
 // Cache-bust + diagnostic header. Flip on every meaningful middleware/data
 // change so curl -sI can confirm the latest deploy reached the edge (Cloudflare
 // + the Vercel-style edge cache otherwise serve stale responses without warning).
-const EDGE_VERSION = '2026-05-02-tier-s-expansion';
+const EDGE_VERSION = '2026-05-27-blog-kill';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

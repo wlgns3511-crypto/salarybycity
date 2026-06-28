@@ -1,0 +1,28 @@
+# SalaryByCity
+
+> US Salary & Wage Data by Occupation and City
+
+Explore salary data for 800+ occupations across 400+ US metro areas. Compare wages, see percentile ranges, and find the highest-paying cities for your career.
+
+## Core pages
+- [Methodology and data sources](https://salarybycity.com/methodology/): how every figure is derived, with primary-source citations
+- [Jobs directory](https://salarybycity.com/jobs/): browse every job we cover
+- [About and editorial standards](https://salarybycity.com/about/): authorship and review policy
+
+## Key jobs
+- [List](https://salarybycity.com/jobs/list/)
+- [Accountants And Auditors](https://salarybycity.com/jobs/accountants-and-auditors/)
+- [Actors](https://salarybycity.com/jobs/actors/)
+- [Actuaries](https://salarybycity.com/jobs/actuaries/)
+- [Administrative Law Judges Adjudicators And Hearing Officers](https://salarybycity.com/jobs/administrative-law-judges-adjudicators-and-hearing-officers/)
+- [Administrative Services Managers](https://salarybycity.com/jobs/administrative-services-managers/)
+- [Adult Basic Education Adult Secondary Education And English As A Second Language Instructors](https://salarybycity.com/jobs/adult-basic-education-adult-secondary-education-and-english-as-a-second-language-instructors/)
+- [Advertising Sales Agents](https://salarybycity.com/jobs/advertising-sales-agents/)
+- [Aerospace Engineering And Operations Technologists And Technicians](https://salarybycity.com/jobs/aerospace-engineering-and-operations-technologists-and-technicians/)
+- [Aerospace Engineers](https://salarybycity.com/jobs/aerospace-engineers/)
+- [Agents And Business Managers Of Artists Performers And Athletes](https://salarybycity.com/jobs/agents-and-business-managers-of-artists-performers-and-athletes/)
+- [Agricultural Engineers](https://salarybycity.com/jobs/agricultural-engineers/)
+
+## Data
+- Primary sources: U.S. Bureau of Labor Statistics — OEWS, U.S. Census Bureau — American Community Survey, U.S. Bureau of Economic Analysis — Regional Price Parities, U.S. Internal Revenue Service — Statistics of Income
+- All figures are derived from these primary sources; see /methodology/ for derivation and vintage.

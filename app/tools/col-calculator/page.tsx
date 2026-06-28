@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { COLAdjustWidget } from '@/components/COLAdjustWidget';
 import { getAllMetroAreas, getNationalArea } from '@/lib/db';
+import { datasetSchema } from '@/lib/schema';
+import { BLS_PUBLISHED, BLS_DATA_YEAR } from '@/lib/authorship';
 
 interface SearchParams {
   searchParams: Promise<{ from?: string; to?: string; salary?: string }>;
@@ -172,6 +174,28 @@ export default async function COLCalculatorPage({ searchParams }: SearchParams) 
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            ...datasetSchema(
+              `Cost-of-Living Salary Calculator — BEA Regional Price Parities (${BLS_DATA_YEAR})`,
+              `Cost-of-living salary conversion across ${metros.length} U.S. metropolitan statistical areas, anchored in the BEA Regional Price Parities all-items index for ${BLS_DATA_YEAR}. The calculator deflates a nominal salary in one metro into its purchasing-power equivalent in another, using the BEA all-items RPP as the deflator.`,
+              `/tools/col-calculator/`,
+              [
+                'bea_rpp_all_items_index',
+                'bea_rpp_goods_index',
+                'bea_rpp_services_index',
+                'bea_rpp_rents_index',
+                'nominal_salary_input',
+                'real_salary_equivalent',
+              ],
+            ),
+            dateModified: BLS_PUBLISHED,
+          }),
+        }}
+      />
     </div>
   );
 }

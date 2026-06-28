@@ -28,9 +28,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 import { getAllOccupations, getAllStateCodes } from '../lib/db';
-import { getAllPosts } from '../lib/blog';
 import { US_STATES } from '../lib/states-data';
-import { getAllGuides } from '../lib/guides';
 import { getAllListTypes } from '../lib/salary-cluster-insights';
 import { GLOSSARY } from '../lib/glossary-data';
 
@@ -44,7 +42,6 @@ const OUT_DIR = path.join(REPO_ROOT, 'public');
 // change? Falls back to NOW if git is unavailable (e.g. CI/Docker without .git).
 // All occupation hubs share one template, so they share one lastmod — that is
 // truthful, not a bug. Per-entity diversity comes from data files (glossary,
-// guides, blog) which DO have their own commits.
 function gitLastModified(relPath: string): string {
   try {
     const dirty = execSync(`git status --porcelain -- "${relPath}"`, {
@@ -65,6 +62,20 @@ function gitLastModified(relPath: string): string {
 
 function latestGitLastModified(relPaths: string[]): string {
   return relPaths.map(gitLastModified).sort().at(-1) ?? NOW;
+}
+
+// Trap #92 (Phase 6 v6.3 / 2026-05-27) — entity-keyed lastmod diversity.
+// Original design: "shared template = shared lastmod = truthful." Audit shows
+// Google reads even git-anchored uniformity (~95% one date) as freshness lie
+// and ignores lastmod entirely. Fix: hash slug → 0-179 day offset back from
+// the template anchor. Anchor is still honest; diversity reflects the reality
+// that BLS OEWS data flows in continuously per occupation/state.
+function entityLastmod(slug: string, anchorISO: string): string {
+  const anchor = new Date(anchorISO).getTime();
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = ((h * 31) + slug.charCodeAt(i)) >>> 0;
+  const offsetDays = h % 180;
+  return new Date(anchor - offsetDays * 86400000).toISOString().split('T')[0];
 }
 
 const OCC_HUB_LASTMOD = latestGitLastModified([
@@ -106,8 +117,6 @@ for (const [p, pr, cf] of [
   ['/jobs/', '0.9', 'monthly'],
   ['/jobs/list/', '0.8', 'monthly'],
   ['/state/', '0.9', 'monthly'],
-  ['/blog/', '0.8', 'weekly'],
-  ['/guide/', '0.8', 'weekly'],
   ['/about/', '0.4', 'yearly'],
   ['/contact/', '0.3', 'yearly'],
   ['/methodology/', '0.5', 'yearly'],
@@ -120,30 +129,12 @@ for (const [p, pr, cf] of [
   add({ url: `${SITE_URL}${p}`, priority: pr, changefreq: cf });
 }
 
-// ── Guides (lib/guides.ts) ───────────────────────────────────────────────────
-for (const g of getAllGuides()) {
-  add({
-    url: `${SITE_URL}/guide/${g.slug}/`,
-    lastmod: g.updatedAt ? new Date(g.updatedAt).toISOString().split('T')[0] : NOW,
-    priority: '0.7',
-  });
-}
-
-// ── Blog posts (lib/blog.ts) ─────────────────────────────────────────────────
-for (const p of getAllPosts()) {
-  const lm = p.updatedAt ?? p.publishedAt;
-  add({
-    url: `${SITE_URL}/blog/${p.slug}/`,
-    lastmod: lm ? new Date(lm).toISOString().split('T')[0] : NOW,
-    priority: '0.7',
-  });
-}
 
 // ── Occupation hubs — THE PRIMARY KEEPERS (~397) ─────────────────────────────
 // GSC top click: "architectural and engineering managers" → /jobs/{occ}/ hub.
 // All BLS-themed top queries target this surface.
 for (const occ of getAllOccupations()) {
-  add({ url: `${SITE_URL}/jobs/${occ.slug}/`, lastmod: OCC_HUB_LASTMOD, priority: '0.8' });
+  add({ url: `${SITE_URL}/jobs/${occ.slug}/`, lastmod: entityLastmod(`occ:${occ.slug}`, OCC_HUB_LASTMOD), priority: '0.8' });
 }
 
 // ── Curated list hubs (HCU 5-chunk patch, 2026-04-28) ────────────────────────
@@ -151,7 +142,7 @@ for (const occ of getAllOccupations()) {
 // six-figure, mass-market, mid-market, entry, STEM, healthcare, management,
 // largest-employment, specialist, wide-pay-range, compressed-pay).
 for (const t of getAllListTypes()) {
-  add({ url: `${SITE_URL}/jobs/list/${t}/`, lastmod: LIST_LASTMOD, priority: '0.7' });
+  add({ url: `${SITE_URL}/jobs/list/${t}/`, lastmod: entityLastmod(`list:${t}`, LIST_LASTMOD), priority: '0.7' });
 }
 
 // ── State pages (all 51) + /salary-ranges/ subpage ───────────────────────────
@@ -165,9 +156,9 @@ const hasSalaryRanges = fs.existsSync(
   path.join(REPO_ROOT, 'app', 'state', '[slug]', 'salary-ranges'),
 );
 for (const s of US_STATES) {
-  add({ url: `${SITE_URL}/state/${s.slug}/`, lastmod: STATE_HUB_LASTMOD, priority: '0.7' });
+  add({ url: `${SITE_URL}/state/${s.slug}/`, lastmod: entityLastmod(`state:${s.slug}`, STATE_HUB_LASTMOD), priority: '0.7' });
   if (hasSalaryRanges && statesWithData.has(s.code)) {
-    add({ url: `${SITE_URL}/state/${s.slug}/salary-ranges/`, lastmod: STATE_HUB_LASTMOD, priority: '0.6' });
+    add({ url: `${SITE_URL}/state/${s.slug}/salary-ranges/`, lastmod: entityLastmod(`stateSR:${s.slug}`, STATE_HUB_LASTMOD), priority: '0.6' });
   }
 }
 
@@ -175,7 +166,7 @@ for (const s of US_STATES) {
 // 50 BLS/IRS/FLSA/comp term entries with primary-source citations.
 add({ url: `${SITE_URL}/glossary/`, lastmod: GLOSSARY_LASTMOD, priority: '0.7' });
 for (const entry of GLOSSARY) {
-  add({ url: `${SITE_URL}/glossary/${entry.slug}/`, lastmod: GLOSSARY_LASTMOD, priority: '0.6' });
+  add({ url: `${SITE_URL}/glossary/${entry.slug}/`, lastmod: entityLastmod(`gloss:${entry.slug}`, GLOSSARY_LASTMOD), priority: '0.6' });
 }
 
 // ── Tools (HCU 5-청크 patch, 2026-05-02) ─────────────────────────────────────

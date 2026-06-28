@@ -291,6 +291,28 @@ export function getRelatedByPay(
   `).all(sourceWage.annual_median, sourceWage.annual_median, majorGroup, socCode, sourceWage.annual_median, limit) as RelatedCareer[];
 }
 
+/**
+ * Cross-area employment distribution for an occupation — used by the
+ * OccupationDensityScore lever to rank a metro inside the published
+ * baseline of other metros for the same SOC.
+ *
+ * Returns one positive employment value per area_type='M' metro that
+ * published an employment figure for this SOC. Suppressed cells (employment
+ * NULL) are excluded — the caller computes percentile rank against the
+ * published baseline only.
+ */
+export function getOccupationEmploymentDistribution(socCode: string): number[] {
+  return (getDb().prepare(`
+    SELECT w.employment AS e
+    FROM wages w
+    JOIN areas a ON w.area_code = a.area_code
+    WHERE w.soc_code = ?
+      AND a.area_type = 'M'
+      AND w.employment IS NOT NULL
+      AND w.employment > 0
+  `).all(socCode) as { e: number }[]).map(r => r.e);
+}
+
 export function getTopPayingCities(socCode: string, limit = 10): WageWithArea[] {
   return getDb().prepare(`
     SELECT w.*, a.area_title, a.slug as area_slug

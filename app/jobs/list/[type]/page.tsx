@@ -4,7 +4,8 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { DataSourceBadge } from "@/components/DataSourceBadge";
 import { CrossSiteLinks } from "@/components/CrossSiteLinks";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, datasetSchema } from "@/lib/schema";
+import { BLS_PUBLISHED, BLS_DATA_YEAR } from "@/lib/authorship";
 import {
   getAllListTypes,
   getListProfile,
@@ -117,6 +118,27 @@ export default async function JobsListTypePage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbSchema(breadcrumbs)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            ...datasetSchema(
+              `${profile.title} — BLS OEWS Wage Profile (${BLS_DATA_YEAR})`,
+              `${profile.intro} Aggregated from BLS OEWS national wage tables (median, 10th-percentile, 90th-percentile, employment count) for the ${rows.length} occupations in this list, anchored to the OEWS ${BLS_DATA_YEAR} release.`,
+              `/jobs/list/${profile.slug}/`,
+              [
+                'annual_median',
+                'annual_p10',
+                'annual_p90',
+                'employment',
+                'cluster_aggregate_median',
+                'list_size',
+              ],
+            ),
+            dateModified: BLS_PUBLISHED,
+          }),
         }}
       />
     </div>

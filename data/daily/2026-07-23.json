@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-23",
+  "kind": "spotlight",
+  "title": "Today’s occupation and city wage profile data: Respiratory Therapists",
+  "description": "2 readings from the SalaryByCity dataset for 2026-07-23: record in focus: respiratory therapists; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "2 readings from the SalaryByCity dataset for 2026-07-23: record in focus: respiratory therapists; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Respiratory Therapists",
+      "value": "Reference entry",
+      "href": "/jobs/respiratory-therapists/"
+    },
+    {
+      "label": "Commercial and Industrial Designers",
+      "value": "Reference entry",
+      "href": "/jobs/commercial-and-industrial-designers/"
+    },
+    {
+      "label": "Coaches and Scouts",
+      "value": "Reference entry",
+      "href": "/jobs/coaches-and-scouts/"
+    },
+    {
+      "label": "Clinical Laboratory Technologists and Technicians",
+      "value": "Reference entry",
+      "href": "/jobs/clinical-laboratory-technologists-and-technicians/"
+    },
+    {
+      "label": "Clergy",
+      "value": "Reference entry",
+      "href": "/jobs/clergy/"
+    },
+    {
+      "label": "Claims Adjusters, Examiners, and Investigators",
+      "value": "Reference entry",
+      "href": "/jobs/claims-adjusters-examiners-and-investigators/"
+    },
+    {
+      "label": "Civil Engineers",
+      "value": "Reference entry",
+      "href": "/jobs/civil-engineers/"
+    },
+    {
+      "label": "Civil Engineering Technologists and Technicians",
+      "value": "Reference entry",
+      "href": "/jobs/civil-engineering-technologists-and-technicians/"
+    },
+    {
+      "label": "Choreographers",
+      "value": "Reference entry",
+      "href": "/jobs/choreographers/"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Respiratory Therapists",
+      "href": "/jobs/respiratory-therapists/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Respiratory Therapists",
+      "body": "Respiratory Therapists records a reference value in the current SalaryByCity data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Respiratory Therapists",
+          "value": "Reference entry",
+          "href": "/jobs/respiratory-therapists/"
+        }
+      ]
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through SalaryByCity for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "Commercial and Industrial Designers",
+          "value": "Reference entry",
+          "href": "/jobs/commercial-and-industrial-designers/"
+        },
+        {
+          "label": "Coaches and Scouts",
+          "value": "Reference entry",
+          "href": "/jobs/coaches-and-scouts/"
+        },
+        {
+          "label": "Clinical Laboratory Technologists and Technicians",
+          "value": "Reference entry",
+          "href": "/jobs/clinical-laboratory-technologists-and-technicians/"
+        },
+        {
+          "label": "Clergy",
+          "value": "Reference entry",
+          "href": "/jobs/clergy/"
+        },
+        {
+          "label": "Claims Adjusters, Examiners, and Investigators",
+          "value": "Reference entry",
+          "href": "/jobs/claims-adjusters-examiners-and-investigators/"
+        },
+        {
+          "label": "Civil Engineers",
+          "value": "Reference entry",
+          "href": "/jobs/civil-engineers/"
+        },
+        {
+          "label": "Civil Engineering Technologists and Technicians",
+          "value": "Reference entry",
+          "href": "/jobs/civil-engineering-technologists-and-technicians/"
+        },
+        {
+          "label": "Choreographers",
+          "value": "Reference entry",
+          "href": "/jobs/choreographers/"
+        }
+      ]
+    }
+  ],
+  "source": "BLS OEWS, Census ACS, and BEA",
+  "dataDate": "2026-05-18",
+  "fingerprint": "3c816fc3"
+}

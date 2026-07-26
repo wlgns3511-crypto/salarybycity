@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-25",
+  "kind": "spotlight",
+  "title": "Today’s occupation and city wage profile data: Public Relations Specialists",
+  "description": "2 readings from the SalaryByCity dataset for 2026-07-25: record in focus: public relations specialists; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "2 readings from the SalaryByCity dataset for 2026-07-25: record in focus: public relations specialists; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Public Relations Specialists",
+      "value": "Reference entry",
+      "href": "/jobs/public-relations-specialists/"
+    },
+    {
+      "label": "Computer Systems Analysts",
+      "value": "Reference entry",
+      "href": "/jobs/computer-systems-analysts/"
+    },
+    {
+      "label": "Computer Science Teachers, Postsecondary",
+      "value": "Reference entry",
+      "href": "/jobs/computer-science-teachers-postsecondary/"
+    },
+    {
+      "label": "Computer Programmers",
+      "value": "Reference entry",
+      "href": "/jobs/computer-programmers/"
+    },
+    {
+      "label": "Computer Occupations, All Other",
+      "value": "Reference entry",
+      "href": "/jobs/computer-occupations-all-other/"
+    },
+    {
+      "label": "Computer Network Support Specialists",
+      "value": "Reference entry",
+      "href": "/jobs/computer-network-support-specialists/"
+    },
+    {
+      "label": "Computer Network Architects",
+      "value": "Reference entry",
+      "href": "/jobs/computer-network-architects/"
+    },
+    {
+      "label": "Computer Hardware Engineers",
+      "value": "Reference entry",
+      "href": "/jobs/computer-hardware-engineers/"
+    },
+    {
+      "label": "Compliance Officers",
+      "value": "Reference entry",
+      "href": "/jobs/compliance-officers/"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Public Relations Specialists",
+      "href": "/jobs/public-relations-specialists/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Public Relations Specialists",
+      "body": "Public Relations Specialists records a reference value in the current SalaryByCity data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Public Relations Specialists",
+          "value": "Reference entry",
+          "href": "/jobs/public-relations-specialists/"
+        }
+      ]
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through SalaryByCity for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "Computer Systems Analysts",
+          "value": "Reference entry",
+          "href": "/jobs/computer-systems-analysts/"
+        },
+        {
+          "label": "Computer Science Teachers, Postsecondary",
+          "value": "Reference entry",
+          "href": "/jobs/computer-science-teachers-postsecondary/"
+        },
+        {
+          "label": "Computer Programmers",
+          "value": "Reference entry",
+          "href": "/jobs/computer-programmers/"
+        },
+        {
+          "label": "Computer Occupations, All Other",
+          "value": "Reference entry",
+          "href": "/jobs/computer-occupations-all-other/"
+        },
+        {
+          "label": "Computer Network Support Specialists",
+          "value": "Reference entry",
+          "href": "/jobs/computer-network-support-specialists/"
+        },
+        {
+          "label": "Computer Network Architects",
+          "value": "Reference entry",
+          "href": "/jobs/computer-network-architects/"
+        },
+        {
+          "label": "Computer Hardware Engineers",
+          "value": "Reference entry",
+          "href": "/jobs/computer-hardware-engineers/"
+        },
+        {
+          "label": "Compliance Officers",
+          "value": "Reference entry",
+          "href": "/jobs/compliance-officers/"
+        }
+      ]
+    }
+  ],
+  "source": "BLS OEWS, Census ACS, and BEA",
+  "dataDate": "2026-05-18",
+  "fingerprint": "b3329ab3"
+}

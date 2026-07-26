@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-22",
+  "kind": "spotlight",
+  "title": "Today’s occupation and city wage profile data: Rehabilitation Counselors",
+  "description": "2 readings from the SalaryByCity dataset for 2026-07-22: record in focus: rehabilitation counselors; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "2 readings from the SalaryByCity dataset for 2026-07-22: record in focus: rehabilitation counselors; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Rehabilitation Counselors",
+      "value": "Reference entry",
+      "href": "/jobs/rehabilitation-counselors/"
+    },
+    {
+      "label": "Community Health Workers",
+      "value": "Reference entry",
+      "href": "/jobs/community-health-workers/"
+    },
+    {
+      "label": "Communications Teachers, Postsecondary",
+      "value": "Reference entry",
+      "href": "/jobs/communications-teachers-postsecondary/"
+    },
+    {
+      "label": "Commercial and Industrial Designers",
+      "value": "Reference entry",
+      "href": "/jobs/commercial-and-industrial-designers/"
+    },
+    {
+      "label": "Coaches and Scouts",
+      "value": "Reference entry",
+      "href": "/jobs/coaches-and-scouts/"
+    },
+    {
+      "label": "Clinical Laboratory Technologists and Technicians",
+      "value": "Reference entry",
+      "href": "/jobs/clinical-laboratory-technologists-and-technicians/"
+    },
+    {
+      "label": "Clergy",
+      "value": "Reference entry",
+      "href": "/jobs/clergy/"
+    },
+    {
+      "label": "Claims Adjusters, Examiners, and Investigators",
+      "value": "Reference entry",
+      "href": "/jobs/claims-adjusters-examiners-and-investigators/"
+    },
+    {
+      "label": "Civil Engineers",
+      "value": "Reference entry",
+      "href": "/jobs/civil-engineers/"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Rehabilitation Counselors",
+      "href": "/jobs/rehabilitation-counselors/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Rehabilitation Counselors",
+      "body": "Rehabilitation Counselors records a reference value in the current SalaryByCity data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Rehabilitation Counselors",
+          "value": "Reference entry",
+          "href": "/jobs/rehabilitation-counselors/"
+        }
+      ]
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through SalaryByCity for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "Community Health Workers",
+          "value": "Reference entry",
+          "href": "/jobs/community-health-workers/"
+        },
+        {
+          "label": "Communications Teachers, Postsecondary",
+          "value": "Reference entry",
+          "href": "/jobs/communications-teachers-postsecondary/"
+        },
+        {
+          "label": "Commercial and Industrial Designers",
+          "value": "Reference entry",
+          "href": "/jobs/commercial-and-industrial-designers/"
+        },
+        {
+          "label": "Coaches and Scouts",
+          "value": "Reference entry",
+          "href": "/jobs/coaches-and-scouts/"
+        },
+        {
+          "label": "Clinical Laboratory Technologists and Technicians",
+          "value": "Reference entry",
+          "href": "/jobs/clinical-laboratory-technologists-and-technicians/"
+        },
+        {
+          "label": "Clergy",
+          "value": "Reference entry",
+          "href": "/jobs/clergy/"
+        },
+        {
+          "label": "Claims Adjusters, Examiners, and Investigators",
+          "value": "Reference entry",
+          "href": "/jobs/claims-adjusters-examiners-and-investigators/"
+        },
+        {
+          "label": "Civil Engineers",
+          "value": "Reference entry",
+          "href": "/jobs/civil-engineers/"
+        }
+      ]
+    }
+  ],
+  "source": "BLS OEWS, Census ACS, and BEA",
+  "dataDate": "2026-05-18",
+  "fingerprint": "dcd54c05"
+}
